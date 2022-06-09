@@ -1,6 +1,6 @@
 #!/bin/sh
 
-name="${1:-tcs-api}"
+name="${1:-rcs-api}"
 tag="${2:-latest}"
 echo "Building ${name}":"${tag}"
 

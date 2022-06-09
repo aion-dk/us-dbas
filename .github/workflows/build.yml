@@ -1,0 +1,44 @@
+name: Build and push
+on:
+  - push
+jobs:
+  build_and_push:
+    name: Build and push dockerimage
+    runs-on: ubuntu-latest
+
+    env:
+      RAILS_ENV: production
+      ECR_URL: 534003348933.dkr.ecr.eu-west-1.amazonaws.com
+      ECR_REPOSITORY: rcs-api
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_RW_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_RW_SECRET_KEY }}
+          aws-region: eu-west-1
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build docker image
+        run: ./bin/docker-build $ECR_REPOSITORY latest
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+
+      - name: Tag docker image
+        run: |
+          docker tag $ECR_REPOSITORY:latest $ECR_URL/$ECR_REPOSITORY:${{ github.ref_name }}
+          docker tag $ECR_REPOSITORY:latest $ECR_URL/$ECR_REPOSITORY:latest
+          docker tag $ECR_REPOSITORY:latest $ECR_URL/$ECR_REPOSITORY:$(git rev-parse --short "$GITHUB_SHA")
+
+      - name: Push docker image
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          docker push $ECR_URL/$ECR_REPOSITORY:${{ github.ref_name }}
+          docker push $ECR_URL/$ECR_REPOSITORY:latest
+          docker push $ECR_URL/$ECR_REPOSITORY:$(git rev-parse --short "$GITHUB_SHA")

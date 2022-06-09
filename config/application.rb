@@ -20,7 +20,7 @@ require "action_view/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Tcs
+module Rcs
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
@@ -38,9 +38,9 @@ module Tcs
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    config.title = "Threshold Ceremony Service (TCS)"
+    config.title = "Result Ceremony Service (RCS)"
     config.version = Rails.root.join("VERSION").read.chomp
-    config.redis_url = ENV.fetch "REDIS_URL", "redis://redis:6381"
+    config.redis_url = ENV.fetch "REDIS_URL", "redis://redis:6382"
 
     # Eager and autoload extra locations
     %w[lib].each do |string|
