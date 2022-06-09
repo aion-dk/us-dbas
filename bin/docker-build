@@ -1,0 +1,10 @@
+#!/bin/sh
+
+name="${1:-tcs-api}"
+tag="${2:-latest}"
+echo "Building ${name}":"${tag}"
+
+DOCKER_BUILDKIT=1 docker build \
+  -t "${name}":"${tag}" \
+  --platform linux/x86_64 \
+  .
