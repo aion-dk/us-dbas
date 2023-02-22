@@ -1,19 +1,77 @@
 version: "3"
 services:
-  api:
-    build: .
-    platform: linux/x86_64
-    entrypoint: bin/docker-entrypoint
-    command: sh -c "bundle exec rails s -b '0.0.0.0'"
-    depends_on:
-      - "redis"
-    links:
-      - "redis:redis"
-    volumes:
-      - ./:/usr/src/app
-    ports:
-      - 3009:3000
-
   redis:
     image: redis:6
-    command: --port 6382
+    ports:
+      - 6379:6379
+
+  db:
+    image: "mysql:5.7"
+    platform: "linux/x86_64"
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+    healthcheck:
+      test: "mysqladmin ping --host db -uroot -ppassword"
+      interval: "5s"
+      start_period: "10s"
+      timeout: "5s"
+      retries: 3
+
+  client:
+    # image: "534003348933.dkr.ecr.eu-west-1.amazonaws.com/SERVICE_NAME_PLACEHOLDER-client:main"
+    build:
+      context: ./client
+      ssh:
+        - default
+    command: npm run dev
+    ports:
+      - 5173:5173
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: curl -s http://localhost:3019/ping
+      interval: 5s
+      start_period: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    # image: "534003348933.dkr.ecr.eu-west-1.amazonaws.com/SERVICE_NAME_PLACEHOLDER-api:main"
+    build:
+      context: ./api
+      ssh:
+        - default
+    platform: linux/x86_64
+    command: rails s -p 3019 -b 0.0.0.0
+    environment:
+      SERVICE_NAME: SERVICE_NAME_PLACEHOLDER
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: password
+    depends_on:
+      - init
+    ports:
+      - 3019:3019
+    healthcheck:
+      test: curl -s http://localhost:3019/ping
+      interval: 5s
+      start_period: 10s
+      timeout: 5s
+      retries: 10
+
+  init:
+    build:
+      context: ./api
+      ssh:
+        - default
+    platform: linux/x86_64
+    command: rails db:create db:migrate
+    environment:
+      SERVICE_NAME: SERVICE_NAME_PLACEHOLDER
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: password
+    depends_on:
+      - redis
+      - db

@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+# Run all test if no input is given
+if [ -z "$1" ]; then
+  # Client test
+  E2E=true
+  COMPONENT=true
+  LINT=true
+  # Api test
+  RUBOCOP=true
+  RSPEC=true
+  AUDIT=true
+  BRAKEMAN=true
+fi
+
+if [ "$1" = "e2e" ]; then
+  E2E=true
+fi
+
+if [ "$1" = "component" ]; then
+  COMPONENT=true
+fi
+
+if [ "$1" = "lint" ]; then
+  LINT=true
+fi
+
+if [ "$1" = "rubocop" ]; then
+  RUBOCOP=true
+fi
+
+if [ "$1" = "rspec" ]; then
+  RSPEC=true
+fi
+
+if [ "$1" = "audit" ]; then
+  AUDIT=true
+fi
+
+if [ "$1" = "brakeman" ]; then
+  BRAKEMAN=true
+fi
+
+if [[ -n $E2E ]]; then
+  echo Running e2e test for the client
+  COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml -f docker-compose.override.e2e.yml run --rm client
+fi
+
+if [[ -n $COMPONENT ]]; then
+  echo Running component test for the client
+  COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml -f docker-compose.override.component.yml run --rm client
+fi
+
+if [[ -n $LINT ]]; then
+  echo Running linting test for the client
+  COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml -f docker-compose.override.linting.yml run --rm client
+fi
+
+if [[ -n $RUBOCOP ]]; then
+  echo Running rubocop linting for the api
+  COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml -f docker-compose.override.rubocop.yml run --rm api
+fi
+
+if [[ -n $RSPEC ]]; then
+  echo Running rspec for the api
+  COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml -f docker-compose.override.rspec.yml run --rm api
+fi
+
+if [[ -n $AUDIT ]]; then
+  echo Running audit for the api
+  COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml -f docker-compose.override.audit.yml run --rm api
+fi
+
+if [[ -n $BRAKEMAN ]]; then
+  echo Running brakeman for the api
+  COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml -f docker-compose.override.brakeman.yml run --rm api
+fi
+
+echo "### HURRA ###
+I got to the end of the scirpt!
+All tests should have runned succesfully now.
+### HURRA ###"
+

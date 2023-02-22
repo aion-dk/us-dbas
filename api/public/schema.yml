@@ -1,0 +1,21 @@
+---
+openapi: 3.1.0
+info:
+  title: Service name placeholder
+  version: 0.0.1
+  description: 
+tags: []
+paths:
+  "/ping":
+    get:
+      tags:
+      - Status
+      summary: Show
+      responses:
+        '200':
+          description: responds with 200 Ok
+          content:
+            text/html:
+              schema:
+                type: object
+                example: 

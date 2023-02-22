@@ -1,0 +1,9 @@
+version: "3"
+services:
+  api:
+    command: >
+      bash -c "bundle exec rspec --format progress --format RspecJunitFormatter --out rspec.xml &&
+      cp rspec.xml rspec/ &&
+      cp -r coverage rspec/"
+    volumes:
+      - ./tests-outputs:/usr/src/app/rspec

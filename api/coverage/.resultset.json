@@ -1,0 +1,86 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/usr/src/app/lib/hash.rb": {
+        "lines": [
+          1,
+          null,
+          null,
+          1,
+          22,
+          null,
+          22,
+          4,
+          null,
+          18,
+          18,
+          18,
+          null,
+          null,
+          22,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null
+        ]
+      },
+      "/usr/src/app/app/controllers/status_controller.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/usr/src/app/app/controllers/application_controller.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          null
+        ]
+      },
+      "/usr/src/app/app/jobs/application_job.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/usr/src/app/app/models/application_record.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      }
+    },
+    "timestamp": 1672666770
+  }
+}
