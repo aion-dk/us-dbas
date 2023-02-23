@@ -57,3 +57,7 @@ Rails/NotNullColumn:
 Layout/LineLength:
   Exclude:
     - db/migrate/*.rb
+
+Lint/EmptyBlock:
+  Exclude:
+    - db/schema.rb

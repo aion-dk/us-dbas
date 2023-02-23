@@ -1,9 +1,25 @@
 #!/bin/sh
-
 set -e
+set -x
 
+export RAILS_LOG_TO_STDOUT=true
+
+# Remove PID if container has crashed
 if [ -f /usr/src/app/tmp/pids/server.pid ]; then
   rm /usr/src/app/tmp/pids/server.pid
+fi
+
+if [ $DEVELOPMENT_MODE = "docker" ]; then
+  bundle exec rails db:prepare
+  exec "$@"
+  exit 0
+fi
+
+if [ "$RAILS_ENV" = "production" ]; then
+  if echo $(rails docker:entrypoint:db:empty) | egrep "true" ; then
+    bundle exec rails db:schema:load
+  fi
+  bundle exec rails db:migrate
 fi
 
 exec "$@"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Hash
   # Written arround halloween, so I chose the spooky naming option here.
   # https://github.com/dam13n/ruby-bury/blob/master/hash.rb

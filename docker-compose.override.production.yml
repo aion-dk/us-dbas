@@ -1,0 +1,13 @@
+version: "3"
+services:
+  api:
+    build:
+      context: "./api"
+      target: "production"
+      args:
+        SECRET_KEY_BASE: "shouldBeRandomHere"
+    environment:
+      RAILS_ENV: "production"
+      DEVELOPMENT_MODE: "docker"
+      SECRET_KEY_BASE: "shouldBeRandomHere"
+      FORCE_HTTPS: "false"

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="rspec" tests="1" skipped="0" failures="0" errors="0" time="0.048889" timestamp="2023-02-22T09:43:04+00:00" hostname="4fb05c425fc2">
+<properties>
+<property name="seed" value="36983"/>
+</properties>
+<testcase classname="spec.requests.status_spec" name="Statuses GET /ping behaves like http status responds with 200 Ok" file="./spec/requests/status_spec.rb" time="0.043170"></testcase>
+</testsuite>

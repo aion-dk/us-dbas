@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="Welcome">
@@ -10,15 +9,14 @@
 </template>
 
 <style type="text/css" scoped>
-  .Welcome {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+.Welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  .Welcome .Welcome__Title {
-    font-size: 2rem;
-  }
+.Welcome .Welcome__Title {
+  font-size: 2rem;
+}
 </style>
-

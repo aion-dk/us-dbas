@@ -2,4 +2,4 @@ version: "3"
 services:
   client:
     command: >
-      bash -c "npm run lint:ci && ./node_modules/prettier/bin-prettier.js -c ."
+      bash -c "npm run lint:ci && npn run prettier"

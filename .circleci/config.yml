@@ -110,7 +110,7 @@ jobs:
       image: ubuntu-2204:2022.04.2
     environment:
       ECR_REGISTRY_ID: "534003348933"
-      ECR_REPOSITORY: "SERVICE_NAME_PLACEHOLDER-api"
+      ECR_REPOSITORY: "service_name_placeholder-api"
       AWS_REGION: "eu-west-1"
       DOCKER_BUILDKIT: "1"
       SSH_AUTH_SOCK: /tmp/circleci/ssh/ssh_agent.sock
@@ -126,19 +126,19 @@ jobs:
       - docker/ssh-access:
           VAR_SSH_KEY: PULL_SSH_KEY
       - run:
-          name: Build SERVICE_NAME_PLACEHOLDER-api development
+          name: Build service_name_placeholder-api development
           command: |
             export ECR_REGISTRY="${ECR_REGISTRY_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
             docker-compose build api
-            docker tag SERVICE_NAME_PLACEHOLDER-api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
-            docker tag SERVICE_NAME_PLACEHOLDER-api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-main
-            docker tag SERVICE_NAME_PLACEHOLDER-api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"$(date "+%d-%m-%Y")"
-            docker tag SERVICE_NAME_PLACEHOLDER-api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"${CIRCLE_SHA1}"
+            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
+            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-main
+            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"$(date "+%d-%m-%Y")"
+            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"${CIRCLE_SHA1}"
             # TMP should be moved to a prod image
-            docker tag SERVICE_NAME_PLACEHOLDER-api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":latest
-            docker tag SERVICE_NAME_PLACEHOLDER-api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":main
+            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":latest
+            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":main
       - run:
-          name: Push SERVICE_NAME_PLACEHOLDER-api development
+          name: Push api development
           command: |
             export ECR_REGISTRY="${ECR_REGISTRY_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
             docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
@@ -161,7 +161,7 @@ jobs:
       image: ubuntu-2204:2022.04.2
     environment:
       ECR_REGISTRY_ID: "534003348933"
-      ECR_REPOSITORY: "SERVICE_NAME_PLACEHOLDER-client"
+      ECR_REPOSITORY: "service_name_placeholder-client"
       AWS_REGION: "eu-west-1"
       DOCKER_BUILDKIT: "1"
       SSH_AUTH_SOCK: /tmp/circleci/ssh/ssh_agent.sock
@@ -177,17 +177,17 @@ jobs:
       - docker/ssh-access:
           VAR_SSH_KEY: PULL_SSH_KEY
       - run:
-          name: Build SERVICE_NAME_PLACEHOLDER-client development
+          name: Build service_name_placeholder-client development
           command: |
             export ECR_REGISTRY="${ECR_REGISTRY_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
             docker-compose build client
-            docker tag SERVICE_NAME_PLACEHOLDER-client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
-            docker tag SERVICE_NAME_PLACEHOLDER-client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-main
-            docker tag SERVICE_NAME_PLACEHOLDER-client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"$(date "+%d-%m-%Y")"
-            docker tag SERVICE_NAME_PLACEHOLDER-client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"${CIRCLE_SHA1}"
+            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
+            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-main
+            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"$(date "+%d-%m-%Y")"
+            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"${CIRCLE_SHA1}"
             # TMP should be moved to a prod image
-            docker tag SERVICE_NAME_PLACEHOLDER-client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":latest
-            docker tag SERVICE_NAME_PLACEHOLDER-client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":main
+            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":latest
+            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":main
       - run:
           name: Push SERVICE_NAME_PLACEHOLDER-client development
           command: |

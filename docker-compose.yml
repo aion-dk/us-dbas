@@ -18,60 +18,56 @@ services:
       retries: 3
 
   client:
+    image: client:latest
     # image: "534003348933.dkr.ecr.eu-west-1.amazonaws.com/SERVICE_NAME_PLACEHOLDER-client:main"
     build:
       context: ./client
       ssh:
         - default
+    volumes:
+      - "./client:/usr/src/app"
+      - "/usr/src/app/node_modules"
     command: npm run dev
     ports:
       - 5173:5173
     depends_on:
       api:
         condition: service_healthy
+    environment:
+      SERVICE_NAME: SERVICE_NAME_PLACEHOLDER
     healthcheck:
-      test: curl -s http://localhost:3019/ping
+      test: curl -s http://localhost:5173
       interval: 5s
       start_period: 10s
       timeout: 5s
       retries: 10
 
   api:
+    image: api:latest
     # image: "534003348933.dkr.ecr.eu-west-1.amazonaws.com/SERVICE_NAME_PLACEHOLDER-api:main"
     build:
       context: ./api
       ssh:
         - default
-    platform: linux/x86_64
-    command: rails s -p 3019 -b 0.0.0.0
+      target: development
+    volumes:
+      - "./api:/usr/src/app"
+    entrypoint: bin/docker-entrypoint
+    command: rails s -p 3000 -b 0.0.0.0
     environment:
       SERVICE_NAME: SERVICE_NAME_PLACEHOLDER
       DB_HOST: db
       DB_USER: root
       DB_PASSWORD: password
+      DEVELOPMENT_MODE: docker
     depends_on:
-      - init
+      db:
+        condition: service_healthy
     ports:
-      - 3019:3019
+      - 3000:3000
     healthcheck:
-      test: curl -s http://localhost:3019/ping
+      test: curl -s http://localhost:3000/ping
       interval: 5s
       start_period: 10s
       timeout: 5s
       retries: 10
-
-  init:
-    build:
-      context: ./api
-      ssh:
-        - default
-    platform: linux/x86_64
-    command: rails db:create db:migrate
-    environment:
-      SERVICE_NAME: SERVICE_NAME_PLACEHOLDER
-      DB_HOST: db
-      DB_USER: root
-      DB_PASSWORD: password
-    depends_on:
-      - redis
-      - db

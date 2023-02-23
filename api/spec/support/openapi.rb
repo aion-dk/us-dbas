@@ -24,7 +24,7 @@ class Openapi # rubocop:disable Metrics/ClassLength
   end
 
   def write
-    File.write Rails.root.join("public/schema.yml"), schema.deep_stringify_keys.to_yaml
+    Rails.public_path.join("schema.yml").write(schema.deep_stringify_keys.to_yaml)
   end
 
   private
@@ -49,7 +49,7 @@ class Openapi # rubocop:disable Metrics/ClassLength
   end
 
   def api_description
-    file = Rails.root.join("public/api/description.md")
+    file = Rails.public_path.join("api/description.md")
     file.exist? ? file.read : nil
   end
 
@@ -66,7 +66,7 @@ class Openapi # rubocop:disable Metrics/ClassLength
   end
 
   def tag_descriptions
-    Dir[Rails.root.join("public/api/*")].collect do |f|
+    Dir[Rails.public_path.join("api/*")].collect do |f|
       next unless Dir.exist? f
 
       {
@@ -237,7 +237,7 @@ end
 open_api = Openapi.new
 
 RSpec.configure do |config|
-  config.after :each, type: :request, openapi: true do |example|
+  config.after :each, openapi: true, type: :request do |example|
     open_api.document context: self, example:
   end
 
