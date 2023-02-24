@@ -9,43 +9,32 @@
           null,
           null,
           1,
-          22,
+          2,
           null,
-          22,
+          2,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          2,
+          6,
+          null,
           4,
           null,
-          18,
-          18,
-          18,
-          null,
-          null,
-          22,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          0,
-          0,
-          null,
-          0,
-          null,
-          null,
-          null
-        ]
-      },
-      "/usr/src/app/app/controllers/status_controller.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          1,
-          1,
           null,
           null
         ]
@@ -54,9 +43,24 @@
         "lines": [
           null,
           null,
-          1,
-          null
-        ]
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/usr/src/app/app/controllers/status_controller.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
       },
       "/usr/src/app/app/jobs/application_job.rb": {
         "lines": [
@@ -85,6 +89,6 @@
         }
       }
     },
-    "timestamp": 1677058984
+    "timestamp": 1677191421
   }
 }

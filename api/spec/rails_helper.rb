@@ -7,6 +7,7 @@ ENV["RAILS_ENV"] ||= "test"
 require "simplecov"
 SimpleCov.start :rails do
   add_filter "lib/crypto.rb"
+  minimum_coverage 77
 end
 
 require_relative "../config/environment"
