@@ -66,8 +66,8 @@ services:
     ports:
       - 3000:3000
     healthcheck:
-      test: curl -s http://localhost:3000/ping
+      test: curl --fail http://localhost:3000/ping
       interval: 5s
       start_period: 10s
       timeout: 5s
-      retries: 10
+      retries: 50
