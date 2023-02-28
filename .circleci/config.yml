@@ -1,22 +1,401 @@
 version: 2.1
 
 orbs:
-  aws-ecr: circleci/aws-ecr@8.1.2
-  docker: assemblyvoting/docker@1.1.3
+  aws-ecr: circleci/aws-ecr@8.2.1
+  docker: assemblyvoting/docker@1.2.5
   slack: circleci/slack@4.10.1
-  ruby: assemblyvoting/ruby@1.0.0
+
+executors:
+  vm-linux-ubuntu:
+    machine:
+      image: ubuntu-2204:2022.04.2
+
+commands:
+  build-image:
+    parameters:
+      service_name:
+        type: string
+      ecr_registry_id:
+        type: string
+        default: "534003348933"
+      target:
+        type: enum
+        default: "development"
+        enum: [ "builder", "development", "production" ]
+      environment:
+        type: enum
+        default: "development"
+        enum: [ "development", "test", "production" ]
+      tag_prefix:
+        type: string
+        default: ""
+      docker_context:
+        type: string
+        default: "."
+
+    steps:
+      - run:
+          name: Set environment variables
+          command: |
+            echo "export AV_SECRET_KEY_BASE=${RANDOM}" >> "$BASH_ENV"
+            echo 'export ECR_REGISTRY="<< parameters.ecr_registry_id >>.dkr.ecr.eu-west-1.amazonaws.com"' >> "$BASH_ENV"
+            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
+            echo 'export SSH_AUTH_SOCK=/tmp/circleci/ssh/ssh_agent.sock' >> "$BASH_ENV"
+      - checkout
+      - aws-ecr/ecr-login:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-cli-version: latest
+          public-registry: false
+          region: eu-west-1
+          registry-id: ECR_REGISTRY_ID
+      - docker/ssh-access:
+          VAR_SSH_KEY: PULL_SSH_KEY
+      - run:
+          name: Build Docker image
+          environment:
+            DOCKER_BUILDKIT: "1"
+            BUILDKIT_PROGRESS: "plain"
+          command: |
+            docker build << parameters.docker_context >> --target=<< parameters.target >> -t << parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1} --ssh default --build-arg RAILS_ENV="<< parameters.environment >>" --build-arg NODE_ENV="<< parameters.environment >>" --build-arg SECRET_KEY_BASE="${RANDOM}"
+      - run:
+          name: Push untested docker image
+          command: |
+            docker tag << parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1} ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
+            docker push ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
+  run-rubocop:
+    parameters:
+      service_name:
+        type: string
+      ecr_registry_id:
+        type: string
+        default: "534003348933"
+      tag_prefix:
+        type: string
+        default: ""
+      aws_access_key_id:
+        type: string
+      aws_secret_access_key:
+        type: string
+    steps:
+      - run:
+          name: Set environment variables
+          command: |
+            echo 'export AWS_ACCESS_KEY_ID="<< parameters.aws_access_key_id >>"' >> "$BASH_ENV"
+            echo 'export AWS_SECRET_ACCESS_KEY="<< parameters.aws_secret_access_key >>"' >> "$BASH_ENV"
+            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
+      - aws-ecr/ecr-login:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-cli-version: latest
+          public-registry: false
+          region: eu-west-1
+          registry-id: ECR_REGISTRY_ID
+      - run:
+          name: Pull the image for testing
+          command: |
+            docker pull 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
+      - run:
+          name: Run rubocop tests
+          command: |
+            docker run --rm 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested bash -c "bundle exec rubocop --config ./.rubocop.yml"
+  run-brakeman:
+    parameters:
+      service_name:
+        type: string
+      ecr_registry_id:
+        type: string
+        default: "534003348933"
+      tag_prefix:
+        type: string
+        default: ""
+      aws_access_key_id:
+        type: string
+      aws_secret_access_key:
+        type: string
+    steps:
+      - run:
+          name: Set environment variables
+          command: |
+            echo 'export AWS_ACCESS_KEY_ID="<< parameters.aws_access_key_id >>"' >> "$BASH_ENV"
+            echo 'export AWS_SECRET_ACCESS_KEY="<< parameters.aws_secret_access_key >>"' >> "$BASH_ENV"
+            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
+      - aws-ecr/ecr-login:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-cli-version: latest
+          public-registry: false
+          region: eu-west-1
+          registry-id: ECR_REGISTRY_ID
+      - run:
+          name: Pull the image for testing
+          command: |
+            docker pull 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
+      - run:
+          name: Run brakeman tests
+          command: |
+            docker run --rm 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested bash -c "bundle exec brakeman -q --no-pager"
+  run-bundler-audit:
+    parameters:
+      service_name:
+        type: string
+      ecr_registry_id:
+        type: string
+        default: "534003348933"
+      tag_prefix:
+        type: string
+        default: ""
+      aws_access_key_id:
+        type: string
+      aws_secret_access_key:
+        type: string
+    steps:
+      - run:
+          name: Set environment variables
+          command: |
+            echo 'export AWS_ACCESS_KEY_ID="<< parameters.aws_access_key_id >>"' >> "$BASH_ENV"
+            echo 'export AWS_SECRET_ACCESS_KEY="<< parameters.aws_secret_access_key >>"' >> "$BASH_ENV"
+            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
+      - aws-ecr/ecr-login:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-cli-version: latest
+          public-registry: false
+          region: eu-west-1
+          registry-id: ECR_REGISTRY_ID
+      - run:
+          name: Pull the image for testing
+          command: |
+            docker pull 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
+      - run:
+          name: Run bundler-audit tests
+          command: |
+            docker run --rm 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested bash -c "bundle exec bundler-audit"
+  tag-tested-image:
+    parameters:
+      service_name:
+        type: string
+      ecr_registry_id:
+        type: string
+        default: "534003348933"
+      tag_prefix:
+        type: string
+        default: ""
+      aws_access_key_id:
+        type: string
+      aws_secret_access_key:
+        type: string
+    steps:
+      - run:
+          name: Set environment variables
+          command: |
+            echo 'export AWS_ACCESS_KEY_ID="<< parameters.aws_access_key_id >>"' >> "$BASH_ENV"
+            echo 'export AWS_SECRET_ACCESS_KEY="<< parameters.aws_secret_access_key >>"' >> "$BASH_ENV"
+            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
+            echo 'export ECR_REGISTRY="${ECR_REGISTRY_ID}.dkr.ecr.eu-west-1.amazonaws.com"' >> "$BASH_ENV"
+      - aws-ecr/ecr-login:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-cli-version: latest
+          public-registry: false
+          region: eu-west-1
+          registry-id: ECR_REGISTRY_ID
+      - run:
+          name: Pull the images for tagging
+          command: |
+            docker pull ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
+      - run:
+          name: Tag image
+          command: |
+            docker tag ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}
+            docker tag ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>latest
+            docker tag ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>main
+            docker tag ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>"$(date "+%d-%m-%Y")"
+      - run:
+          name: Push image
+          command: |
+            docker push ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}
+            docker push ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>latest
+            docker push ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>main
+            docker push ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>"$(date "+%d-%m-%Y")"
+  run-e2e:
+    parameters:
+      service_name:
+        type: string
+      ecr_registry_id:
+        type: string
+        default: "534003348933"
+      tag_prefix:
+        type: string
+        default: ""
+      aws_access_key_id:
+        type: string
+      aws_secret_access_key:
+        type: string
+    steps:
+      - run:
+          name: Set environment variables
+          command: |
+            echo 'export AWS_ACCESS_KEY_ID="<< parameters.aws_access_key_id >>"' >> "$BASH_ENV"
+            echo 'export AWS_SECRET_ACCESS_KEY="<< parameters.aws_secret_access_key >>"' >> "$BASH_ENV"
+            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
+      - aws-ecr/ecr-login:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-cli-version: latest
+          public-registry: false
+          region: eu-west-1
+          registry-id: ECR_REGISTRY_ID
+      - run:
+          name: Pull the image for testing
+          command: |
+            docker pull 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
+      - run:
+          name: Run e2e client tests
+          command: |
+            docker run -e CI="1" --rm 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested bash -c "npm run build && npm run test:e2e:ci"
+  run-component:
+    parameters:
+      service_name:
+        type: string
+      ecr_registry_id:
+        type: string
+        default: "534003348933"
+      tag_prefix:
+        type: string
+        default: ""
+      aws_access_key_id:
+        type: string
+      aws_secret_access_key:
+        type: string
+    steps:
+      - run:
+          name: Set environment variables
+          command: |
+            echo 'export AWS_ACCESS_KEY_ID="<< parameters.aws_access_key_id >>"' >> "$BASH_ENV"
+            echo 'export AWS_SECRET_ACCESS_KEY="<< parameters.aws_secret_access_key >>"' >> "$BASH_ENV"
+            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
+      - aws-ecr/ecr-login:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-cli-version: latest
+          public-registry: false
+          region: eu-west-1
+          registry-id: ECR_REGISTRY_ID
+      - run:
+          name: Pull the image for testing
+          command: |
+            docker pull 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
+      - run:
+          name: Run component client tests
+          command: |
+            docker run -e CI="1" --rm 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested bash -c "npm run test:unit:ci"
+  run-linting:
+    parameters:
+      service_name:
+        type: string
+      ecr_registry_id:
+        type: string
+        default: "534003348933"
+      tag_prefix:
+        type: string
+        default: ""
+      aws_access_key_id:
+        type: string
+      aws_secret_access_key:
+        type: string
+    steps:
+      - run:
+          name: Set environment variables
+          command: |
+            echo 'export AWS_ACCESS_KEY_ID="<< parameters.aws_access_key_id >>"' >> "$BASH_ENV"
+            echo 'export AWS_SECRET_ACCESS_KEY="<< parameters.aws_secret_access_key >>"' >> "$BASH_ENV"
+            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
+      - aws-ecr/ecr-login:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-cli-version: latest
+          public-registry: false
+          region: eu-west-1
+          registry-id: ECR_REGISTRY_ID
+      - run:
+          name: Pull the image for testing
+          command: |
+            docker pull 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
+      - run:
+          name: Run linting for client
+          command: |
+            docker run --rm 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested bash -c "npm run lint:ci && npm run prettier:ci"
+
 
 jobs:
-  api-tests:
-    machine:
-      image: ubuntu-2204:2022.04.2
+  lint-dockerfile-api:
+    executor: vm-linux-ubuntu
+    steps:
+      - docker/lint:
+          dockerfile: ./api/Dockerfile
+  lint-dockerfile-client:
+    executor: vm-linux-ubuntu
+    steps:
+      - docker/lint:
+          dockerfile: ./client/Dockerfile
+  build-image-development-api:
+    executor: vm-linux-ubuntu
+    steps:
+      - build-image:
+          service_name: "service_name_placeholder-api"
+          tag_prefix: "dev-"
+          target: "development"
+          environment: "development"
+          docker_context: "./api"
+  build-image-development-client:
+    executor: vm-linux-ubuntu
+    steps:
+      - build-image:
+          service_name: "service_name_placeholder-client"
+          tag_prefix: "dev-"
+          target: "development"
+          environment: "development"
+          docker_context: "./client"
+  build-image-production-api:
+    executor: vm-linux-ubuntu
+    steps:
+      - build-image:
+          service_name: "service_name_placeholder-api"
+          tag_prefix: ""
+          target: "production"
+          environment: "production"
+          docker_context: "./api"
+  build-image-production-client:
+    executor: vm-linux-ubuntu
+    steps:
+      - build-image:
+          service_name: "service_name_placeholder-client"
+          tag_prefix: ""
+          target: "production"
+          environment: "production"
+          docker_context: "./client"
+  api-rubocop:
+    executor: vm-linux-ubuntu
+    steps:
+      - run-rubocop: &api-service-aws
+          service_name: "service_name_placeholder-api"
+          tag_prefix: "dev-"
+          aws_access_key_id: "${AWS_ACCESS_KEY_ID}"
+          aws_secret_access_key: "${AWS_SECRET_ACCESS_KEY}"
+  api-brakeman:
+    executor: vm-linux-ubuntu
+    steps:
+      - run-brakeman: *api-service-aws
+  api-bundler-audit:
+    executor: vm-linux-ubuntu
+    steps:
+      - run-bundler-audit: *api-service-aws
+  scan-api:
+    executor: vm-linux-ubuntu
     environment:
       ECR_REGISTRY_ID: "534003348933"
-      AWS_REGION: "eu-west-1"
-      DOCKER_BUILDKIT: "1"
-      SSH_AUTH_SOCK: /tmp/circleci/ssh/ssh_agent.sock
     steps:
-      - checkout
       - aws-ecr/ecr-login:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
@@ -24,49 +403,17 @@ jobs:
           public-registry: false
           region: eu-west-1
           registry-id: ECR_REGISTRY_ID
-      - docker/ssh-access:
-          VAR_SSH_KEY: PULL_SSH_KEY
-
       - run:
-          name: Run rubocop for api
-          command: ./bin/docker-tests rubocop
-
-      - run:
-          name: Run rspec test for api
-          command: ./bin/docker-tests rspec
-
-      - run:
-          name: Run audit test for api
-          command: ./bin/docker-tests audit
-
-      - run:
-          name: Run brakeman test for api
-          command: ./bin/docker-tests brakeman
-
-      - store_artifacts:
-          path: ./api/rspec.xml
-          destination: rspec.xml
-      - store_artifacts:
-          path: tests-outputs/coverage
-          destination: coverage-file
-
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: basic_success_1
-
-  client-tests:
-    machine:
-      image: ubuntu-2204:2022.04.2
+          name: Pull the image for scanning
+          command: |
+            docker pull ${ECR_REGISTRY_ID}.dkr.ecr.eu-west-1.amazonaws.com/service_name_placeholder-api:${CIRCLE_SHA1}-untested
+      - docker/scan:
+          image: ${ECR_REGISTRY_ID}.dkr.ecr.eu-west-1.amazonaws.com/service_name_placeholder-api:${CIRCLE_SHA1}-untested
+  scan-client:
+    executor: vm-linux-ubuntu
     environment:
       ECR_REGISTRY_ID: "534003348933"
-      AWS_REGION: "eu-west-1"
-      DOCKER_BUILDKIT: "1"
-      SSH_AUTH_SOCK: /tmp/circleci/ssh/ssh_agent.sock
     steps:
-      - checkout
       - aws-ecr/ecr-login:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
@@ -74,165 +421,385 @@ jobs:
           public-registry: false
           region: eu-west-1
           registry-id: ECR_REGISTRY_ID
-      - docker/ssh-access:
-          VAR_SSH_KEY: PULL_SSH_KEY
-
       - run:
-          name: Run e2e test for the client
-          command: ./bin/docker-tests e2e
-      - run:
-          name: Run component test for the client
-          command: ./bin/docker-tests component
-      - run:
-          name: Run lint test for the client
-          command: ./bin/docker-tests lint
-
-      - store_artifacts:
-          path: tests-outputs/playwright.xml
-          destination: playwright.xml
-
-      - store_artifacts:
-          path: tests-outputs/vitest.xml
-          destination: vitest.xml
-
-      - store_artifacts:
-          path: tests-outputs/artifacts
-
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: basic_success_1
-
-  build-and-push-api:
-    machine:
-      image: ubuntu-2204:2022.04.2
-    environment:
-      ECR_REGISTRY_ID: "534003348933"
-      ECR_REPOSITORY: "service_name_placeholder-api"
-      AWS_REGION: "eu-west-1"
-      DOCKER_BUILDKIT: "1"
-      SSH_AUTH_SOCK: /tmp/circleci/ssh/ssh_agent.sock
+          name: Pull the image for scanning
+          command: |
+            docker pull ${ECR_REGISTRY_ID}.dkr.ecr.eu-west-1.amazonaws.com/service_name_placeholder-client:${CIRCLE_SHA1}-untested
+      - docker/scan:
+          image: ${ECR_REGISTRY_ID}.dkr.ecr.eu-west-1.amazonaws.com/service_name_placeholder-client:${CIRCLE_SHA1}-untested
+          ignored_cves: "CVE-2021-4048,CVE-2021-3756"
+  tag-tested-api-image-dev:
+    executor: vm-linux-ubuntu
     steps:
-      - checkout
-      - aws-ecr/ecr-login:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-cli-version: latest
-          public-registry: false
-          region: eu-west-1
-          registry-id: ECR_REGISTRY_ID
-      - docker/ssh-access:
-          VAR_SSH_KEY: PULL_SSH_KEY
-      - run:
-          name: Build service_name_placeholder-api development
-          command: |
-            export ECR_REGISTRY="${ECR_REGISTRY_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-            docker-compose build api
-            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
-            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-main
-            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"$(date "+%d-%m-%Y")"
-            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"${CIRCLE_SHA1}"
-            # TMP should be moved to a prod image
-            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":latest
-            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":main
-      - run:
-          name: Push api development
-          command: |
-            export ECR_REGISTRY="${ECR_REGISTRY_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
-            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-main
-            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"$(date "+%d-%m-%Y")"
-            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"${CIRCLE_SHA1}"
-            # TMP should be moved to a prod image
-            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":latest
-            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":main
-
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
-
-  build-and-push-client:
-    machine:
-      image: ubuntu-2204:2022.04.2
-    environment:
-      ECR_REGISTRY_ID: "534003348933"
-      ECR_REPOSITORY: "service_name_placeholder-client"
-      AWS_REGION: "eu-west-1"
-      DOCKER_BUILDKIT: "1"
-      SSH_AUTH_SOCK: /tmp/circleci/ssh/ssh_agent.sock
+      - tag-tested-image: *api-service-aws
+  tag-tested-api-image-prod:
+    executor: vm-linux-ubuntu
     steps:
-      - checkout
-      - aws-ecr/ecr-login:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-cli-version: latest
-          public-registry: false
-          region: eu-west-1
-          registry-id: ECR_REGISTRY_ID
-      - docker/ssh-access:
-          VAR_SSH_KEY: PULL_SSH_KEY
-      - run:
-          name: Build service_name_placeholder-client development
-          command: |
-            export ECR_REGISTRY="${ECR_REGISTRY_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-            docker-compose build client
-            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
-            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-main
-            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"$(date "+%d-%m-%Y")"
-            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"${CIRCLE_SHA1}"
-            # TMP should be moved to a prod image
-            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":latest
-            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":main
-      - run:
-          name: Push SERVICE_NAME_PLACEHOLDER-client development
-          command: |
-            export ECR_REGISTRY="${ECR_REGISTRY_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
-            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-main
-            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"$(date "+%d-%m-%Y")"
-            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"${CIRCLE_SHA1}"
-            # TMP should be moved to a prod image
-            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":latest
-            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":main
-
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
+      - tag-tested-image:
+          <<: *api-service-aws
+          tag_prefix: ""
+  client-e2e:
+    executor: vm-linux-ubuntu
+    steps:
+      - run-e2e: &client-service-aws
+          service_name: "service_name_placeholder-client"
+          tag_prefix: "dev-"
+          aws_access_key_id: "${AWS_ACCESS_KEY_ID}"
+          aws_secret_access_key: "${AWS_SECRET_ACCESS_KEY}"
+  client-component:
+    executor: vm-linux-ubuntu
+    steps:
+      - run-component:
+          <<: *client-service-aws
+  client-linting:
+    executor: vm-linux-ubuntu
+    steps:
+      - run-linting:
+          <<: *client-service-aws
+  tag-tested-client-image-dev:
+    executor: vm-linux-ubuntu
+    steps:
+      - tag-tested-image:
+          <<: *client-service-aws
+  tag-tested-client-image-prod:
+    executor: vm-linux-ubuntu
+    steps:
+      - tag-tested-image:
+          <<: *client-service-aws
+          tag_prefix: ""
 
 workflows:
-  test-and-build-push:
+  everything:
     jobs:
-      - api-tests:
+      - lint-dockerfile-api
+      - lint-dockerfile-client
+      - build-image-development-api:
           context:
             - "GIT"
             - "ECR-RW"
-            - "slack"
-      - client-tests:
+#            - "slack"
+          requires:
+            - lint-dockerfile-api
+      - build-image-development-client:
           context:
             - "GIT"
             - "ECR-RW"
-            - "slack"
-      - build-and-push-api:
+#            - "slack"
+          requires:
+            - lint-dockerfile-client
+      - build-image-production-api:
           context:
             - "GIT"
             - "ECR-RW"
-            - "slack"
-## Must be enable when test can pass
-#          requires:
-#            - api-tests
-      - build-and-push-client:
+#            - "slack"
+          requires:
+            - lint-dockerfile-api
+      - build-image-production-client:
           context:
             - "GIT"
             - "ECR-RW"
-            - "slack"
-## Must be enable when test can pass
-#          requires:
-#            - client-tests
+#            - "slack"
+          requires:
+            - lint-dockerfile-client
+      - api-rubocop:
+          requires:
+            - build-image-development-api
+          context:
+            - "ECR-RW"
+#            - "slack"
+      - api-brakeman:
+          requires:
+            - build-image-development-api
+          context:
+            - "ECR-RW"
+      - api-bundler-audit:
+          requires:
+            - build-image-development-api
+          context:
+            - "ECR-RW"
+      - scan-api:
+          requires:
+            - build-image-production-api
+          context:
+            - "ECR-RW"
+      - tag-tested-api-image-dev:
+          requires:
+            - api-rubocop
+            - api-brakeman
+            - api-bundler-audit
+          context:
+            - "ECR-RW"
+      - tag-tested-api-image-prod:
+          requires:
+            - api-rubocop
+            - api-brakeman
+            - api-bundler-audit
+            - scan-api
+          context:
+            - "ECR-RW"
+      - scan-client:
+          requires:
+            - build-image-production-client
+          context:
+            - "ECR-RW"
+      - client-e2e:
+          requires:
+            - build-image-development-client
+          context:
+            - "ECR-RW"
+      - client-component:
+          requires:
+            - build-image-development-client
+          context:
+            - "ECR-RW"
+      - client-linting:
+          requires:
+            - build-image-development-client
+          context:
+            - "ECR-RW"
+      - tag-tested-client-image-dev:
+          requires:
+            - client-e2e
+            - client-component
+            - client-linting
+          context:
+            - "ECR-RW"
+      - tag-tested-client-image-prod:
+          requires:
+            - client-e2e
+            - client-component
+            - client-linting
+            - scan-client
+          context:
+            - "ECR-RW"
+
+#  api-tests:
+#    machine:
+#      image: ubuntu-2204:2022.04.2
+#    environment:
+#      ECR_REGISTRY_ID: "534003348933"
+#      AWS_REGION: "eu-west-1"
+#      DOCKER_BUILDKIT: "1"
+#      SSH_AUTH_SOCK: /tmp/circleci/ssh/ssh_agent.sock
+#    steps:
+#      - checkout
+#      - aws-ecr/ecr-login:
+#          aws-access-key-id: AWS_ACCESS_KEY_ID
+#          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+#          aws-cli-version: latest
+#          public-registry: false
+#          region: eu-west-1
+#          registry-id: ECR_REGISTRY_ID
+#      - docker/ssh-access:
+#          VAR_SSH_KEY: PULL_SSH_KEY
+#
+#      - run:
+#          name: Run rubocop for api
+#          command: ./bin/docker-tests rubocop
+#
+#      - run:
+#          name: Run rspec test for api
+#          command: ./bin/docker-tests rspec
+#
+#      - run:
+#          name: Run audit test for api
+#          command: ./bin/docker-tests audit
+#
+#      - run:
+#          name: Run brakeman test for api
+#          command: ./bin/docker-tests brakeman
+#
+#      - store_artifacts:
+#          path: ./api/rspec.xml
+#          destination: rspec.xml
+#      - store_artifacts:
+#          path: tests-outputs/coverage
+#          destination: coverage-file
+#
+#      - slack/notify:
+#          event: fail
+#          template: basic_fail_1
+#      - slack/notify:
+#          event: pass
+#          template: basic_success_1
+#
+#  client-tests:
+#    machine:
+#      image: ubuntu-2204:2022.04.2
+#    environment:
+#      ECR_REGISTRY_ID: "534003348933"
+#      AWS_REGION: "eu-west-1"
+#      DOCKER_BUILDKIT: "1"
+#      SSH_AUTH_SOCK: /tmp/circleci/ssh/ssh_agent.sock
+#    steps:
+#      - checkout
+#      - aws-ecr/ecr-login:
+#          aws-access-key-id: AWS_ACCESS_KEY_ID
+#          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+#          aws-cli-version: latest
+#          public-registry: false
+#          region: eu-west-1
+#          registry-id: ECR_REGISTRY_ID
+#      - docker/ssh-access:
+#          VAR_SSH_KEY: PULL_SSH_KEY
+#
+#      - run:
+#          name: Run e2e test for the client
+#          command: ./bin/docker-tests e2e
+#      - run:
+#          name: Run component test for the client
+#          command: ./bin/docker-tests component
+#      - run:
+#          name: Run lint test for the client
+#          command: ./bin/docker-tests lint
+#
+#      - store_artifacts:
+#          path: tests-outputs/playwright.xml
+#          destination: playwright.xml
+#
+#      - store_artifacts:
+#          path: tests-outputs/vitest.xml
+#          destination: vitest.xml
+#
+#      - store_artifacts:
+#          path: tests-outputs/artifacts
+#
+#      - slack/notify:
+#          event: fail
+#          template: basic_fail_1
+#      - slack/notify:
+#          event: pass
+#          template: basic_success_1
+#
+#  build-and-push-api:
+#    machine:
+#      image: ubuntu-2204:2022.04.2
+#    environment:
+#      ECR_REGISTRY_ID: "534003348933"
+#      ECR_REPOSITORY: "service_name_placeholder-api"
+#      AWS_REGION: "eu-west-1"
+#      DOCKER_BUILDKIT: "1"
+#      SSH_AUTH_SOCK: /tmp/circleci/ssh/ssh_agent.sock
+#    steps:
+#      - checkout
+#      - aws-ecr/ecr-login:
+#          aws-access-key-id: AWS_ACCESS_KEY_ID
+#          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+#          aws-cli-version: latest
+#          public-registry: false
+#          region: eu-west-1
+#          registry-id: ECR_REGISTRY_ID
+#      - docker/ssh-access:
+#          VAR_SSH_KEY: PULL_SSH_KEY
+#      - run:
+#          name: Build service_name_placeholder-api development
+#          command: |
+#            export ECR_REGISTRY="${ECR_REGISTRY_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+#            docker-compose build api
+#            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
+#            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-main
+#            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"$(date "+%d-%m-%Y")"
+#            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"${CIRCLE_SHA1}"
+#            # TMP should be moved to a prod image
+#            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":latest
+#            docker tag api:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":main
+#      - run:
+#          name: Push api development
+#          command: |
+#            export ECR_REGISTRY="${ECR_REGISTRY_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+#            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
+#            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-main
+#            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"$(date "+%d-%m-%Y")"
+#            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"${CIRCLE_SHA1}"
+#            # TMP should be moved to a prod image
+#            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":latest
+#            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":main
+#
+#      - slack/notify:
+#          event: fail
+#          template: basic_fail_1
+#      - slack/notify:
+#          event: pass
+#          template: success_tagged_deploy_1
+#
+#  build-and-push-client:
+#    machine:
+#      image: ubuntu-2204:2022.04.2
+#    environment:
+#      ECR_REGISTRY_ID: "534003348933"
+#      ECR_REPOSITORY: "service_name_placeholder-client"
+#      AWS_REGION: "eu-west-1"
+#      DOCKER_BUILDKIT: "1"
+#      SSH_AUTH_SOCK: /tmp/circleci/ssh/ssh_agent.sock
+#    steps:
+#      - checkout
+#      - aws-ecr/ecr-login:
+#          aws-access-key-id: AWS_ACCESS_KEY_ID
+#          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+#          aws-cli-version: latest
+#          public-registry: false
+#          region: eu-west-1
+#          registry-id: ECR_REGISTRY_ID
+#      - docker/ssh-access:
+#          VAR_SSH_KEY: PULL_SSH_KEY
+#      - run:
+#          name: Build service_name_placeholder-client development
+#          command: |
+#            export ECR_REGISTRY="${ECR_REGISTRY_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+#            docker-compose build client
+#            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
+#            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-main
+#            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"$(date "+%d-%m-%Y")"
+#            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"${CIRCLE_SHA1}"
+#            # TMP should be moved to a prod image
+#            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":latest
+#            docker tag client:latest "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":main
+#      - run:
+#          name: Push SERVICE_NAME_PLACEHOLDER-client development
+#          command: |
+#            export ECR_REGISTRY="${ECR_REGISTRY_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+#            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-latest
+#            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-main
+#            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"$(date "+%d-%m-%Y")"
+#            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":dev-"${CIRCLE_SHA1}"
+#            # TMP should be moved to a prod image
+#            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":latest
+#            docker push "${ECR_REGISTRY}"/"${ECR_REPOSITORY}":main
+#
+#      - slack/notify:
+#          event: fail
+#          template: basic_fail_1
+#      - slack/notify:
+#          event: pass
+#          template: success_tagged_deploy_1
+
+
+#workflows:
+#  everything:
+#    jobs:
+#      - api-tests:
+#          context:
+#            - "GIT"
+#            - "ECR-RW"
+#            - "slack"
+#      - client-tests:
+#          context:
+#            - "GIT"
+#            - "ECR-RW"
+#            - "slack"
+#      - build-and-push-api:
+#          context:
+#            - "GIT"
+#            - "ECR-RW"
+#            - "slack"
+### Must be enable when test can pass
+##          requires:
+##            - api-tests
+#      - build-and-push-client:
+#          context:
+#            - "GIT"
+#            - "ECR-RW"
+#            - "slack"
+### Must be enable when test can pass
+##          requires:
+##            - client-tests

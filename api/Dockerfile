@@ -12,7 +12,8 @@ ENV RAILS_LOG_TO_STDOUT=true
 WORKDIR /usr/src/app
 
 # Bundle
-RUN mkdir -p -m 0600 ~/.ssh \
+RUN mkdir -p ~/.ssh \
+  && chmod 600 ~/.ssh \
   && ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN gem install bundler --version "$BUNDLER_VERSION"
 COPY Gemfile Gemfile.lock ./
