@@ -3,6 +3,7 @@ import BallotTrackingWidget from "../components/BallotTrackingWidget.vue";
 import { useRoute } from "vue-router";
 import useAVClient from "../lib/useAvClient";
 import { onMounted, onUnmounted, ref, watch } from "vue";
+import DateTime from "../components/DateTime.vue";
 
 const route = useRoute();
 const _trackingCode = ref(route.params.trackingCode);
@@ -27,7 +28,7 @@ async function loadBallotStatus() {
     );
     const res = await avClient.checkBallotStatus(_trackingCode.value);
     status.value = res.status;
-    activities.value = res.activities;
+    activities.value = res.activities.reverse();
   } catch (e) {
     status.value = "not_found";
     console.error("No ballot with tracking code", _trackingCode.value);
@@ -52,6 +53,13 @@ onUnmounted(() => {
     />
 
     <p class="BallotTracker__Status">{{ status }}</p>
+
+    <ol>
+      <li v-for="activity in activities">
+        <DateTime :date-time="activity.registered_at" />
+        {{ activity.type }}
+      </li>
+    </ol>
   </div>
 </template>
 
