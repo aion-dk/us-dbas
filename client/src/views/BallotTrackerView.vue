@@ -52,11 +52,15 @@ onUnmounted(() => {
       :electionSlug="_electionSlug"
     />
 
-    <p class="BallotTracker__Status">{{ status }}</p>
+    <p class="BallotTracker__Status">Currently: {{ status }}</p>
 
-    <div class="BallotTracker__Activity">
-      <BallotActivity v-for="activity in activities" :activity="activity" />
-    </div>
+    <p class="BallotTracker__ActivityTitle">Recent activity</p>
+
+    <ol class="BallotTracker__ActivityList">
+      <li v-for="activity in activities">
+        <BallotActivity :activity="activity" />
+      </li>
+    </ol>
   </div>
 </template>
 

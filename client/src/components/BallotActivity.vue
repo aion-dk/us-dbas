@@ -1,24 +1,29 @@
 <script lang="ts" setup>
 import DateTime from "./DateTime.vue";
+import PlainBallotActivity from "./PlainBallotActivity.vue"
+import RejectedBallotActivity from "./RejectedBallotActivity.vue"
 
 defineProps({
-  activity: Object,
-  required: true,
+  activity: {
+    type: Object,
+    required: true,
+  },
 });
 
 const activityMap = {
-  AffidavitRejectItem: "Rejected",
-  AffidavitAcceptItem: "Accepted",
-  CastRequestItem: "Cast vote",
-  VoterSessionItem: "Authenticated",
+  AffidavitRejectItem: RejectedBallotActivity,
+  AffidavitAcceptItem: PlainBallotActivity,
+  CastRequestItem: PlainBallotActivity,
+  VoterSessionItem: PlainBallotActivity,
 };
 </script>
 
 <template>
   <div class="BallotActivity">
-    <span class="BallotActivity__Type">
-      {{ activityMap[activity.type] || activity.type }}
-    </span>
+    <component
+      :is="activityMap[activity.type]"
+      :activity="activity"
+      class="BallotActivity__Type" />
 
     <DateTime
       class="BallotActivity__RegisteredAt"
