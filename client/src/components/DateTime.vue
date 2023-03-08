@@ -25,12 +25,12 @@ function absolute(date) {
     .parseZone(date)
     .tz(tz)
     .locale(window.navigator.language)
-    .format("LLLL")
+    .format("LLLL");
 }
 </script>
 
 <template>
-  <span :title="absolute(dateTime)">
+  <span class="DateTime" :title="absolute(dateTime)">
     {{ relative(dateTime) }}
   </span>
 </template>
