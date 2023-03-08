@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import BallotTrackingWidget from "../components/BallotTrackingWidget.vue";
+import { useRoute } from "vue-router";
+import { ref, watch } from "vue"
+
+const route = useRoute();
+const _electionSlug = ref(route.params.electionSlug)
+
+watch(route, (newRoute) => {
+  _electionSlug.value = newRoute.params.electionSlug;
+});
 </script>
 
 <template>
   <div class="Welcome">
     <h1 class="Welcome__Title">Digital Ballot Audit Site</h1>
 
-    <BallotTrackingWidget />
+    <BallotTrackingWidget :election-slug="_electionSlug" />
   </div>
 </template>
 
