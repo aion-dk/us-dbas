@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Welcome from "../views/Welcome.vue";
-import BallotTracker from "../views/BallotTracker.vue";
+import BallotTrackerView from "../views/BallotTrackerView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -11,9 +11,9 @@ const router = createRouter({
       component: Welcome,
     },
     {
-      name: "BallotTracker",
+      name: "BallotTrackerView",
       path: "/:electionSlug/track/:trackingCode",
-      component: BallotTracker,
+      component: BallotTrackerView,
     },
   ],
 });
