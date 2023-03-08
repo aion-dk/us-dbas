@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import router from "../router";
+import { useRoute } from "vue-router"
 
+const route = useRoute()
 const props = defineProps({
   trackingCode: {
     type: String,
@@ -20,7 +22,7 @@ let _electionSlug = props.electionSlug;
 async function submitForm(event) {
   event.preventDefault();
   event.stopPropagation();
-  router.push(`/${_electionSlug}/track/${_trackingCode}`);
+  router.push(`/${route.params.locale}/${_electionSlug}/track/${_trackingCode}`);
 }
 </script>
 
@@ -30,7 +32,7 @@ async function submitForm(event) {
       <input
         :disabled="disabled"
         type="text"
-        name="tracking-code"
+        name="ballot tracking code"
         v-model="_trackingCode"
       />
     </p>
@@ -39,7 +41,7 @@ async function submitForm(event) {
       <input
         :disabled="disabled"
         type="submit"
-        name="submit-tracking-code"
+        name="submit tracking code"
         value="Track my ballot"
       />
     </p>
