@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from "vue"
+import { ref } from "vue";
 
 const props = defineProps({
   activity: {
@@ -10,10 +10,11 @@ const props = defineProps({
 
 const reasonMap = {
   invalid: "its invalid",
-}
+};
 
-const _text = ref(`Rejected because ${reasonMap[props.activity.content.rejectionReason]}`)
-
+const _text = ref(
+  `Rejected because ${reasonMap[props.activity.content.rejectionReason]}`
+);
 </script>
 
 <template>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import BallotTrackingWidget from "../components/BallotTrackingWidget.vue";
 import { useRoute } from "vue-router";
-import { ref, watch } from "vue"
+import { ref, watch } from "vue";
 
 const route = useRoute();
-const _electionSlug = ref(route.params.electionSlug)
+const _electionSlug = ref(route.params.electionSlug);
 
 watch(route, (newRoute) => {
   _electionSlug.value = newRoute.params.electionSlug;

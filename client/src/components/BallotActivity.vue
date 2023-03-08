@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import DateTime from "./DateTime.vue";
-import PlainBallotActivity from "./PlainBallotActivity.vue"
-import RejectedBallotActivity from "./RejectedBallotActivity.vue"
+import PlainBallotActivity from "./PlainBallotActivity.vue";
+import RejectedBallotActivity from "./RejectedBallotActivity.vue";
 
 defineProps({
   activity: {
@@ -23,7 +23,8 @@ const activityMap = {
     <component
       :is="activityMap[activity.type]"
       :activity="activity"
-      class="BallotActivity__Type" />
+      class="BallotActivity__Type"
+    />
 
     <DateTime
       class="BallotActivity__RegisteredAt"

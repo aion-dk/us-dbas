@@ -8,6 +8,10 @@ const props = defineProps({
   electionSlug: {
     type: String,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 let _trackingCode = props.trackingCode;
@@ -23,11 +27,17 @@ async function submitForm(event) {
 <template>
   <form @submit="submitForm">
     <p>
-      <input type="text" name="tracking-code" v-model="_trackingCode" />
+      <input
+        :disabled="disabled"
+        type="text"
+        name="tracking-code"
+        v-model="_trackingCode"
+      />
     </p>
 
     <p>
       <input
+        :disabled="disabled"
         type="submit"
         name="submit-tracking-code"
         value="Track my ballot"
