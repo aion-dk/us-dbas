@@ -7,12 +7,12 @@ const router = createRouter({
   routes: [
     {
       name: "Welcome",
-      path: "/",
+      path: "/:electionSlug",
       component: Welcome,
     },
     {
       name: "BallotTracker",
-      path: "/track/:trackingCode",
+      path: "/:electionSlug/track/:trackingCode",
       component: BallotTracker,
     },
   ],

@@ -5,25 +5,31 @@ import useAVClient from "../lib/useAvClient";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 
 const route = useRoute();
-const _trackingCode = ref(route.params.trackingCode)
-const activities = ref([])
-const status = ref("not_found")
-const interval = setInterval(loadBallotStatus, 1000)
+const _trackingCode = ref(route.params.trackingCode);
+const _electionSlug = ref(route.params.electionSlug);
+const activities = ref([]);
+const status = ref("loading");
+const interval = setInterval(loadBallotStatus, 1000);
 
-watch(_trackingCode, () => loadBallotStatus())
-watch(route, (newRoute) => _trackingCode.value = newRoute.params.trackingCode)
+watch(_trackingCode, () => loadBallotStatus());
+watch(_electionSlug, () => loadBallotStatus());
+watch(route, (newRoute) => {
+  _trackingCode.value = newRoute.params.trackingCode;
+  _electionSlug.value = newRoute.params.electionSlug;
+});
 
 async function loadBallotStatus() {
   console.info("Tracking ballot", _trackingCode.value);
 
   try {
-    const avClient = await useAVClient("http://dbb:3003/us");
-    const { activities, status } = await avClient.checkBallotStatus(
-      _trackingCode.value
+    const avClient = await useAVClient(
+      `http://dbb:3003/${_electionSlug.value}`
     );
-    state.status = status;
-    state.activities = activities;
+    const res = await avClient.checkBallotStatus(_trackingCode.value);
+    status.value = res.status;
+    activities.value = res.activities;
   } catch (e) {
+    status.value = "not_found";
     console.error("No ballot with tracking code", _trackingCode.value);
     console.log(e);
   }
@@ -34,13 +40,16 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
-  clearInterval(interval)
-})
+  clearInterval(interval);
+});
 </script>
 
 <template>
   <div class="BallotTracker">
-    <BallotTrackingWidget :trackingCode="_trackingCode" />
+    <BallotTrackingWidget
+      :trackingCode="_trackingCode"
+      :electionSlug="_electionSlug"
+    />
 
     <p class="BallotTracker__Status">{{ status }}</p>
   </div>

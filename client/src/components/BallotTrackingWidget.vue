@@ -5,14 +5,18 @@ const props = defineProps({
   trackingCode: {
     type: String,
   },
+  electionSlug: {
+    type: String,
+  },
 });
 
-let _trackingCode = props.trackingCode
+let _trackingCode = props.trackingCode;
+let _electionSlug = props.electionSlug;
 
 async function submitForm(event) {
   event.preventDefault();
   event.stopPropagation();
-  router.push(`/track/${_trackingCode}`);
+  router.push(`/${_electionSlug}/track/${_trackingCode}`);
 }
 </script>
 
