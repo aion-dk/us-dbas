@@ -1,24 +1,30 @@
 <script setup lang="ts">
-import TrackingWidget from "../components/TrackingWidget.vue";
+import BallotTrackingWidget from "../components/BallotTrackingWidget.vue";
 import { useRoute } from "vue-router";
 import useAVClient from "../lib/useAvClient";
-import { onMounted, reactive } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 const route = useRoute();
-const ballotStatus = reactive({ status: "not_found", activities: [] });
+const _trackingCode = ref(route.params.trackingCode)
+const activities = ref([])
+const status = ref("not_found")
 
-let trackingCode = route.params.trackingCode;
+watch(_trackingCode, () => loadBallotStatus())
+watch(route, (newRoute) => _trackingCode.value = newRoute.params.trackingCode)
 
 async function loadBallotStatus() {
+  console.info("Tracking ballot", _trackingCode.value);
+
   try {
     const avClient = await useAVClient("http://dbb:3003/us");
     const { activities, status } = await avClient.checkBallotStatus(
-      trackingCode
+      _trackingCode.value
     );
-    ballotStatus.status = status;
-    ballotStatus.activities = activities;
+    state.status = status;
+    state.activities = activities;
   } catch (e) {
-    console.error("No ballot with tracking code", trackingCode);
+    console.error("No ballot with tracking code", _trackingCode.value);
+    console.log(e);
   }
 }
 
@@ -29,9 +35,9 @@ onMounted(async () => {
 
 <template>
   <div class="BallotTracker">
-    <TrackingWidget :trackingCode="trackingCode" />
+    <BallotTrackingWidget :trackingCode="_trackingCode" />
 
-    <pre>{{ JSON.stringify(ballotStatus) }}</pre>
+    <p class="BallotTracker__Status">{{ status }}</p>
   </div>
 </template>
 

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import TrackingWidget from "../components/TrackingWidget.vue";
+import BallotTrackingWidget from "../components/BallotTrackingWidget.vue";
 </script>
 
 <template>
   <div class="Welcome">
     <h1 class="Welcome__Title">Digital Ballot Audit Site</h1>
 
-    <TrackingWidget />
+    <BallotTrackingWidget />
   </div>
 </template>
 
