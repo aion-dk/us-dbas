@@ -2,12 +2,13 @@
 import BallotTrackingWidget from "../components/BallotTrackingWidget.vue";
 import { useRoute } from "vue-router";
 import useAVClient from "../lib/useAvClient";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 
 const route = useRoute();
 const _trackingCode = ref(route.params.trackingCode)
 const activities = ref([])
 const status = ref("not_found")
+const interval = setInterval(loadBallotStatus, 1000)
 
 watch(_trackingCode, () => loadBallotStatus())
 watch(route, (newRoute) => _trackingCode.value = newRoute.params.trackingCode)
@@ -31,6 +32,10 @@ async function loadBallotStatus() {
 onMounted(async () => {
   loadBallotStatus();
 });
+
+onUnmounted(() => {
+  clearInterval(interval)
+})
 </script>
 
 <template>
