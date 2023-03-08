@@ -9,7 +9,7 @@ const props = defineProps({
 });
 
 const reasonMap = {
-  invalid: "its invalid",
+  invalid: "it's invalid",
 };
 
 const _text = ref(
