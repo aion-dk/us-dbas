@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import useAVClient from "../lib/useAVClient"
   import { onMounted, ref } from "vue"
+  import router from "../router"
 
   let trackingCodeInput = ref(null)
   let avClient;
@@ -16,6 +17,7 @@
 
     try {
       const status = await avClient.checkBallotStatus(trackingCode)
+      router.push(`/track/${trackingCode}`)
     } catch (e) {
       error.value = "Unable to find the ballot"
     }
