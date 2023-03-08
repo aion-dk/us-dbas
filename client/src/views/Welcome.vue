@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import TrackingWidget from "../components/TrackingWidget.vue"
+import TrackingWidget from "../components/TrackingWidget.vue";
 </script>
 
 <template>
