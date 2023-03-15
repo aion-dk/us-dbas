@@ -7,6 +7,7 @@ import BallotActivity from "../components/BallotActivity.vue";
 import InfoBox from "../components/Infobox.vue"
 import BallotActivityList from "../components/BallotActivityList.vue"
 import useElectionStore from "../stores/useElectionStore"
+import CompactHeader from "../components/CompactHeader.vue"
 
 const electionStore = useElectionStore()
 const route = useRoute();
@@ -84,11 +85,7 @@ onUnmounted(() => {
 
 <template>
   <div class="BallotTracker">
-    <div class="BallotTracker__Header">
-      <h2 class="BallotTracker__Title">{{ _title }}</h2>
-      <div class="BallotTracker__CircleSpacer" v-if="_info" />
-      <p class="BallotTracker__Info">{{ _info }}</p>
-    </div>
+    <CompactHeader class="BallotTracker__Header" />
 
     <div class="BallotTracker__Content1">
       <InfoBox class="BallotTracker__Infobox1">
@@ -120,7 +117,7 @@ onUnmounted(() => {
 <style type="text/css" scoped>
 .BallotTracker {
   font-family: "Open Sans";
-  padding: 40px 166px;
+  padding: 0 166px;
   width: 900px;
   margin: auto;
 }
@@ -180,29 +177,5 @@ code {
   font-weight: 400;
   font-size: 40px;
   color: #212529;
-}
-
-.BallotTracker__Header {
-  display: flex;
-  align-items: center;
-  color: #6C757D;
-  margin-bottom: 40px;
-}
-
-.BallotTracker__Title {
-  font-size: 16px;
-}
-
-.BallotTracker__Info {
-  font-size: 16px;
-}
-
-.BallotTracker__CircleSpacer {
-  height: 6px;
-  width: 6px;
-  background-color: #CED4DA;
-  border-radius: 100%;
-  display: block;
-  margin: 0 8px;
 }
 </style>
