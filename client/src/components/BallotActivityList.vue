@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import BallotActivity from "./BallotActivity.vue"
+import BallotActivity from "./BallotActivity.vue";
 
 defineProps({
   activities: {

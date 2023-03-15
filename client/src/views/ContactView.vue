@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <main class="ContactView">
@@ -7,5 +6,4 @@
   </main>
 </template>
 
-<style type="text/css" scoped>
-</style>
+<style type="text/css" scoped></style>

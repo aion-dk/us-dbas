@@ -2,17 +2,17 @@ import { createWebHistory, createRouter } from "vue-router";
 import Welcome from "../views/Welcome.vue";
 import BallotTrackerView from "../views/BallotTrackerView.vue";
 import MissingSlugView from "../views/MissingSlugView.vue";
-import LogsView from "../views/LogsView.vue"
-import HelpView from "../views/HelpView.vue"
-import AboutView from "../views/AboutView.vue"
-import ContactView from "../views/ContactView.vue"
+import LogsView from "../views/LogsView.vue";
+import HelpView from "../views/HelpView.vue";
+import AboutView from "../views/AboutView.vue";
+import ContactView from "../views/ContactView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: "/",
-      redirect: to => "/en",
+      redirect: (to) => "/en",
     },
     {
       path: "/:locale",

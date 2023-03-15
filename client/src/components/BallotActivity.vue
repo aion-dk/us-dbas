@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { reactive, ref } from "vue"
+import { reactive, ref } from "vue";
 import DateTime from "./DateTime.vue";
 
 defineProps({
@@ -9,36 +9,38 @@ defineProps({
   },
 });
 
-const expanded = ref(false)
+const expanded = ref(false);
 
 const classes = reactive({
   BallotActivity: true,
   ["BallotActivity--expanded"]: expanded,
-})
+});
 
 const detailsMap = {
-  AffidavitRejectItem: "Your affidavit has been rejected. Please contact your Election Officials office to cure your affidavit.",
-  AffidavitAcceptItem: "Your affidavit has been accepted. A new item will appear here when it has been extracted for tallying.",
+  AffidavitRejectItem:
+    "Your affidavit has been rejected. Please contact your Election Officials office to cure your affidavit.",
+  AffidavitAcceptItem:
+    "Your affidavit has been accepted. A new item will appear here when it has been extracted for tallying.",
   CastRequestItem: "Your ballot has been received.",
   VoterSessionItem: "You have authenticated your self and signed in.",
-}
+};
 
 const authorMap = {
   AffidavitRejectItem: "Election Official",
   AffidavitAcceptItem: "Election Official",
   CastRequestItem: "You",
   VoterSessionItem: "You",
-}
+};
 
 const typeMap = {
   AffidavitRejectItem: "Affidavit Rejected",
   AffidavitAcceptItem: "Affidavit Accepted",
   CastRequestItem: "Ballot Cast",
   VoterSessionItem: "Sign In",
-}
+};
 
 function toggleExpanded() {
-  expanded.value = !expanded.value
+  expanded.value = !expanded.value;
 }
 </script>
 
@@ -82,7 +84,7 @@ function toggleExpanded() {
 <style type="text/css" scoped>
 .BallotActivity {
   font-family: "Open Sans";
-  border: solid 1px #DEE2E6;
+  border: solid 1px #dee2e6;
   margin-bottom: 20px;
   padding: 20px 32px;
   border-radius: 12px;

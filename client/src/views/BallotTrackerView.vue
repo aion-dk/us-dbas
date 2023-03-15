@@ -4,13 +4,13 @@ import { useRoute } from "vue-router";
 import useAVClient from "../lib/useAVClient";
 import { onMounted, onUnmounted, ref, watch, reactive } from "vue";
 import BallotActivity from "../components/BallotActivity.vue";
-import InfoBox from "../components/Infobox.vue"
-import BallotActivityList from "../components/BallotActivityList.vue"
-import useElectionStore from "../stores/useElectionStore"
-import CompactHeader from "../components/CompactHeader.vue"
-import router from "../router"
+import InfoBox from "../components/Infobox.vue";
+import BallotActivityList from "../components/BallotActivityList.vue";
+import useElectionStore from "../stores/useElectionStore";
+import CompactHeader from "../components/CompactHeader.vue";
+import router from "../router";
 
-const electionStore = useElectionStore()
+const electionStore = useElectionStore();
 const route = useRoute();
 const _trackingCode = ref(route.params.trackingCode);
 const _electionSlug = ref(route.params.electionSlug);
@@ -18,22 +18,24 @@ const activities = ref([]);
 const status = ref(null);
 const interval = setInterval(() => loadBallotStatus(true), 30000);
 const loading = ref(false);
-const _locale = ref(route.params.locale)
-const _title = ref("Loading..")
-const _info = ref("Loading...")
+const _locale = ref(route.params.locale);
+const _title = ref("Loading..");
+const _info = ref("Loading...");
 
 watch(_trackingCode, () => loadBallotStatus());
 watch(_electionSlug, () => loadBallotStatus());
 watch(_locale, () => loadInfo());
 watch(route, async (newRoute) => routeChange());
-watch(electionStore, newElectionStore => loadInfo())
+watch(electionStore, (newElectionStore) => loadInfo());
 
 function loadInfo() {
-  _title.value = electionStore.election?.content?.title[_locale.value]
+  _title.value = electionStore.election?.content?.title[_locale.value];
   _info.value = [
     electionStore.election?.content?.jurisdiction,
     electionStore.election?.content?.state,
-    ].filter(s => s).join(", ")
+  ]
+    .filter((s) => s)
+    .join(", ");
 }
 
 function routeChange(r) {
@@ -43,7 +45,7 @@ function routeChange(r) {
 }
 
 function reset() {
-  router.push(`/${_locale.value}/${_electionSlug.value}`)
+  router.push(`/${_locale.value}/${_electionSlug.value}`);
 }
 
 async function loadBallotStatus(background: boolean) {
@@ -58,7 +60,7 @@ async function loadBallotStatus(background: boolean) {
     activities.value = res.activities.reverse();
   } catch (e) {
     status.value = "not_found";
-    activities.value = []
+    activities.value = [];
     console.error("No ballot with tracking code", _trackingCode.value);
     console.log(e);
   } finally {
@@ -69,19 +71,21 @@ async function loadBallotStatus(background: boolean) {
 const statusMap = {
   rejected: "Ballot not accepted",
   not_found: "Not Found",
-}
+};
 
 const statusDetailMap = {
   received: "Hello",
-  rejected: "There is a problem with your signature affidavit. It was not accepted. Contact your local election official for next steps and to cure your affidavit.",
-  not_found: "We cannot find a ballot with that tracking code. Please check your tracking code and try again or make sure that you have correctly and completely submitted your ballot in the voting app."
-}
+  rejected:
+    "There is a problem with your signature affidavit. It was not accepted. Contact your local election official for next steps and to cure your affidavit.",
+  not_found:
+    "Please check that the tracking code was entered correctly. The code is case sensitive. If you are checking to make sure your ballot was recorded correctly before submitting, use the ballot check site instead. Still having problems? Contact your local election official.",
+};
 
 onMounted(async () => {
-  await electionStore.loadElection(route.params.electionSlug)
+  await electionStore.loadElection(route.params.electionSlug);
   loadBallotStatus();
-  routeChange(route)
-  loadInfo()
+  routeChange(route);
+  loadInfo();
 });
 
 onUnmounted(() => {
@@ -94,9 +98,14 @@ onUnmounted(() => {
     <CompactHeader class="BallotTracker__Header" />
 
     <div class="BallotTracker__Content1">
-      <InfoBox :class="{ BallotTracker__Infobox1: true, [`BallotTracker__Infobox1--${status}`]: true }">
+      <InfoBox
+        :class="{
+          BallotTracker__Infobox1: true,
+          [`BallotTracker__Infobox1--${status}`]: true,
+        }"
+      >
         <h3>{{ statusMap[status] }}</h3>
-      <p>{{ statusDetailMap[status] || status }}</p>
+        <p>{{ statusDetailMap[status] || status }}</p>
       </InfoBox>
 
       <InfoBox class="BallotTracker__Infobox2">
@@ -110,9 +119,11 @@ onUnmounted(() => {
       Activity connected to the tracking code
     </h3>
 
-    <BallotActivityList v-if="activities.length"
+    <BallotActivityList
+      v-if="activities.length"
       class="BallotTracker__BallotActivity"
-      :activities="activities" />
+      :activities="activities"
+    />
   </div>
 </template>
 
@@ -150,7 +161,7 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #6C757D;
+  color: #6c757d;
   font-size: 22px;
   font-weight: 400;
   position: relative;
@@ -185,7 +196,7 @@ code {
 }
 
 .BallotTracker__Close {
-  color: #ADB5BD;
+  color: #adb5bd;
   background-color: transparent;
   border: none;
   font-size: 3rem;

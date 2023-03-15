@@ -1,36 +1,38 @@
 <script setup lang="ts">
 import BallotTrackingWidget from "../components/BallotTrackingWidget.vue";
 import { useRoute } from "vue-router";
-import useElectionStore from "../stores/useElectionStore"
+import useElectionStore from "../stores/useElectionStore";
 import { ref, watch, onMounted } from "vue";
-import Infobox from "../components/Infobox.vue"
+import Infobox from "../components/Infobox.vue";
 
-const electionStore = useElectionStore()
+const electionStore = useElectionStore();
 const route = useRoute();
 const _electionSlug = ref(route.params.electionSlug);
-const _locale = ref(route.params.locale)
-const _title = ref("Loading..")
-const _info = ref("Loading..")
+const _locale = ref(route.params.locale);
+const _title = ref("Loading..");
+const _info = ref("Loading..");
 
 function setInfo() {
-  _title.value = electionStore.election?.content?.title[_locale.value]
+  _title.value = electionStore.election?.content?.title[_locale.value];
   _info.value = [
     electionStore.election?.content?.jurisdiction,
     electionStore.election?.content?.state,
-  ].filter(s => s).join(", ")
+  ]
+    .filter((s) => s)
+    .join(", ");
 }
 
 watch(route, (newRoute) => {
   _electionSlug.value = newRoute.params.electionSlug;
   _locale.value = newRoute.params.locale;
-  setInfo()
+  setInfo();
 });
 
 watch(electionStore, (newElectionStore) => {
-  setInfo()
+  setInfo();
 });
 
-onMounted(() => setInfo())
+onMounted(() => setInfo());
 </script>
 
 <template>
@@ -44,9 +46,15 @@ onMounted(() => setInfo())
       <Infobox class="Welcome__About">
         <p>Ballot tracker</p>
         <p>I have voted and I want to track my ballot</p>
-        <p>To check the status of your ballot, you need to input the tracking code from the Voter receipt.</p>
+        <p>
+          To check the status of your ballot, you need to input the tracking
+          code from the Voter receipt.
+        </p>
       </Infobox>
-      <BallotTrackingWidget class="Welcome__Widget" :election-slug="_electionSlug" />
+      <BallotTrackingWidget
+        class="Welcome__Widget"
+        :election-slug="_electionSlug"
+      />
     </div>
 
     <div class="Welcome__Footer">
@@ -69,7 +77,7 @@ onMounted(() => setInfo())
 }
 
 .Welcome__Info {
-  color: #6C757D;
+  color: #6c757d;
   font-size: 26px;
   margin: 0;
   padding: 0;
