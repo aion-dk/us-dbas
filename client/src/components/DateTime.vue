@@ -12,7 +12,7 @@ defineProps({
   },
 });
 
-function relative(date) {
+function relative(date: any) {
   return moment
     .parseZone(date)
     .tz(tz)
@@ -20,12 +20,12 @@ function relative(date) {
     .fromNow();
 }
 
-function absolute(date) {
+function absolute(date: any) {
   return moment
     .parseZone(date)
     .tz(tz)
     .locale(window.navigator.language)
-    .format("LLLL");
+    .format("LLLL zz");
 }
 </script>
 

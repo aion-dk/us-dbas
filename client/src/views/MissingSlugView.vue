@@ -6,7 +6,7 @@
   const route = useRoute()
   const _electionSlug = ref(null)
 
-  function submitForm(event) {
+  function submitForm(event: any) {
     event.preventDefault()
     event.stopPropagation()
     router.push(`/${route.params.locale}/${_electionSlug.value}`);
