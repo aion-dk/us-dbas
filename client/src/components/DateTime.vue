@@ -39,11 +39,18 @@ function absolute(date: any) {
     v-if="format === 'relative'"
     class="DateTime"
     :title="absolute(dateTime)"
+    :aria-label="relative(dateTime)"
+    role="status"
   >
     {{ relative(dateTime) }}
   </span>
 
-  <span v-else class="DateTime" :title="absolute(dateTime)">
+  <span
+    :aria-label="absolute(dateTime)"
+    v-else class="DateTime"
+    :title="absolute(dateTime)"
+    role="status"
+  >
     {{ absolute(dateTime) }}
   </span>
 </template>
