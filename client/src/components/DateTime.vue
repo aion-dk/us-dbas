@@ -47,7 +47,8 @@ function absolute(date: any) {
 
   <span
     :aria-label="absolute(dateTime)"
-    v-else class="DateTime"
+    v-else
+    class="DateTime"
     :title="absolute(dateTime)"
     role="status"
   >
