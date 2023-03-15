@@ -36,7 +36,6 @@ function loadInfo() {
 }
 
 function routeChange(r) {
-  console.log("Route changed", r.params)
   _trackingCode.value = r.params.trackingCode;
   _electionSlug.value = r.params.electionSlug;
   _locale.value = r.params.locale;

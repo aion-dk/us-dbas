@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from "vue"
-import api from "../lib/api"
+import { api } from "../lib/api"
 
 export default defineStore('useElectionStore', () => {
   const election = ref({})

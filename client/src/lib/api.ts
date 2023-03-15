@@ -1,7 +1,8 @@
 import axios from "axios"
 
-const api = axios.create({
+const options = {
   baseURL: "http://dbb:3003",
-})
+}
+const api = axios.create(options)
 
-export default api;
+export { api, options };

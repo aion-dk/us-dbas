@@ -31,7 +31,9 @@ function setTitle() {
 <template>
   <div class="DBAS">
     <Header class="DBAS__Header" />
-    <RouterView class="DBAS__Content" />
+    <div class="DBAS__Content">
+      <RouterView  />
+    </div>
     <Footer class="DBAS__Footer" />
   </div>
 </template>
@@ -55,5 +57,6 @@ function setTitle() {
   .DBAS__Content {
     flex-grow: 1;
     height: calc(100vh - calc(70px + 40px));
+    padding-bottom: 200px;
   }
 </style>

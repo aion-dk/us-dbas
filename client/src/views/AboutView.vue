@@ -38,7 +38,7 @@
 
 <style type="text/css" scoped>
   .AboutView {
-    max-width: 900px;
+    width: 900px;
     margin: auto;
     font-family: "Open Sans";
   }

@@ -17,6 +17,10 @@
     padding: 10px;
     font-weight: 400;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
   }
 
   .Footer__Image {
