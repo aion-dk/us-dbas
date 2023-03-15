@@ -1,25 +1,8 @@
 version: "3"
 services:
-  redis:
-    image: redis:6
-    ports:
-      - 6379:6379
-
-  db:
-    image: "mysql:5.7"
-    platform: "linux/x86_64"
-    environment:
-      MYSQL_ROOT_PASSWORD: "password"
-    healthcheck:
-      test: "mysqladmin ping --host db -uroot -ppassword"
-      interval: "5s"
-      start_period: "10s"
-      timeout: "5s"
-      retries: 3
-
   client:
     image: client:latest
-    # image: "534003348933.dkr.ecr.eu-west-1.amazonaws.com/SERVICE_NAME_PLACEHOLDER-client:main"
+    # image: "534003348933.dkr.ecr.eu-west-1.amazonaws.com/dbas-client:main"
     build:
       context: ./client
       ssh:
@@ -30,44 +13,11 @@ services:
     command: npm run dev
     ports:
       - 5173:5173
-    depends_on:
-      api:
-        condition: service_healthy
     environment:
-      SERVICE_NAME: SERVICE_NAME_PLACEHOLDER
+      SERVICE_NAME: dbas
     healthcheck:
       test: curl -s http://localhost:5173
       interval: 5s
       start_period: 10s
       timeout: 5s
       retries: 10
-
-  api:
-    image: api:latest
-    # image: "534003348933.dkr.ecr.eu-west-1.amazonaws.com/SERVICE_NAME_PLACEHOLDER-api:main"
-    build:
-      context: ./api
-      ssh:
-        - default
-      target: development
-    volumes:
-      - "./api:/usr/src/app"
-    entrypoint: bin/docker-entrypoint
-    command: rails s -p 3000 -b 0.0.0.0
-    environment:
-      SERVICE_NAME: SERVICE_NAME_PLACEHOLDER
-      DB_HOST: db
-      DB_USER: root
-      DB_PASSWORD: password
-      DEVELOPMENT_MODE: docker
-    depends_on:
-      db:
-        condition: service_healthy
-    ports:
-      - 3000:3000
-    healthcheck:
-      test: curl --fail http://localhost:3000/ping
-      interval: 5s
-      start_period: 10s
-      timeout: 5s
-      retries: 50
