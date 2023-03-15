@@ -8,12 +8,12 @@ import Infobox from "../components/Infobox.vue"
 const electionStore = useElectionStore()
 const route = useRoute();
 const _electionSlug = ref(route.params.electionSlug);
-const locale = ref(route.params.locale)
+const _locale = ref(route.params.locale)
 const _title = ref("Loading..")
 const _info = ref("Loading..")
 
 function setTitle() {
-  _title.value = electionStore.election?.content?.title[locale.value]
+  _title.value = electionStore.election?.content?.title[_locale.value]
 }
 
 function setInfo() {

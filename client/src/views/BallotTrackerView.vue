@@ -17,8 +17,14 @@ const status = ref(null);
 const interval = setInterval(() => loadBallotStatus(true), 30000);
 const loading = ref(false);
 const _locale = ref(route.params.locale)
-const _title = ref("Loading")
+const _title = ref("Loading..")
 const _info = ref("Loading...")
+
+watch(_trackingCode, () => loadBallotStatus());
+watch(_electionSlug, () => loadBallotStatus());
+watch(_locale, () => loadInfo());
+watch(route, async (newRoute) => routeChange());
+watch(electionStore, newElectionStore => loadInfo())
 
 function loadInfo() {
   _title.value = electionStore.election?.content?.title[_locale.value]
@@ -28,18 +34,12 @@ function loadInfo() {
     ].filter(s => s).join(", ")
 }
 
-watch(_trackingCode, () => loadBallotStatus());
-watch(_electionSlug, () => loadBallotStatus());
-watch(route, async (newRoute) => {
-  await electionStore.loadElection(route.params.electionSlug)
-  loadInfo()
-  _trackingCode.value = newRoute.params.trackingCode;
-  _electionSlug.value = newRoute.params.electionSlug;
-  _locale.value = newRoute.params.locale
-});
-watch(electionStore, newElectionStore => {
-  loadInfo()
-})
+function routeChange(r) {
+  console.log("Route changed", r.params)
+  _trackingCode.value = r.params.trackingCode;
+  _electionSlug.value = r.params.electionSlug;
+  _locale.value = r.params.locale;
+}
 
 async function loadBallotStatus(background: boolean) {
   console.info("Tracking ballot", _trackingCode.value);
@@ -71,8 +71,9 @@ const statusDetailMap = {
 }
 
 onMounted(async () => {
-  loadBallotStatus();
   await electionStore.loadElection(route.params.electionSlug)
+  loadBallotStatus();
+  routeChange(route)
   loadInfo()
 });
 

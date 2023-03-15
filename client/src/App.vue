@@ -54,9 +54,6 @@ function setTitle() {
 
   .DBAS__Content {
     flex-grow: 1;
-  }
-
-  .DBAS__Footer {
-    height: 40px;
+    height: calc(100vh - calc(70px + 40px));
   }
 </style>
