@@ -10,6 +10,11 @@ defineProps({
     type: String,
     required: true,
   },
+  format: {
+    type: String,
+    required: true,
+    default: "relative",
+  }
 });
 
 function relative(date: any) {
@@ -30,7 +35,11 @@ function absolute(date: any) {
 </script>
 
 <template>
-  <span class="DateTime" :title="absolute(dateTime)">
+  <span v-if="format === 'relative'" class="DateTime" :title="absolute(dateTime)">
     {{ relative(dateTime) }}
+  </span>
+
+  <span v-else class="DateTime" :title="absolute(dateTime)">
+    {{ absolute(dateTime) }}
   </span>
 </template>

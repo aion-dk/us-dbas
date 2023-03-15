@@ -1,15 +1,5 @@
 <script setup lang="ts">
   import CompactHeader from "../components/CompactHeader.vue"
-  import useElectionStore from "../stores/useElectionStore"
-  import { onMounted } from "vue"
-  import { useRoute } from "vue-router"
-
-  const electionStore = useElectionStore()
-  const route = useRoute()
-
-  onMounted(() => {
-    electionStore.loadElection(route.params.electionSlug)
-  })
 </script>
 
 <template>

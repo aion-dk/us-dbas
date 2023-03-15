@@ -10,6 +10,8 @@ export default defineStore('useElectionStore', () => {
   }
 
   const loadElection = async (slug: string) => {
+    if (election.value && election.value.slug == slug) return;
+
     const { data } = await api.get(`${slug}/configuration/latest_config`)
     setElection({
       ...data.items.electionConfig,

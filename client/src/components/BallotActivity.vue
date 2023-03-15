@@ -68,7 +68,10 @@ function toggleExpanded() {
     </div>
 
     <div class="BallotActivity__Row BallotActivity__Details" v-if="expanded">
-      <p>Registered at: {{ activity.registered_at }}</p>
+      <p>
+        Registered at:
+        <DateTime :date-time="activity.registered_at" format="long" />
+      </p>
       <p>Actor: {{ authorMap[activity.type] }}</p>
       <p>What does this mean?</p>
       <p>{{ detailsMap[activity.type] }}</p>

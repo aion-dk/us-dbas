@@ -17,6 +17,9 @@ watch(route, async (newRoute) => {
 
 watch(electionStore, () => {
   setTitle()
+  if (route.params.electionSlug) {
+    electionStore.loadElection(route.params.electionSlug)
+  }
 })
 
 function setTitle() {
@@ -30,11 +33,11 @@ function setTitle() {
 
 <template>
   <div class="DBAS">
-    <Header class="DBAS__Header" />
+    <Header />
     <div class="DBAS__Content">
-      <RouterView  />
+      <RouterView class="DBAS__InnerContent"  />
     </div>
-    <Footer class="DBAS__Footer" />
+    <Footer />
   </div>
 </template>
 
@@ -50,13 +53,15 @@ function setTitle() {
     flex-direction: column;
   }
 
-  .DBAS__Header {
-    height: 70px;
+  .DBAS__Content {
+    height: calc(100vh - 120px);
+    margin-top: 80px;
+    overflow-y: scroll;
   }
 
-  .DBAS__Content {
-    flex-grow: 1;
-    height: calc(100vh - calc(70px + 40px));
-    padding-bottom: 200px;
+  .DBAS__InnerContent {
+    width: 900px;
+    margin: auto;
+    padding: 20px;
   }
 </style>

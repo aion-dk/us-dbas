@@ -38,6 +38,10 @@
     font-family: "Open Sans";
     align-items: center;
     box-shadow: 0px 4px 10px #ccc;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    background-color: #fff;
   }
 
   .Header__Title {

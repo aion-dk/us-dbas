@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import useElectionStore from "../stores/useElectionStore"
-  import { ref, watch } from "vue"
+  import { ref, watch, onMounted } from "vue"
   import { useRoute } from "vue-router"
 
   const route = useRoute()
@@ -20,6 +20,8 @@
       electionStore.election?.state,
     ].filter(s => s).join(", ")
   }
+
+  onMounted(() => setInfo())
 </script>
 
 <template>
@@ -42,6 +44,8 @@
   .CompactHeader__Title {
     font-size: 16px;
     font-weight: 600;
+    padding: 0;
+    margin: 0;
   }
 
   .CompactHeader__Area {

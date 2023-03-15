@@ -8,6 +8,7 @@ import InfoBox from "../components/Infobox.vue"
 import BallotActivityList from "../components/BallotActivityList.vue"
 import useElectionStore from "../stores/useElectionStore"
 import CompactHeader from "../components/CompactHeader.vue"
+import router from "../router"
 
 const electionStore = useElectionStore()
 const route = useRoute();
@@ -41,6 +42,10 @@ function routeChange(r) {
   _locale.value = r.params.locale;
 }
 
+function reset() {
+  router.push(`/${_locale.value}/${_electionSlug.value}`)
+}
+
 async function loadBallotStatus(background: boolean) {
   console.info("Tracking ballot", _trackingCode.value);
 
@@ -63,11 +68,13 @@ async function loadBallotStatus(background: boolean) {
 
 const statusMap = {
   rejected: "Ballot not accepted",
+  not_found: "Not Found",
 }
 
 const statusDetailMap = {
   received: "Hello",
   rejected: "There is a problem with your signature affidavit. It was not accepted. Contact your local election official for next steps and to cure your affidavit.",
+  not_found: "We cannot find a ballot with that tracking code. Please check your tracking code and try again or make sure that you have correctly and completely submitted your ballot in the voting app."
 }
 
 onMounted(async () => {
@@ -87,23 +94,19 @@ onUnmounted(() => {
     <CompactHeader class="BallotTracker__Header" />
 
     <div class="BallotTracker__Content1">
-      <InfoBox class="BallotTracker__Infobox1">
-        <h3>Ballot found</h3>
-        <p>See the status of your ballot below. You can also see all activity connected to your ballot tracking code.</p>
+      <InfoBox :class="{ BallotTracker__Infobox1: true, [`BallotTracker__Infobox1--${status}`]: true }">
+        <h3>{{ statusMap[status] }}</h3>
+      <p>{{ statusDetailMap[status] || status }}</p>
       </InfoBox>
 
       <InfoBox class="BallotTracker__Infobox2">
+        <button class="BallotTracker__Close" @click="reset">×</button>
         <p>You are currently tracking</p>
         <code>{{ _trackingCode }}</code>
       </InfoBox>
     </div>
 
-    <InfoBox class="BallotTracker__Status">
-      <h3>{{ statusMap[status] }}</h3>
-      <p>{{ statusDetailMap[status] || status }}</p>
-    </InfoBox>
-
-    <h3 class="BallotTracker__ActivityTitle">
+    <h3 class="BallotTracker__ActivityTitle" v-if="status !== 'not_found'">
       Activity connected to the tracking code
     </h3>
 
@@ -116,9 +119,6 @@ onUnmounted(() => {
 <style type="text/css" scoped>
 .BallotTracker {
   font-family: "Open Sans";
-  padding: 0 166px;
-  width: 900px;
-  margin: auto;
 }
 
 .BallotTracker__Content1 {
@@ -132,8 +132,13 @@ onUnmounted(() => {
   width: 350px;
 }
 
+.BallotTracker__Infobox1--not_found,
+.BallotTracker__Infobox1--rejected {
+  border-color: red;
+  color: darkred;
+}
+
 .BallotTracker__Infobox1 h3 {
-  color: #495057;
   font-weight: 600;
   font-size: 26px;
 }
@@ -148,6 +153,7 @@ onUnmounted(() => {
   color: #6C757D;
   font-size: 22px;
   font-weight: 400;
+  position: relative;
 }
 
 .BallotTracker__Infobox2 p {
@@ -176,5 +182,16 @@ code {
   font-weight: 400;
   font-size: 40px;
   color: #212529;
+}
+
+.BallotTracker__Close {
+  color: #ADB5BD;
+  background-color: transparent;
+  border: none;
+  font-size: 3rem;
+  position: absolute;
+  top: 0;
+  right: 5px;
+  cursor: pointer;
 }
 </style>

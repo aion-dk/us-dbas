@@ -2,7 +2,7 @@
 import BallotTrackingWidget from "../components/BallotTrackingWidget.vue";
 import { useRoute } from "vue-router";
 import useElectionStore from "../stores/useElectionStore"
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import Infobox from "../components/Infobox.vue"
 
 const electionStore = useElectionStore()
@@ -12,11 +12,8 @@ const _locale = ref(route.params.locale)
 const _title = ref("Loading..")
 const _info = ref("Loading..")
 
-function setTitle() {
-  _title.value = electionStore.election?.content?.title[_locale.value]
-}
-
 function setInfo() {
+  _title.value = electionStore.election?.content?.title[_locale.value]
   _info.value = [
     electionStore.election?.content?.jurisdiction,
     electionStore.election?.content?.state,
@@ -26,14 +23,14 @@ function setInfo() {
 watch(route, (newRoute) => {
   _electionSlug.value = newRoute.params.electionSlug;
   _locale.value = newRoute.params.locale;
-  setTitle()
   setInfo()
 });
 
 watch(electionStore, (newElectionStore) => {
-  setTitle()
   setInfo()
 });
+
+onMounted(() => setInfo())
 </script>
 
 <template>
@@ -61,9 +58,6 @@ watch(electionStore, (newElectionStore) => {
 <style type="text/css" scoped>
 .Welcome {
   font-family: "Open Sans";
-  padding: 121px 166px;
-  width: 900px;
-  margin: auto;
 }
 
 .Welcome__Title {
@@ -84,6 +78,7 @@ watch(electionStore, (newElectionStore) => {
 
 .Welcome__Header {
   margin-bottom: 60px;
+  margin-top: 120px;
 }
 
 .Welcome__Content {
