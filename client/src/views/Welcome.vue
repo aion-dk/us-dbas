@@ -62,6 +62,8 @@ watch(electionStore, (newElectionStore) => {
 .Welcome {
   font-family: "Open Sans";
   padding: 121px 166px;
+  width: 900px;
+  margin: auto;
 }
 
 .Welcome__Title {
