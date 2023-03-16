@@ -70,7 +70,7 @@ test("tracking a non-existing ballot shows an error", async ({ page }) => {
   await page.getByPlaceholder('Ballot tracking code').fill('hijklm');
 });
 
-test.only("tracking a rejected ballot has the right text", async ({ page }) => {
+test("tracking a rejected ballot has the right text", async ({ page }) => {
   // Mock Network calls
   await page.route('**/*', async (route) => {
     const url = route.request().url()
