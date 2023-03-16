@@ -5,19 +5,23 @@ import useElectionStore from "../stores/useElectionStore";
 import useLocaleStore from "../stores/useLocaleStore";
 import config from "../lib/config";
 import router from "../router";
+import enFlag from "../assets/en.svg"
+import esFlag from "../assets/es.svg"
 
 const localeStore = useLocaleStore();
 const electionStore = useElectionStore();
 const route = useRoute();
 const slug = ref(null);
 const locale = ref("en");
+const locales = ref(["en"])
 
-watch(
-  electionStore,
-  (newElectionStore) => (slug.value = newElectionStore.election?.slug)
-);
-
+watch(electionStore, (newElectionStore) => setElectionInfo());
 watch(localeStore, () => (locale.value = localeStore.locale));
+
+function setElectionInfo() {
+  slug.value = electionStore.election?.slug
+  locales.value = electionStore.election.content.locales
+}
 
 function setLocale(locale) {
   const oldLocale = localeStore.locale;
@@ -26,6 +30,11 @@ function setLocale(locale) {
   const url = window.location.href;
   const newUrl = url.replace(`/${oldLocale}/`, `/${locale}/`);
   window.location.href = newUrl;
+}
+
+const localeImages = {
+  en: enFlag,
+  es: esFlag,
 }
 
 onMounted(() => {
@@ -57,21 +66,13 @@ onMounted(() => {
 
       <div class="Header__Flags">
         <img
-          src="../assets/us.svg"
+          v-for="l in locales"
+          :src="localeImages[l]"
           :class="{
             Header__Flag: true,
-            ['Header__Flag--current']: locale === 'en',
+            ['Header__Flag--current']: locale === l,
           }"
-          @click="() => setLocale('en')"
-        />
-
-        <img
-          src="../assets/es.svg"
-          :class="{
-            Header__Flag: true,
-            ['Header__Flag--current']: locale === 'es',
-          }"
-          @click="() => setLocale('es')"
+          @click="() => setLocale(l)"
         />
       </div>
     </div>
