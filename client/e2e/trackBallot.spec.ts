@@ -1,18 +1,95 @@
 import { test, expect } from "@playwright/test";
 
+const latestConfig = {
+  items: {
+    electionConfig: {
+      content: {
+        locales: ["en"],
+        title: { en: "Funny Election" },
+      },
+    },
+  },
+}
+
+const foundBallotStatus = {
+  status: 'found',
+  activities: [
+    {
+      type: 'VoterSessionItem',
+      registered_at: '2023-03-14T13:26:54.211Z',
+    },
+    {
+      type: 'CastRequestItem',
+      registered_at: '2023-03-14T13:26:55.101Z',
+    }
+  ]
+}
+
 test("tracking a ballot", async ({ page }) => {
+  // Mock Network calls
+  await page.route('**/*', async (route) => {
+    const url = route.request().url()
+
+    // Intercept DBB latest config calls
+    if (url.indexOf("us3/configuration/latest_config") > 0) {
+      return route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(latestConfig),
+      });
+    }
+
+    // Intercept DBB ballot status calls
+    if (url.indexOf("us3/ballot_status") > 0) {
+      return route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(foundBallotStatus),
+      });
+    }
+
+    return route.continue()
+  })
+
   await page.goto("/en/us3");
-  await expect(page.locator("h2")).toHaveText("Famous Names Election");
+  await expect(page.locator("h2")).toHaveText("Funny Election");
   await page.getByPlaceholder('Ballot tracking code').fill('5ksv8Ee');
   await page.getByRole('button', { name: 'Track my ballot' }).click();
-  await page.locator('div:nth-child(5) > .BallotActivity__Row > .BallotActivity__Expander').click();
+  await page.locator('.BallotActivity__Expander').first().click();
   await page.getByRole('button', { name: 'Cancel and track a new ballot' }).click();
+  await page.getByPlaceholder('Ballot tracking code').fill('5ksv8Ee');
 });
 
-test("tracking a non-existing ballot", async ({ page }) => {
+test("tracking a non-existing ballot shows an error", async ({ page }) => {
+  // Mock Network calls
+  await page.route('**/*', async (route) => {
+    const url = route.request().url()
+
+    // Intercept DBB latest config calls
+    if (url.indexOf("us3/configuration/latest_config") > 0) {
+      return route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(latestConfig),
+      });
+    }
+
+    // Intercept DBB ballot status calls
+    if (url.indexOf("us3/ballot_status") > 0) {
+      return route.fulfill({
+        status: 404,
+        contentType: 'application/json',
+        body: JSON.stringify({}),
+      });
+    }
+
+    return route.continue()
+  })
+
   await page.goto("/en/us3");
-  await expect(page.locator("h2")).toHaveText("Famous Names Election");
+  await expect(page.locator("h2")).toHaveText("Funny Election");
   await page.getByPlaceholder('Ballot tracking code').fill('abcdef');
   await page.getByRole('button', { name: 'Track my ballot' }).click();
   await page.getByRole('heading', { name: 'Tracking code not found' }).click();
+  await page.getByPlaceholder('Ballot tracking code').fill('hijklm');
 });
