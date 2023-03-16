@@ -5,22 +5,22 @@ import useElectionStore from "../stores/useElectionStore";
 import useLocaleStore from "../stores/useLocaleStore";
 import config from "../lib/config";
 import router from "../router";
-import enFlag from "../assets/en.svg"
-import esFlag from "../assets/es.svg"
+import enFlag from "../assets/en.svg";
+import esFlag from "../assets/es.svg";
 
 const localeStore = useLocaleStore();
 const electionStore = useElectionStore();
 const route = useRoute();
 const slug = ref(null);
 const locale = ref("en");
-const locales = ref(["en"])
+const locales = ref(["en"]);
 
 watch(electionStore, (newElectionStore) => setElectionInfo());
 watch(localeStore, () => (locale.value = localeStore.locale));
 
 function setElectionInfo() {
-  slug.value = electionStore.election?.slug
-  locales.value = electionStore.election.content.locales
+  slug.value = electionStore.election?.slug;
+  locales.value = electionStore.election.content.locales;
 }
 
 function setLocale(locale) {
@@ -35,7 +35,7 @@ function setLocale(locale) {
 const localeImages = {
   en: enFlag,
   es: esFlag,
-}
+};
 
 onMounted(() => {
   locale.value = localeStore.locale;

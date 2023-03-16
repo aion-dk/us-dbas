@@ -24,9 +24,9 @@ library.add(faClock);
 library.add(faCircleInfo);
 library.add(faUser);
 
-let locale = "en"
-const url = new URL(window.location.href)
-if (url.pathname.split("/")[1]) locale = url.pathname.split("/")[1]
+let locale = "en";
+const url = new URL(window.location.href);
+if (url.pathname.split("/")[1]) locale = url.pathname.split("/")[1];
 
 const i18n = createI18n({
   locale: locale,

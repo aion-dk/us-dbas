@@ -1,9 +1,33 @@
 <script setup lang="ts">
 import CompactHeader from "../components/CompactHeader.vue";
-import { useRoute } from "vue-router";
 import { options } from "../lib/api";
+import useLocaleStore from "../stores/useLocaleStore";
+import useElectionStore from "../stores/useElectionStore";
+import useBoardStore from "../stores/useBoardStore";
+import { onMounted, watch } from "vue";
+import { useRoute, RouterLink } from "vue-router";
+import DateTime from "../components/DateTime.vue"
+import { hexToShortCode } from '@aion-dk/js-client/dist/lib/av_client/short_codes';
 
-const route = useRoute();
+const route = useRoute()
+const localeStore = useLocaleStore()
+const electionStore = useElectionStore();
+const boardStore = useBoardStore();
+
+watch(electionStore, () => loadPage(currentPage()));
+watch(route, () => loadPage(currentPage()));
+
+function currentPage() {
+  return parseInt(route.params.page || boardStore.currentPage || 1, 10)
+}
+
+function loadPage(page: number) {
+  if (electionStore.election.slug) {
+    boardStore.loadPage(electionStore.election.slug, page);
+  }
+}
+
+onMounted(() => loadPage(currentPage()));
 </script>
 
 <template>
@@ -18,10 +42,30 @@ const route = useRoute();
       </p>
     </div>
 
+    <div v-for="item in boardStore.items" class="Item">
+      <div>{{ item.type }}</div>
+      <DateTime :date-time="item.registered_at" format="long" />
+      <div>{{ hexToShortCode(item.address.slice(0, 10)) }}</div>
+      <!-- <pre>{{ item }}</pre> -->
+    </div>
+
+    <div class="Pagination">
+      <RouterLink
+        :class="{
+          Pagination__Page: true,
+          ['Pagination__Page--current']: i + 1 === boardStore.meta.current_page,
+        }"
+        v-for="(_, i) in Array(boardStore.meta.total_pages)"
+        :to="`/${localeStore.locale}/${electionStore.election.slug}/logs/${i + 1}`"
+      >
+        {{ i + 1 }}
+      </RouterLink>
+    </div>
+
     <div class="LogsView__Footer">
       <a
         class="LogsView__DownloadButton"
-        :href="`${options.baseURL}/${route.params.electionSlug}/download_log`"
+        :href="`${options.baseURL}/${electionStore.election.slug}/download_log`"
       >
         Download the full election activity log (json)
       </a>
@@ -30,6 +74,14 @@ const route = useRoute();
 </template>
 
 <style type="text/css" scoped>
+.Item {
+  display: flex;
+}
+
+.Pagination {
+  display: flex;
+}
+
 .LogsView {
   width: 900px;
   margin: auto;

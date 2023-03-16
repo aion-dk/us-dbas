@@ -1,16 +1,20 @@
 import { test, expect } from "@playwright/test";
-import { latestConfig, foundBallotStatus, rejectedBallotStatus } from "./mocks.ts"
+import {
+  latestConfig,
+  foundBallotStatus,
+  rejectedBallotStatus,
+} from "./mocks.ts";
 
 test("tracking a ballot", async ({ page }) => {
   // Mock Network calls
-  await page.route('**/*', async (route) => {
-    const url = route.request().url()
+  await page.route("**/*", async (route) => {
+    const url = route.request().url();
 
     // Intercept DBB latest config calls
     if (url.indexOf("us3/configuration/latest_config") > 0) {
       return route.fulfill({
         status: 200,
-        contentType: 'application/json',
+        contentType: "application/json",
         body: JSON.stringify(latestConfig),
       });
     }
@@ -19,33 +23,35 @@ test("tracking a ballot", async ({ page }) => {
     if (url.indexOf("us3/ballot_status") > 0) {
       return route.fulfill({
         status: 200,
-        contentType: 'application/json',
+        contentType: "application/json",
         body: JSON.stringify(foundBallotStatus),
       });
     }
 
-    return route.continue()
-  })
+    return route.continue();
+  });
 
   await page.goto("/en/us3");
   await expect(page.locator("h2")).toHaveText("Funny Election");
-  await page.getByPlaceholder('Ballot tracking code').fill('5ksv8Ee');
-  await page.getByRole('button', { name: 'Track my ballot' }).click();
-  await page.locator('.BallotActivity__Expander').first().click();
-  await page.getByRole('button', { name: 'Cancel and track a new ballot' }).click();
-  await page.getByPlaceholder('Ballot tracking code').fill('5ksv8Ee');
+  await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
+  await page.getByRole("button", { name: "Track my ballot" }).click();
+  await page.locator(".BallotActivity__Expander").first().click();
+  await page
+    .getByRole("button", { name: "Cancel and track a new ballot" })
+    .click();
+  await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
 });
 
 test("tracking a non-existing ballot shows an error", async ({ page }) => {
   // Mock Network calls
-  await page.route('**/*', async (route) => {
-    const url = route.request().url()
+  await page.route("**/*", async (route) => {
+    const url = route.request().url();
 
     // Intercept DBB latest config calls
     if (url.indexOf("us3/configuration/latest_config") > 0) {
       return route.fulfill({
         status: 200,
-        contentType: 'application/json',
+        contentType: "application/json",
         body: JSON.stringify(latestConfig),
       });
     }
@@ -54,32 +60,32 @@ test("tracking a non-existing ballot shows an error", async ({ page }) => {
     if (url.indexOf("us3/ballot_status") > 0) {
       return route.fulfill({
         status: 404,
-        contentType: 'application/json',
+        contentType: "application/json",
         body: JSON.stringify({}),
       });
     }
 
-    return route.continue()
-  })
+    return route.continue();
+  });
 
   await page.goto("/en/us3");
   await expect(page.locator("h2")).toHaveText("Funny Election");
-  await page.getByPlaceholder('Ballot tracking code').fill('abcdef');
-  await page.getByRole('button', { name: 'Track my ballot' }).click();
-  await page.getByRole('heading', { name: 'Tracking code not found' }).click();
-  await page.getByPlaceholder('Ballot tracking code').fill('hijklm');
+  await page.getByPlaceholder("Ballot tracking code").fill("abcdef");
+  await page.getByRole("button", { name: "Track my ballot" }).click();
+  await page.getByRole("heading", { name: "Tracking code not found" }).click();
+  await page.getByPlaceholder("Ballot tracking code").fill("hijklm");
 });
 
 test("tracking a rejected ballot has the right text", async ({ page }) => {
   // Mock Network calls
-  await page.route('**/*', async (route) => {
-    const url = route.request().url()
+  await page.route("**/*", async (route) => {
+    const url = route.request().url();
 
     // Intercept DBB latest config calls
     if (url.indexOf("us3/configuration/latest_config") > 0) {
       return route.fulfill({
         status: 200,
-        contentType: 'application/json',
+        contentType: "application/json",
         body: JSON.stringify(latestConfig),
       });
     }
@@ -88,22 +94,32 @@ test("tracking a rejected ballot has the right text", async ({ page }) => {
     if (url.indexOf("us3/ballot_status") > 0) {
       return route.fulfill({
         status: 200,
-        contentType: 'application/json',
+        contentType: "application/json",
         body: JSON.stringify(rejectedBallotStatus),
       });
     }
 
-    return route.continue()
-  })
+    return route.continue();
+  });
 
   await page.goto("/en/us3");
   await expect(page.locator("h2")).toHaveText("Funny Election");
-  await page.getByPlaceholder('Ballot tracking code').fill('5ksv8Ee');
-  await page.getByRole('button', { name: 'Track my ballot' }).click();
-  await page.getByRole('heading', { name: "You are currently tracking" }).click()
+  await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
+  await page.getByRole("button", { name: "Track my ballot" }).click();
+  await page
+    .getByRole("heading", { name: "You are currently tracking" })
+    .click();
 
-  expect(page.locator(".BallotTracker__StatusInfo h3")).toHaveText("Ballot not accepted")
-  expect(page.locator(".BallotTracker__StatusInfo p")).toHaveText("There is a problem with your signature affidavit. Contact your local election official for next steps and to cure your affidavit.")
-  expect(page.locator(".BallotTracker__StatusInfo p")).toHaveText("There is a problem with your signature affidavit. Contact your local election official for next steps and to cure your affidavit.")
-  expect(page.locator(".BallotActivity__Type").first()).toHaveText("Affidavit Rejected")
+  expect(page.locator(".BallotTracker__StatusInfo h3")).toHaveText(
+    "Ballot not accepted"
+  );
+  expect(page.locator(".BallotTracker__StatusInfo p")).toHaveText(
+    "There is a problem with your signature affidavit. Contact your local election official for next steps and to cure your affidavit."
+  );
+  expect(page.locator(".BallotTracker__StatusInfo p")).toHaveText(
+    "There is a problem with your signature affidavit. Contact your local election official for next steps and to cure your affidavit."
+  );
+  expect(page.locator(".BallotActivity__Type").first()).toHaveText(
+    "Affidavit Rejected"
+  );
 });

@@ -104,7 +104,7 @@ function toggleExpanded() {
 }
 
 .BallotActivity__Details svg {
-  color: #6C757D;
+  color: #6c757d;
 }
 
 .BallotActivity__RegisteredAt {

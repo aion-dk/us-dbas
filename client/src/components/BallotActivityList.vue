@@ -29,24 +29,24 @@ defineProps({
 </template>
 
 <style type="text/css" scoped>
-  .BallotActivitiesList h3 {
-    padding: 20px 32px;
-    margin: 0;
-  }
+.BallotActivitiesList h3 {
+  padding: 20px 32px;
+  margin: 0;
+}
 
-  .BallotActivitiesList__ColumnDescriptions {
-    list-style: none;
-    padding: 20px 32px;
-    margin: 0;
-    display: flex;
-    font-size: 14px;
-  }
+.BallotActivitiesList__ColumnDescriptions {
+  list-style: none;
+  padding: 20px 32px;
+  margin: 0;
+  display: flex;
+  font-size: 14px;
+}
 
-  .BallotActivitiesList__ColumnDescriptions--time {
-    width: 150px;
-  }
+.BallotActivitiesList__ColumnDescriptions--time {
+  width: 150px;
+}
 
-  .BallotActivitiesList__ColumnDescriptions--event {
-    width: 205px;
-  }
+.BallotActivitiesList__ColumnDescriptions--event {
+  width: 205px;
+}
 </style>

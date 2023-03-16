@@ -32,8 +32,8 @@ onMounted(() => setBallot());
 
     <div class="BallotTracker__Row">
       <Infobox class="BallotTracker__Infobox">
-        <h2 role="status">{{ $t('views.tracker.info.title') }}</h2>
-        <p>{{ $t('views.tracker.info.description') }}</p>
+        <h2 role="status">{{ $t("views.tracker.info.title") }}</h2>
+        <p>{{ $t("views.tracker.info.description") }}</p>
       </Infobox>
 
       <Infobox class="BallotTracker__TrackingCode">
