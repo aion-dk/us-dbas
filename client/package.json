@@ -19,6 +19,9 @@
   },
   "dependencies": {
     "@aion-dk/js-client": "^2.1.4",
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
     "@vue/cli-shared-utils": "^5.0.8",
     "moment-timezone": "^0.5.41",
     "vue": "^3.2.45",

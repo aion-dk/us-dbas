@@ -64,8 +64,16 @@ function toggleExpanded() {
       <div class="BallotActivity__Spacer" />
 
       <span class="BallotActivity__Expander" @click="toggleExpanded">
-        <span v-if="expanded">-</span>
-        <span v-else>+</span>
+        <font-awesome-icon
+          v-if="expanded"
+          icon="fa-solid fa-minus"
+          aria-label="Collapse this activity"
+        />
+        <font-awesome-icon
+          v-else
+          icon="fa-solid fa-plus"
+          aria-label="Expand this activity"
+        />
       </span>
     </div>
 

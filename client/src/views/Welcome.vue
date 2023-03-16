@@ -5,9 +5,9 @@ import { ref, watch, onMounted } from "vue";
 import Infobox from "../components/Infobox.vue";
 import useBallotStore from "../stores/useBallotStore";
 import router from "../router";
-import useLocaleStore from "../stores/useLocaleStore"
+import useLocaleStore from "../stores/useLocaleStore";
 
-const localeStore = useLocaleStore()
+const localeStore = useLocaleStore();
 const ballotStore = useBallotStore();
 const electionStore = useElectionStore();
 const route = useRoute();
@@ -17,7 +17,7 @@ const _title = ref("Loading..");
 const _info = ref("Loading..");
 const _trackingCode = ref(null);
 const _error = ref(false);
-const _disabled = ref(false)
+const _disabled = ref(false);
 
 function setInfo() {
   _title.value = electionStore.election?.content?.title[_locale.value];
@@ -32,8 +32,8 @@ function setInfo() {
 async function lookupBallot(event) {
   event.preventDefault();
   event.stopPropagation();
-  _disabled.value = true
-  _error.value = false
+  _disabled.value = true;
+  _error.value = false;
 
   await ballotStore.loadBallot(
     _trackingCode.value,
@@ -48,7 +48,7 @@ async function lookupBallot(event) {
     _error.value = true;
   }
 
-  _disabled.value = false
+  _disabled.value = false;
 }
 
 watch(route, (newRoute) => {
@@ -75,7 +75,10 @@ onMounted(() => {
     </div>
 
     <div v-if="_error" class="Welcome__Error" role="alert">
-      <h3>Tracking code not found</h3>
+      <h3>
+        <font-awesome-icon icon="fa-solid fa-triangle-exclamation" />
+        Tracking code not found
+      </h3>
 
       <p>
         Please check that the tracking code was entered correctly. The code is
@@ -107,15 +110,21 @@ onMounted(() => {
             class="Welcome__TrackingCode"
           />
 
-          <input
+          <button
             :disabled="_disabled"
-            type="submit"
             name="lookup-ballot"
             id="lookup-ballot"
-            value="Track my ballot"
             class="Welcome__SubmitButton"
-          />
+            @click="lookupBallot"
+          >
+            Track my ballot
+          </button>
         </form>
+
+        <p>
+          <font-awesome-icon icon="fa-solid fa-circle-question" />
+          Where do I find my tracking code?
+        </p>
       </Infobox>
     </div>
 
@@ -212,10 +221,15 @@ onMounted(() => {
   font-size: 16px;
 }
 
+.Welcome__SubmitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .Welcome__Error {
-  background-color: #FCEDE9;
+  background-color: #fcede9;
   border: none;
-  border-left: solid 6px #EA4E2C;
+  border-left: solid 6px #ea4e2c;
   padding: 17px 36px;
   margin-bottom: 40px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
