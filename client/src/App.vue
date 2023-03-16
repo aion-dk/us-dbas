@@ -3,9 +3,11 @@ import { onMounted, ref, watch } from "vue";
 import { RouterView, useRoute } from "vue-router";
 import useLocaleStore from "./stores/useLocaleStore";
 import useElectionStore from "./stores/useElectionStore";
+import useBallotStore from "./stores/useBallotStore";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 
+const ballotStore = useBallotStore()
 const electionStore = useElectionStore();
 const localeStore = useLocaleStore();
 const route = useRoute();
@@ -13,12 +15,19 @@ const route = useRoute();
 watch(route, async (newRoute) => {
   const slug = newRoute.params.electionSlug;
   if (slug) electionStore.loadElection(slug);
+
+  const locale = newRoute.params.locale;
+  if (locale) localeStore.setLocale(locale)
 });
 
 watch(electionStore, () => {
   setTitle();
   if (route.params.electionSlug) {
     electionStore.loadElection(route.params.electionSlug);
+
+    if (route.params.trackingCode) {
+      ballotStore.loadBallot(route.params.trackingCode, electionStore.election.slug)
+    }
   }
 });
 
@@ -60,7 +69,7 @@ body {
 }
 
 .DBAS__InnerContent {
-  width: 900px;
+  width: 80vw;
   margin: auto;
   padding: 20px;
 }
