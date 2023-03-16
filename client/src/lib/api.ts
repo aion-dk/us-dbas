@@ -1,7 +1,8 @@
 import axios from "axios";
+import config from "./config"
 
 const options = {
-  baseURL: "http://dbb:3003",
+  baseURL: config.dbbUrl,
 };
 const api = axios.create(options);
 

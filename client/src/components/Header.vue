@@ -2,6 +2,7 @@
 import { ref, watch } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 import useElectionStore from "../stores/useElectionStore";
+import config from "../lib/config"
 
 const electionStore = useElectionStore();
 const route = useRoute();
@@ -17,7 +18,7 @@ watch(
 
 <template>
   <nav class="Header">
-    <img class="Header__Logo" src="../assets/cat.png" alt="DBAS Logo" />
+    <img class="Header__Logo" :src="config.logoUrl" alt="DBAS Logo" />
     <RouterLink class="Header__Title" :to="`/${locale}/${slug}`" v-if="slug">
       Digital Ballot Audit Site
     </RouterLink>
@@ -49,6 +50,7 @@ watch(
   width: 100%;
   z-index: 2;
   background-color: #fff;
+  box-sizing: border-box;
 }
 
 .Header__Title {
@@ -64,7 +66,8 @@ watch(
   height: 54px;
   width: 54px;
   object-fit: cover;
-  margin: 11px;
+  margin: 8px 11px;
+  border-radius: 3px;
 }
 
 .Header__Links {
@@ -75,7 +78,7 @@ watch(
 }
 
 .Header__Link {
-  padding: 32px 8px;
+  padding: 20px 8px;
   font-size: 18px;
   font-weight: 700;
   text-transform: uppercase;
