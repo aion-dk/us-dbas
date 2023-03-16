@@ -38,7 +38,7 @@ test("downloading logs", async ({ page }) => {
   const download = await downloadPromise;
 });
 
-test("traversing board items", async ({ page }) => {
+test.only("traversing board items", async ({ page }) => {
   // Mock Network calls
   await page.route("**/*", async (route) => {
     const url = route.request().url();
@@ -75,6 +75,18 @@ test("traversing board items", async ({ page }) => {
 
   await page.goto("/en/us3");
   await page.getByRole('link', { name: 'Logs' }).click();
+
+  // Page 1
+  await page.getByText('16fSovo').click();
+  await page.getByText('VMMHYWv').click();
+
+  // Page 2
   await page.getByRole('link', { name: '2', exact: true }).click();
+  await page.getByText('1yo3CEM').click();
+  await page.getByText('12g69GA').click();
+
+  // Page 1 again
   await page.getByRole('link', { name: '1', exact: true }).click();
+  await page.getByText('16fSovo').click();
+  await page.getByText('VMMHYWv').click();
 });
