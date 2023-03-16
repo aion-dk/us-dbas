@@ -17,6 +17,7 @@ const _title = ref("Loading..");
 const _info = ref("Loading..");
 const _trackingCode = ref(null);
 const _error = ref(false);
+const _disabled = ref(false)
 
 function setInfo() {
   _title.value = electionStore.election?.content?.title[_locale.value];
@@ -31,6 +32,9 @@ function setInfo() {
 async function lookupBallot(event) {
   event.preventDefault();
   event.stopPropagation();
+  _disabled.value = true
+  _error.value = false
+
   await ballotStore.loadBallot(
     _trackingCode.value,
     electionStore.election.slug
@@ -43,6 +47,8 @@ async function lookupBallot(event) {
   } else {
     _error.value = true;
   }
+
+  _disabled.value = false
 }
 
 watch(route, (newRoute) => {
@@ -92,6 +98,7 @@ onMounted(() => {
       <Infobox class="Welcome__Tracking">
         <form @submit="lookupBallot">
           <input
+            :disabled="_disabled"
             type="text"
             name="tracking-code"
             id="tracking-code"
@@ -101,6 +108,7 @@ onMounted(() => {
           />
 
           <input
+            :disabled="_disabled"
             type="submit"
             name="lookup-ballot"
             id="lookup-ballot"
