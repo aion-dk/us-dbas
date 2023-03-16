@@ -12,8 +12,8 @@ defineProps({
   },
   format: {
     type: String,
-    required: true,
     default: "relative",
+    validate: (s) => ["absolute", "relative"].indexOf(s) >= 0
   },
 });
 
