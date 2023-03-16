@@ -71,6 +71,7 @@ onMounted(() => {
           :class="{
             Header__Flag: true,
             ['Header__Flag--current']: locale === l,
+            [`Header__Flag--${l}`]: locale === l,
           }"
           @click="() => setLocale(l)"
         />

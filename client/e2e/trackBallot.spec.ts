@@ -1,29 +1,5 @@
 import { test, expect } from "@playwright/test";
-
-const latestConfig = {
-  items: {
-    electionConfig: {
-      content: {
-        locales: ["en"],
-        title: { en: "Funny Election" },
-      },
-    },
-  },
-}
-
-const foundBallotStatus = {
-  status: 'found',
-  activities: [
-    {
-      type: 'VoterSessionItem',
-      registered_at: '2023-03-14T13:26:54.211Z',
-    },
-    {
-      type: 'CastRequestItem',
-      registered_at: '2023-03-14T13:26:55.101Z',
-    }
-  ]
-}
+import { latestConfig, foundBallotStatus } from "./mocks.ts"
 
 test("tracking a ballot", async ({ page }) => {
   // Mock Network calls
