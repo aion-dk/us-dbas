@@ -13,6 +13,31 @@
         "type": "Activity type",
         "time": "Date and time",
         "actor": "Actor"
+      },
+      "ballot_activity": {
+        "registered_at": "Registered at",
+        "author": "Author {author}",
+        "meaning": "What does this mean?",
+        "AffidavitRejectItem": {
+          "type": "Affidavit Rejected",
+          "author": "Election Official",
+          "details": "Your affidavit has been rejected. Please contact your Election Officials office to cure your affidavit."
+        },
+        "AffidavitAcceptItem": {
+          "type": "Affidavit Accepted",
+          "author": "Election Official",
+          "details": "Your affidavit has been accepted. A new item will appear here when it has been extracted for tallying."
+        },
+        "CastRequestItem": {
+          "type": "Ballot Cast",
+          "author": "You",
+          "details": "Your ballot has been received."
+        },
+        "VoterSessionItem": {
+          "type": "Sign in",
+          "author": "You",
+          "details": "You have authenticated your self and signed in."
+        }
       }
     },
     "views": {

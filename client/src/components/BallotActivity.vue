@@ -16,29 +16,6 @@ const classes = reactive({
   ["BallotActivity--expanded"]: expanded,
 });
 
-const detailsMap = {
-  AffidavitRejectItem:
-    "Your affidavit has been rejected. Please contact your Election Officials office to cure your affidavit.",
-  AffidavitAcceptItem:
-    "Your affidavit has been accepted. A new item will appear here when it has been extracted for tallying.",
-  CastRequestItem: "Your ballot has been received.",
-  VoterSessionItem: "You have authenticated your self and signed in.",
-};
-
-const authorMap = {
-  AffidavitRejectItem: "Election Official",
-  AffidavitAcceptItem: "Election Official",
-  CastRequestItem: "You",
-  VoterSessionItem: "You",
-};
-
-const typeMap = {
-  AffidavitRejectItem: "Affidavit Rejected",
-  AffidavitAcceptItem: "Affidavit Accepted",
-  CastRequestItem: "Ballot Cast",
-  VoterSessionItem: "Sign In",
-};
-
 function toggleExpanded() {
   expanded.value = !expanded.value;
 }
@@ -48,7 +25,7 @@ function toggleExpanded() {
   <div :class="classes">
     <div class="BallotActivity__Row">
       <div class="BallotActivity__Type">
-        {{ typeMap[activity.type] }}
+        {{ $t(`components.ballot_activity.${activity.type}.type`) }}
       </div>
 
       <DateTime
@@ -58,7 +35,7 @@ function toggleExpanded() {
       />
 
       <div class="BallotActivity__Author" v-if="!expanded">
-        {{ authorMap[activity.type] }}
+        {{ $t(`components.ballot_activity.${activity.type}.author`) }}
       </div>
 
       <div class="BallotActivity__Spacer" />
@@ -67,12 +44,12 @@ function toggleExpanded() {
         <font-awesome-icon
           v-if="expanded"
           icon="fa-solid fa-minus"
-          aria-label="Collapse this activity"
+          :aria-label="$t('components.ballot_activity.collapse')"
         />
         <font-awesome-icon
           v-else
           icon="fa-solid fa-plus"
-          aria-label="Expand this activity"
+          :aria-label="$t('components.ballot_activity.expand')"
         />
       </span>
     </div>
@@ -80,18 +57,22 @@ function toggleExpanded() {
     <div class="BallotActivity__Row BallotActivity__Details" v-if="expanded">
       <p>
         <font-awesome-icon icon="fa-solid fa-clock" />
-        Registered at:
+        {{ $t("components.ballot_activity.registered_at") }}
         <DateTime :date-time="activity.registered_at" format="long" />
       </p>
       <p>
         <font-awesome-icon icon="fa-solid fa-user" />
-        Actor: {{ authorMap[activity.type] }}
+        {{
+          $t("components.ballot_activity.author", {
+            author: $t(`components.ballot_activity.${activity.type}.author`),
+          })
+        }}
       </p>
       <p>
         <font-awesome-icon icon="fa-solid fa-circle-info" />
-        What does this mean?
+        {{ $t("components.ballot_activity.meaning") }}
       </p>
-      <p>{{ detailsMap[activity.type] }}</p>
+      <p>{{ $t(`components.ballot_activity.${activity.type}.details`) }}</p>
     </div>
   </div>
 </template>
