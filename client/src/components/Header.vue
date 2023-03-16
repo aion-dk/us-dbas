@@ -4,6 +4,7 @@ import { RouterLink, useRoute } from "vue-router";
 import useElectionStore from "../stores/useElectionStore";
 import useLocaleStore from "../stores/useLocaleStore";
 import config from "../lib/config";
+import router from "../router"
 
 const localeStore = useLocaleStore();
 const electionStore = useElectionStore();
@@ -18,6 +19,21 @@ watch(
 
 watch(localeStore, () => (locale.value = localeStore.locale));
 
+function setLocale(locale) {
+  localeStore.setLocale(locale)
+  const url = [
+    locale,
+    electionStore.election.slug,
+  ]
+
+  if (route.params.trackingCode) {
+    url.push("track")
+    url.push(route.params.trackingCode)
+  }
+
+  router.replace(`/${url.join('/')}`)
+}
+
 onMounted(() => {
   locale.value = localeStore.locale;
 });
@@ -26,6 +42,7 @@ onMounted(() => {
 <template>
   <nav class="Header">
     <img class="Header__Logo" :src="config.logoUrl" alt="DBAS Logo" />
+
     <RouterLink class="Header__Title" :to="`/${locale}/${slug}`" v-if="slug">
       Digital Ballot Audit Site
     </RouterLink>
@@ -43,6 +60,16 @@ onMounted(() => {
       <RouterLink class="Header__Link" :to="`/${locale}/${slug}/contact`"
         >Contact</RouterLink
       >
+
+      <img
+        src="../assets/us.svg"
+        :class="{ Header__Flag: true, ['Header__Flag--current']: locale === 'en'}"
+        @click="() => setLocale('en')" />
+
+      <img
+        src="../assets/es.svg"
+        :class="{ Header__Flag: true, ['Header__Flag--current']: locale === 'es'}"
+        @click="() => setLocale('es')" />
     </div>
   </nav>
 </template>
@@ -92,5 +119,16 @@ onMounted(() => {
   min-width: 127px;
   text-decoration: none;
   color: #495057;
+}
+
+.Header__Flag {
+  width: 30px;
+  height: 24px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.Header__Flag--current {
+  border: solid 1px #000;
 }
 </style>
