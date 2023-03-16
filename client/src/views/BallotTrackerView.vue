@@ -15,25 +15,6 @@ const ballot = ref(null);
 
 watch(ballotStore, () => setBallot());
 
-const statusMap = {
-  found: {
-    title: "Ballot received",
-    body: "Your ballot package has been received. Check back to verify that your ballot was accepted for counting.",
-  },
-  rejected: {
-    title: "Ballot Not Accepted",
-    body: "There is a problem with your signature affidavit. Contact your local election official for next steps and to cure your affidavit.",
-  },
-  accepted: {
-    title: "Ballot accepted",
-    body: "Your signature affidavit has been verified and your ballot is accepted for counting.",
-  },
-  extracted: {
-    title: "Ballot decrypted for printing",
-    body: "Your ballot has been extracted from the digital ballot box and decrypted offline. It has been printed onto a paper ballot for scanning and tabulation with other absentee ballots.",
-  },
-};
-
 function setBallot() {
   ballot.value = ballotStore.ballot;
 }
@@ -51,24 +32,20 @@ onMounted(() => setBallot());
 
     <div class="BallotTracker__Row">
       <Infobox class="BallotTracker__Infobox">
-        <h2 role="status">Ballot found</h2>
-
-        <p>
-          See the status of your ballot below. You can also see all activity
-          connected to your ballot tracking code.
-        </p>
+        <h2 role="status">{{ $t('views.tracker.info.title') }}</h2>
+        <p>{{ $t('views.tracker.info.description') }}</p>
       </Infobox>
 
       <Infobox class="BallotTracker__TrackingCode">
         <button
           class="BallotTracker__Cancel"
           @click="cancel"
-          aria-label="Cancel and track a new ballot"
+          :aria-label="$t('views.tracker.cancel_cross_label')"
         >
           ×
         </button>
         <h3>
-          <span>You are currently tracking</span>
+          <span>{{ $t("views.tracker.currently_tracking") }}</span>
           <code>{{ ballot.trackingCode }}</code>
         </h3>
       </Infobox>
@@ -76,8 +53,8 @@ onMounted(() => setBallot());
 
     <div class="BallotTracker__Row">
       <Infobox class="BallotTracker__StatusInfo">
-        <h3>{{ statusMap[ballot.status].title }}</h3>
-        <p>{{ statusMap[ballot.status].body }}</p>
+        <h3>{{ $t(`views.tracker.status_map.${ballot.status}.title`) }}</h3>
+        <p>{{ $t(`views.tracker.status_map.${ballot.status}.description`) }}</p>
       </Infobox>
     </div>
 
@@ -85,8 +62,6 @@ onMounted(() => setBallot());
       class="BallotTracker__Row BallotTracker__Row--stacked"
       v-if="ballot.activities.length"
     >
-      <h3>Activity connected to the tracking code</h3>
-
       <BallotActivityList :activities="ballot.activities" />
     </div>
   </div>

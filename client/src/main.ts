@@ -9,6 +9,9 @@ import {
   faMinus,
   faTriangleExclamation,
   faCircleQuestion,
+  faClock,
+  faUser,
+  faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
 import { createI18n } from "vue-i18n";
 import translations from "./assets/translations.json";
@@ -17,6 +20,9 @@ library.add(faPlus);
 library.add(faMinus);
 library.add(faTriangleExclamation);
 library.add(faCircleQuestion);
+library.add(faClock);
+library.add(faCircleInfo);
+library.add(faUser);
 
 let locale = "en"
 const url = new URL(window.location.href)

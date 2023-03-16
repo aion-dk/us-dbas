@@ -79,11 +79,18 @@ function toggleExpanded() {
 
     <div class="BallotActivity__Row BallotActivity__Details" v-if="expanded">
       <p>
+        <font-awesome-icon icon="fa-solid fa-clock" />
         Registered at:
         <DateTime :date-time="activity.registered_at" format="long" />
       </p>
-      <p>Actor: {{ authorMap[activity.type] }}</p>
-      <p>What does this mean?</p>
+      <p>
+        <font-awesome-icon icon="fa-solid fa-user" />
+        Actor: {{ authorMap[activity.type] }}
+      </p>
+      <p>
+        <font-awesome-icon icon="fa-solid fa-circle-info" />
+        What does this mean?
+      </p>
       <p>{{ detailsMap[activity.type] }}</p>
     </div>
   </div>
@@ -115,8 +122,11 @@ function toggleExpanded() {
   padding: 0;
 }
 
+.BallotActivity__Details svg {
+  color: #6C757D;
+}
+
 .BallotActivity__RegisteredAt {
-  margin-left: 24px;
   width: 150px;
 }
 

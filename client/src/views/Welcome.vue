@@ -77,25 +77,17 @@ onMounted(() => {
     <div v-if="_error" class="Welcome__Error" role="alert">
       <h3>
         <font-awesome-icon icon="fa-solid fa-triangle-exclamation" />
-        Tracking code not found
+        {{ $t("views.welcome.error.title") }}
       </h3>
 
-      <p>
-        Please check that the tracking code was entered correctly. The code is
-        case sensitive. If you are checking to make sure your ballot was
-        recorded correctly before submitting, use the ballot check site instead.
-        Still having problems? Contact your local election official.
-      </p>
+      <p>{{ $t("views.welcome.error.content") }}</p>
     </div>
 
     <div class="Welcome__Content">
       <Infobox class="Welcome__About">
-        <p>Ballot tracker</p>
-        <p>I have voted and I want to track my ballot</p>
-        <p>
-          To check the status of your ballot, you need to input the tracking
-          code from the Voter receipt.
-        </p>
+        <h3>{{ $t("views.welcome.about.header") }}</h3>
+        <p>{{ $t("views.welcome.about.p1") }}</p>
+        <p>{{ $t("views.welcome.about.p2") }}</p>
       </Infobox>
 
       <Infobox class="Welcome__Tracking">
@@ -105,7 +97,7 @@ onMounted(() => {
             type="text"
             name="tracking-code"
             id="tracking-code"
-            placeholder="Ballot tracking code"
+            :placeholder="$t('views.welcome.tracking_code_input')"
             v-model="_trackingCode"
             class="Welcome__TrackingCode"
           />
@@ -117,19 +109,19 @@ onMounted(() => {
             class="Welcome__SubmitButton"
             @click="lookupBallot"
           >
-            Track my ballot
+            {{ $t("views.welcome.track_ballot_button") }}
           </button>
         </form>
 
         <p>
           <font-awesome-icon icon="fa-solid fa-circle-question" />
-          Where do I find my tracking code?
+          {{ $t("views.welcome.locate_tracking_code") }}
         </p>
       </Infobox>
     </div>
 
     <div class="Welcome__Footer">
-      <p>Did you mean Ballot Check instead?</p>
+      <p>{{ $t("views.welcome.footer") }}</p>
     </div>
   </div>
 </template>

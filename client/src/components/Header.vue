@@ -47,7 +47,7 @@ onMounted(() => {
     <img class="Header__Logo" :src="config.logoUrl" alt="DBAS Logo" />
 
     <RouterLink class="Header__Title" :to="`/${locale}/${slug}`" v-if="slug">
-      Digital Ballot Audit Site
+      {{ $t("header.dbas") }}
     </RouterLink>
 
     <div class="Header__Links" v-if="slug">
