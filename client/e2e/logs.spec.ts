@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { latestConfig, foundBallotStatus } from "./mocks.ts"
 
-test.only("downloading logs", async ({ page }) => {
+test("downloading logs", async ({ page }) => {
   // Mock Network calls
   await page.route('**/*', async (route) => {
     const url = route.request().url()
