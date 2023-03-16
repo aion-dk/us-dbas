@@ -2,9 +2,9 @@
 import useElectionStore from "../stores/useElectionStore";
 import { ref, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import useLocaleStore from "../stores/useLocaleStore"
+import useLocaleStore from "../stores/useLocaleStore";
 
-const localeStore = useLocaleStore()
+const localeStore = useLocaleStore();
 const route = useRoute();
 const electionStore = useElectionStore();
 const _locale = ref("en");

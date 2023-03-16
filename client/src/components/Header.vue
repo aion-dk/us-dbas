@@ -4,7 +4,7 @@ import { RouterLink, useRoute } from "vue-router";
 import useElectionStore from "../stores/useElectionStore";
 import useLocaleStore from "../stores/useLocaleStore";
 import config from "../lib/config";
-import router from "../router"
+import router from "../router";
 
 const localeStore = useLocaleStore();
 const electionStore = useElectionStore();
@@ -20,18 +20,12 @@ watch(
 watch(localeStore, () => (locale.value = localeStore.locale));
 
 function setLocale(locale) {
-  localeStore.setLocale(locale)
-  const url = [
-    locale,
-    electionStore.election.slug,
-  ]
+  const oldLocale = localeStore.locale;
+  localeStore.setLocale(locale);
 
-  if (route.params.trackingCode) {
-    url.push("track")
-    url.push(route.params.trackingCode)
-  }
-
-  router.replace(`/${url.join('/')}`)
+  const url = window.location.href;
+  const newUrl = url.replace(`/${oldLocale}/`, `/${locale}/`);
+  window.location.href = newUrl;
 }
 
 onMounted(() => {
@@ -48,28 +42,38 @@ onMounted(() => {
     </RouterLink>
 
     <div class="Header__Links" v-if="slug">
-      <RouterLink class="Header__Link" :to="`/${locale}/${slug}/about`"
-        >About</RouterLink
-      >
-      <RouterLink class="Header__Link" :to="`/${locale}/${slug}/logs`"
-        >Logs</RouterLink
-      >
-      <RouterLink class="Header__Link" :to="`/${locale}/${slug}/help`"
-        >Help</RouterLink
-      >
-      <RouterLink class="Header__Link" :to="`/${locale}/${slug}/contact`"
-        >Contact</RouterLink
-      >
+      <RouterLink class="Header__Link" :to="`/${locale}/${slug}/about`">
+        {{ $t("header.about") }}
+      </RouterLink>
+      <RouterLink class="Header__Link" :to="`/${locale}/${slug}/logs`">
+        {{ $t("header.logs") }}
+      </RouterLink>
+      <RouterLink class="Header__Link" :to="`/${locale}/${slug}/help`">
+        {{ $t("header.help") }}
+      </RouterLink>
+      <RouterLink class="Header__Link" :to="`/${locale}/${slug}/contact`">
+        {{ $t("header.contact") }}
+      </RouterLink>
 
-      <img
-        src="../assets/us.svg"
-        :class="{ Header__Flag: true, ['Header__Flag--current']: locale === 'en'}"
-        @click="() => setLocale('en')" />
+      <div class="Header__Flags">
+        <img
+          src="../assets/us.svg"
+          :class="{
+            Header__Flag: true,
+            ['Header__Flag--current']: locale === 'en',
+          }"
+          @click="() => setLocale('en')"
+        />
 
-      <img
-        src="../assets/es.svg"
-        :class="{ Header__Flag: true, ['Header__Flag--current']: locale === 'es'}"
-        @click="() => setLocale('es')" />
+        <img
+          src="../assets/es.svg"
+          :class="{
+            Header__Flag: true,
+            ['Header__Flag--current']: locale === 'es',
+          }"
+          @click="() => setLocale('es')"
+        />
+      </div>
     </div>
   </nav>
 </template>
@@ -112,19 +116,23 @@ onMounted(() => {
 }
 
 .Header__Link {
-  padding: 20px 8px;
+  padding: 20px;
   font-size: 18px;
   font-weight: 700;
   text-transform: uppercase;
-  min-width: 127px;
   text-decoration: none;
   color: #495057;
+}
+
+.Header__Flags {
+  margin-left: 20px;
+  margin-right: 10px;
 }
 
 .Header__Flag {
   width: 30px;
   height: 24px;
-  margin-right: 20px;
+  margin: 3px;
   cursor: pointer;
 }
 

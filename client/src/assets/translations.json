@@ -1,0 +1,18 @@
+{
+  "en": {
+    "header": {
+      "about": "About",
+      "logs": "Logs",
+      "help": "Help",
+      "contact": "Contact"
+    }
+  },
+  "es": {
+    "header": {
+      "about": "Información",
+      "logs": "Registros",
+      "help": "Ayuda",
+      "contact": "Contacto"
+    }
+  }
+}
