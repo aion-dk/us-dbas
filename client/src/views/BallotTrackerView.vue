@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import useElectionStore from "../stores/useElectionStore";
 import useBallotstore from "../stores/useBallotstore";
+import useLocaleStore from "../stores/useLocaleStore";
 import CompactHeader from "../components/CompactHeader.vue";
 import Infobox from "../components/Infobox.vue";
 import { ref, watch, onMounted } from "vue";
 import BallotActivityList from "../components/BallotActivityList.vue";
+import router from "../router";
 
+const localeStore = useLocaleStore();
 const electionStore = useElectionStore();
 const ballotStore = useBallotstore();
 const ballot = ref(null);
@@ -35,6 +38,10 @@ function setBallot() {
   ballot.value = ballotStore.ballot;
 }
 
+function cancel() {
+  router.push(`/${localeStore.locale}/${electionStore.election.slug}`);
+}
+
 onMounted(() => setBallot());
 </script>
 
@@ -53,6 +60,13 @@ onMounted(() => setBallot());
       </Infobox>
 
       <Infobox class="BallotTracker__TrackingCode">
+        <button
+          class="BallotTracker__Cancel"
+          @click="cancel"
+          aria-label="Cancel and track a new ballot"
+        >
+          ×
+        </button>
         <h3>
           <span>You are currently tracking</span>
           <code>{{ ballot.trackingCode }}</code>
@@ -99,6 +113,7 @@ onMounted(() => setBallot());
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .BallotTracker__Infobox {
@@ -125,5 +140,20 @@ onMounted(() => setBallot());
 
 .BallotTracker__StatusInfo {
   width: 100%;
+}
+
+.BallotTracker__StatusInfo h3 {
+  font-size: 24px;
+}
+
+.BallotTracker__Cancel {
+  border: none;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  right: 8px;
+  font-size: 40px;
+  cursor: pointer;
+  color: #adb5bd;
 }
 </style>

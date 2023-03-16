@@ -5,12 +5,14 @@ import { ref, watch, onMounted } from "vue";
 import Infobox from "../components/Infobox.vue";
 import useBallotStore from "../stores/useBallotStore";
 import router from "../router";
+import useLocaleStore from "../stores/useLocaleStore"
 
+const localeStore = useLocaleStore()
 const ballotStore = useBallotStore();
 const electionStore = useElectionStore();
 const route = useRoute();
 const _electionSlug = ref(route.params.electionSlug);
-const _locale = ref(route.params.locale);
+const _locale = ref(localeStore.locale);
 const _title = ref("Loading..");
 const _info = ref("Loading..");
 const _trackingCode = ref(null);
@@ -185,6 +187,7 @@ onMounted(() => {
   line-height: 44px;
   text-align: center;
   padding: 0 20px;
+  font-size: 16px;
 }
 
 .Welcome__SubmitButton {
@@ -198,5 +201,6 @@ onMounted(() => {
   line-height: 44px;
   margin-top: 16px;
   cursor: pointer;
+  font-size: 16px;
 }
 </style>

@@ -74,6 +74,6 @@ body {
 .DBAS__InnerContent {
   width: 80vw;
   margin: auto;
-  padding: 20px;
+  padding: 0;
 }
 </style>

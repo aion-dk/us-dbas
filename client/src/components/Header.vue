@@ -1,19 +1,26 @@
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 import useElectionStore from "../stores/useElectionStore";
+import useLocaleStore from "../stores/useLocaleStore";
 import config from "../lib/config";
 
+const localeStore = useLocaleStore()
 const electionStore = useElectionStore();
 const route = useRoute();
-const locale = ref(route.params.locale);
 const slug = ref(null);
+const locale = ref("en")
 
-watch(route, (newRoute) => (locale.value = newRoute.params.locale));
 watch(
   electionStore,
-  (newElectionStore) => (slug.value = newElectionStore?.election?.slug)
+  (newElectionStore) => (slug.value = newElectionStore.election?.slug)
 );
+
+watch(localeStore, () => locale.value = localeStore.locale)
+
+onMounted(() => {
+  locale.value = localeStore.locale
+})
 </script>
 
 <template>
