@@ -6,8 +6,7 @@ import useElectionStore from "../stores/useElectionStore";
 import useBoardStore from "../stores/useBoardStore";
 import { onMounted, watch } from "vue";
 import { useRoute, RouterLink } from "vue-router";
-import DateTime from "../components/DateTime.vue"
-import { hexToShortCode } from '@aion-dk/js-client/dist/lib/av_client/short_codes';
+import BoardItem from "../components/BoardItem.vue"
 
 const route = useRoute()
 const localeStore = useLocaleStore()
@@ -42,18 +41,13 @@ onMounted(() => loadPage(currentPage()));
       </p>
     </div>
 
-    <div v-for="item in boardStore.items" class="Item">
-      <div>{{ item.type }}</div>
-      <DateTime :date-time="item.registered_at" format="long" />
-      <div>{{ hexToShortCode(item.address.slice(0, 10)) }}</div>
-      <!-- <pre>{{ item }}</pre> -->
-    </div>
+    <BoardItem v-for="item in boardStore.items" :item="item" />
 
-    <div class="Pagination">
+    <div class="LogsView__Pagination">
       <RouterLink
         :class="{
-          Pagination__Page: true,
-          ['Pagination__Page--current']: i + 1 === boardStore.meta.current_page,
+          LogsView__PageLink: true,
+          ['LogsView__PageLink--current']: i + 1 === boardStore.meta.current_page,
         }"
         v-for="(_, i) in Array(boardStore.meta.total_pages)"
         :to="`/${localeStore.locale}/${electionStore.election.slug}/logs/${i + 1}`"
@@ -74,12 +68,21 @@ onMounted(() => loadPage(currentPage()));
 </template>
 
 <style type="text/css" scoped>
-.Item {
+.LogsView__Pagination {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.Pagination {
-  display: flex;
+.LogsView__PageLink {
+  padding: 3px;
+  margin: 5px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.LogsView__PageLink--current {
+  font-weight: 700;
 }
 
 .LogsView {
