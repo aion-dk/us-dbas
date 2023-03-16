@@ -19,7 +19,8 @@ watch(electionStore, (newElectionStore) => setElectionInfo());
 watch(localeStore, () => (locale.value = localeStore.locale));
 
 function setElectionInfo() {
-  slug.value = electionStore.election?.slug;
+  if (electionStore.election && electionStore.election.slug)
+    slug.value = electionStore.election?.slug;
   locales.value = electionStore.election.content.locales;
 }
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useElectionStore from "../stores/useElectionStore";
-import useBallotstore from "../stores/useBallotstore";
+import useBallotStore from "../stores/useBallotStore";
 import useLocaleStore from "../stores/useLocaleStore";
 import CompactHeader from "../components/CompactHeader.vue";
 import Infobox from "../components/Infobox.vue";
@@ -10,7 +10,7 @@ import router from "../router";
 
 const localeStore = useLocaleStore();
 const electionStore = useElectionStore();
-const ballotStore = useBallotstore();
+const ballotStore = useBallotStore();
 const ballot = ref(null);
 
 watch(ballotStore, () => setBallot());

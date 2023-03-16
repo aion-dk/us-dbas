@@ -35,10 +35,12 @@ async function lookupBallot(event) {
   _disabled.value = true;
   _error.value = false;
 
-  await ballotStore.loadBallot(
-    _trackingCode.value,
-    electionStore.election.slug
-  );
+  if (_trackingCode.value && electionStore.election.slug) {
+    await ballotStore.loadBallot(
+      _trackingCode.value,
+      electionStore.election.slug
+    );
+  }
 
   if (ballotStore.ballot?.status) {
     router.push(

@@ -16,7 +16,7 @@ watch(electionStore, () => setInfo());
 watch(localeStore, () => setInfo());
 
 function setInfo() {
-  _locale.value = route.params.locale;
+  _locale.value = route.params.locale.toString();
   _title.value = electionStore.election?.content?.title[_locale.value];
   _area.value = [
     electionStore.election?.jurisdiction,

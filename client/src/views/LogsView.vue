@@ -17,7 +17,10 @@ watch(electionStore, () => loadPage(currentPage()));
 watch(route, () => loadPage(currentPage()));
 
 function currentPage() {
-  return parseInt(route.params.page || boardStore.currentPage || 1, 10);
+  return parseInt(
+    (route.params.page || boardStore.currentPage || 1).toString(),
+    10
+  );
 }
 
 function loadPage(page: number) {

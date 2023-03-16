@@ -14,7 +14,7 @@ const route = useRoute();
 
 watch(route, async (newRoute) => {
   const slug = newRoute.params.electionSlug;
-  if (slug) electionStore.loadElection(slug);
+  if (slug) electionStore.loadElection(slug.toString());
 
   const locale = newRoute.params.locale;
   if (locale) localeStore.setLocale(locale);
