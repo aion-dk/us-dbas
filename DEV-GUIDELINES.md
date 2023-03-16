@@ -15,3 +15,7 @@ These are also the ones mapped in our routes.
 ## Stores
 
 Stores may be connected to the network, and through these, components can call out into the world.
+
+## Resources
+
+* [Flag images](https://github.com/LeCoupa/vueflags/tree/master/flags)
