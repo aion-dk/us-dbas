@@ -34,7 +34,6 @@ const router = createRouter({
       component: LogsView,
     },
     {
-      name: "LogsView",
       path: "/:locale/:electionSlug/logs/:page",
       component: LogsView,
     },

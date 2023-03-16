@@ -8,7 +8,7 @@ export default defineStore("useBoardStore", () => {
   const currentPage = ref(null);
 
   const loadPage = async (slug: string, page: number) => {
-    if (currentPage.value === page) return
+    if (currentPage.value === page) return;
 
     const url = `/${slug}/board?page=${page}`;
     const { data } = await api.get(url);

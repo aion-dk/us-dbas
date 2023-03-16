@@ -6,10 +6,10 @@ import useElectionStore from "../stores/useElectionStore";
 import useBoardStore from "../stores/useBoardStore";
 import { onMounted, watch } from "vue";
 import { useRoute, RouterLink } from "vue-router";
-import BoardItem from "../components/BoardItem.vue"
+import BoardItem from "../components/BoardItem.vue";
 
-const route = useRoute()
-const localeStore = useLocaleStore()
+const route = useRoute();
+const localeStore = useLocaleStore();
 const electionStore = useElectionStore();
 const boardStore = useBoardStore();
 
@@ -17,7 +17,7 @@ watch(electionStore, () => loadPage(currentPage()));
 watch(route, () => loadPage(currentPage()));
 
 function currentPage() {
-  return parseInt(route.params.page || boardStore.currentPage || 1, 10)
+  return parseInt(route.params.page || boardStore.currentPage || 1, 10);
 }
 
 function loadPage(page: number) {
@@ -47,10 +47,13 @@ onMounted(() => loadPage(currentPage()));
       <RouterLink
         :class="{
           LogsView__PageLink: true,
-          ['LogsView__PageLink--current']: i + 1 === boardStore.meta.current_page,
+          ['LogsView__PageLink--current']:
+            i + 1 === boardStore.meta.current_page,
         }"
         v-for="(_, i) in Array(boardStore.meta.total_pages)"
-        :to="`/${localeStore.locale}/${electionStore.election.slug}/logs/${i + 1}`"
+        :to="`/${localeStore.locale}/${electionStore.election.slug}/logs/${
+          i + 1
+        }`"
       >
         {{ i + 1 }}
       </RouterLink>

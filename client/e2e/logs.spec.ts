@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { latestConfig, foundBallotStatus } from "./mocks.ts";
+import { latestConfig, foundBallotStatus, boardItemsPage1, boardItemsPage2 } from "./mocks.ts";
 
 test("downloading logs", async ({ page }) => {
   // Mock Network calls
@@ -36,4 +36,45 @@ test("downloading logs", async ({ page }) => {
     })
     .click();
   const download = await downloadPromise;
+});
+
+test("traversing board items", async ({ page }) => {
+  // Mock Network calls
+  await page.route("**/*", async (route) => {
+    const url = route.request().url();
+
+    // Intercept DBB latest config calls
+    if (url.indexOf("us3/configuration/latest_config") > 0) {
+      return route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify(latestConfig),
+      });
+    }
+
+    // Intercept page 1 of the board
+    if (url.indexOf("us3/board?page=1") > 0) {
+      return route.fulfill({
+        status: 200,
+        contentType: "application/octet-stream",
+        body: JSON.stringify(boardItemsPage1),
+      });
+    }
+
+    // Intercept page 1 of the board
+    if (url.indexOf("us3/board?page=2") > 0) {
+      return route.fulfill({
+        status: 200,
+        contentType: "application/octet-stream",
+        body: JSON.stringify(boardItemsPage2),
+      });
+    }
+
+    return route.continue();
+  });
+
+  await page.goto("/en/us3");
+  await page.getByRole('link', { name: 'Logs' }).click();
+  await page.getByRole('link', { name: '2', exact: true }).click();
+  await page.getByRole('link', { name: '1', exact: true }).click();
 });
