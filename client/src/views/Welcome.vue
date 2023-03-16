@@ -68,8 +68,8 @@ onMounted(() => {
       <h3 class="Welcome__Info">{{ _info }}</h3>
     </div>
 
-    <div v-if="_error" role="alert">
-      <p>Tracking code not found</p>
+    <div v-if="_error" class="Welcome__Error" role="alert">
+      <h3>Tracking code not found</h3>
 
       <p>
         Please check that the tracking code was entered correctly. The code is
@@ -202,5 +202,20 @@ onMounted(() => {
   margin-top: 16px;
   cursor: pointer;
   font-size: 16px;
+}
+
+.Welcome__Error {
+  background-color: #FCEDE9;
+  border: none;
+  border-left: solid 6px #EA4E2C;
+  padding: 17px 36px;
+  margin-bottom: 40px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.Welcome__Error h3 {
+  font-weight: 700;
+  font-size: 18px;
+  color: #495057;
 }
 </style>
