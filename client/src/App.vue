@@ -7,7 +7,7 @@ import useBallotStore from "./stores/useBallotStore";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 
-const ballotStore = useBallotStore()
+const ballotStore = useBallotStore();
 const electionStore = useElectionStore();
 const localeStore = useLocaleStore();
 const route = useRoute();
@@ -17,7 +17,7 @@ watch(route, async (newRoute) => {
   if (slug) electionStore.loadElection(slug);
 
   const locale = newRoute.params.locale;
-  if (locale) localeStore.setLocale(locale)
+  if (locale) localeStore.setLocale(locale);
 });
 
 watch(electionStore, () => {
@@ -26,7 +26,10 @@ watch(electionStore, () => {
     electionStore.loadElection(route.params.electionSlug);
 
     if (route.params.trackingCode) {
-      ballotStore.loadBallot(route.params.trackingCode, electionStore.election.slug)
+      ballotStore.loadBallot(
+        route.params.trackingCode,
+        electionStore.election.slug
+      );
     }
   }
 });

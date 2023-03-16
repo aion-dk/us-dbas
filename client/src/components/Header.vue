@@ -2,7 +2,7 @@
 import { ref, watch } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 import useElectionStore from "../stores/useElectionStore";
-import config from "../lib/config"
+import config from "../lib/config";
 
 const electionStore = useElectionStore();
 const route = useRoute();

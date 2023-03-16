@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { api } from "../lib/api";
-import useAVClient from "../lib/useAVClient"
+import useAVClient from "../lib/useAVClient";
 
 export default defineStore("useBallotStore", () => {
   const ballot = ref(null);
@@ -11,12 +11,12 @@ export default defineStore("useBallotStore", () => {
   };
 
   function resetBallot() {
-    ballot.value = null
+    ballot.value = null;
   }
 
   async function loadBallot(trackingCode: string, electionSlug: string) {
     console.info("Tracking ballot", trackingCode);
-    resetBallot()
+    resetBallot();
 
     try {
       const avClient = await useAVClient(electionSlug);
@@ -26,10 +26,10 @@ export default defineStore("useBallotStore", () => {
         trackingCode: trackingCode,
         status: res.status,
         activities: res.activities.reverse(),
-      }
+      };
     } catch (e) {
-      console.log("Unable to find ballot", trackingCode)
-      resetBallot()
+      console.log("Unable to find ballot", trackingCode);
+      resetBallot();
     }
   }
 

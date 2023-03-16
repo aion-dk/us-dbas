@@ -3,18 +3,18 @@ import { useRoute } from "vue-router";
 import useElectionStore from "../stores/useElectionStore";
 import { ref, watch, onMounted } from "vue";
 import Infobox from "../components/Infobox.vue";
-import useBallotStore from "../stores/useBallotStore"
-import router from "../router"
+import useBallotStore from "../stores/useBallotStore";
+import router from "../router";
 
-const ballotStore = useBallotStore()
+const ballotStore = useBallotStore();
 const electionStore = useElectionStore();
 const route = useRoute();
 const _electionSlug = ref(route.params.electionSlug);
 const _locale = ref(route.params.locale);
 const _title = ref("Loading..");
 const _info = ref("Loading..");
-const _trackingCode = ref(null)
-const _error = ref(false)
+const _trackingCode = ref(null);
+const _error = ref(false);
 
 function setInfo() {
   _title.value = electionStore.election?.content?.title[_locale.value];
@@ -27,17 +27,19 @@ function setInfo() {
 }
 
 async function lookupBallot(event) {
-  event.preventDefault()
-  event.stopPropagation()
+  event.preventDefault();
+  event.stopPropagation();
   await ballotStore.loadBallot(
     _trackingCode.value,
     electionStore.election.slug
-  )
+  );
 
-  if(ballotStore.ballot?.status) {
-    router.push(`/${_locale.value}/${_electionSlug.value}/track/${_trackingCode.value}`)
+  if (ballotStore.ballot?.status) {
+    router.push(
+      `/${_locale.value}/${_electionSlug.value}/track/${_trackingCode.value}`
+    );
   } else {
-    _error.value = true
+    _error.value = true;
   }
 }
 
@@ -52,8 +54,8 @@ watch(electionStore, (newElectionStore) => {
 });
 
 onMounted(() => {
-  setInfo()
-  document.querySelector(".Welcome__TrackingCode").focus()
+  setInfo();
+  document.querySelector(".Welcome__TrackingCode").focus();
 });
 </script>
 
@@ -67,7 +69,12 @@ onMounted(() => {
     <div v-if="_error" role="alert">
       <p>Tracking code not found</p>
 
-      <p>Please check that the tracking code was entered correctly. The code is case sensitive. If you are checking to make sure your ballot was recorded correctly before submitting, use the ballot check site instead. Still having problems? Contact your local election official.</p>
+      <p>
+        Please check that the tracking code was entered correctly. The code is
+        case sensitive. If you are checking to make sure your ballot was
+        recorded correctly before submitting, use the ballot check site instead.
+        Still having problems? Contact your local election official.
+      </p>
     </div>
 
     <div class="Welcome__Content">
@@ -82,9 +89,22 @@ onMounted(() => {
 
       <Infobox class="Welcome__Tracking">
         <form @submit="lookupBallot">
-          <input type="text" name="tracking-code" id="tracking-code" placeholder="Ballot tracking code" v-model="_trackingCode" class="Welcome__TrackingCode" />
+          <input
+            type="text"
+            name="tracking-code"
+            id="tracking-code"
+            placeholder="Ballot tracking code"
+            v-model="_trackingCode"
+            class="Welcome__TrackingCode"
+          />
 
-          <input type="submit" name="lookup-ballot" id="lookup-ballot" value="Track my ballot" class="Welcome__SubmitButton" />
+          <input
+            type="submit"
+            name="lookup-ballot"
+            id="lookup-ballot"
+            value="Track my ballot"
+            class="Welcome__SubmitButton"
+          />
         </form>
       </Infobox>
     </div>
@@ -157,7 +177,7 @@ onMounted(() => {
 
 .Welcome__TrackingCode {
   color: #000;
-  border: solid 1px #ADB5BD;
+  border: solid 1px #adb5bd;
   border-radius: 12px;
   box-sizing: border-box;
   width: 100%;
@@ -170,7 +190,7 @@ onMounted(() => {
 .Welcome__SubmitButton {
   box-sizing: border-box;
   width: 100%;
-  background-color: #343A40;
+  background-color: #343a40;
   color: #fff;
   border: none;
   border-radius: 12px;

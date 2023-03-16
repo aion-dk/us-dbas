@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import useElectionStore from "../stores/useElectionStore";
 import useBallotstore from "../stores/useBallotstore";
-import CompactHeader from "../components/CompactHeader.vue"
-import Infobox from "../components/Infobox.vue"
-import { ref, watch, onMounted } from "vue"
-import BallotActivityList from "../components/BallotActivityList.vue"
+import CompactHeader from "../components/CompactHeader.vue";
+import Infobox from "../components/Infobox.vue";
+import { ref, watch, onMounted } from "vue";
+import BallotActivityList from "../components/BallotActivityList.vue";
 
 const electionStore = useElectionStore();
 const ballotStore = useBallotstore();
-const ballot = ref(null)
+const ballot = ref(null);
 
-watch(ballotStore, () => setBallot())
+watch(ballotStore, () => setBallot());
 
 const statusMap = {
   found: {
     title: "Ballot received",
-    body: "Your ballot package has been received. Check back to verify that your ballot was accepted for counting."
+    body: "Your ballot package has been received. Check back to verify that your ballot was accepted for counting.",
   },
   rejected: {
     title: "Ballot Not Accepted",
@@ -29,13 +29,13 @@ const statusMap = {
     title: "Ballot decrypted for printing",
     body: "Your ballot has been extracted from the digital ballot box and decrypted offline. It has been printed onto a paper ballot for scanning and tabulation with other absentee ballots.",
   },
-}
+};
 
 function setBallot() {
-  ballot.value = ballotStore.ballot
+  ballot.value = ballotStore.ballot;
 }
 
-onMounted(() => setBallot())
+onMounted(() => setBallot());
 </script>
 
 <template>
@@ -46,7 +46,10 @@ onMounted(() => setBallot())
       <Infobox class="BallotTracker__Infobox">
         <h2 role="status">Ballot found</h2>
 
-        <p>See the status of your ballot below. You can also see all activity connected to your ballot tracking code.</p>
+        <p>
+          See the status of your ballot below. You can also see all activity
+          connected to your ballot tracking code.
+        </p>
       </Infobox>
 
       <Infobox class="BallotTracker__TrackingCode">
@@ -64,7 +67,10 @@ onMounted(() => setBallot())
       </Infobox>
     </div>
 
-    <div class="BallotTracker__Row BallotTracker__Row--stacked" v-if="ballot.activities.length">
+    <div
+      class="BallotTracker__Row BallotTracker__Row--stacked"
+      v-if="ballot.activities.length"
+    >
       <h3>Activity connected to the tracking code</h3>
 
       <BallotActivityList :activities="ballot.activities" />
@@ -73,51 +79,51 @@ onMounted(() => setBallot())
 </template>
 
 <style type="text/css" scoped>
-  .BallotTracker {
-    font-family: "Open Sans";
-  }
+.BallotTracker {
+  font-family: "Open Sans";
+}
 
-  .BallotTracker__Row {
-    display: flex;
-    margin-bottom: 40px;
-  }
+.BallotTracker__Row {
+  display: flex;
+  margin-bottom: 40px;
+}
 
-  .BallotTracker__Row--stacked {
-    flex-direction: column;
-  }
+.BallotTracker__Row--stacked {
+  flex-direction: column;
+}
 
-  .BallotTracker__TrackingCode {
-    margin-left: 40px;
-    flex-grow: 1;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.BallotTracker__TrackingCode {
+  margin-left: 40px;
+  flex-grow: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .BallotTracker__Infobox {
-    max-width: 350px;
-  }
+.BallotTracker__Infobox {
+  max-width: 350px;
+}
 
-  .BallotTracker__TrackingCode h3 {
-    padding: 0;
-    margin: 0;
-  }
+.BallotTracker__TrackingCode h3 {
+  padding: 0;
+  margin: 0;
+}
 
-  .BallotTracker__TrackingCode code {
-    font-size: 40px;
-    font-family: "Red Hat Mono";
-    letter-spacing: 5px;
-  }
+.BallotTracker__TrackingCode code {
+  font-size: 40px;
+  font-family: "Red Hat Mono";
+  letter-spacing: 5px;
+}
 
-  .BallotTracker__TrackingCode h3 span {
-    color: #6C757D;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 20px;
-  }
+.BallotTracker__TrackingCode h3 span {
+  color: #6c757d;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 20px;
+}
 
-  .BallotTracker__StatusInfo {
-    width: 100%;
-  }
+.BallotTracker__StatusInfo {
+  width: 100%;
+}
 </style>

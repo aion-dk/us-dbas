@@ -13,7 +13,7 @@ defineProps({
   format: {
     type: String,
     default: "relative",
-    validate: (s) => ["absolute", "relative"].indexOf(s) >= 0
+    validate: (s) => ["absolute", "relative"].indexOf(s) >= 0,
   },
 });
 
