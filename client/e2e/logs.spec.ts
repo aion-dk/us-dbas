@@ -38,7 +38,7 @@ test("downloading logs", async ({ page }) => {
   const download = await downloadPromise;
 });
 
-test.only("traversing board items", async ({ page }) => {
+test("traversing board items", async ({ page }) => {
   // Mock Network calls
   await page.route("**/*", async (route) => {
     const url = route.request().url();
