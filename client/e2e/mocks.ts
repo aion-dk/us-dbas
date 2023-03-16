@@ -25,3 +25,21 @@ export const foundBallotStatus = {
     }
   ]
 }
+
+export const rejectedBallotStatus = {
+  status: 'rejected',
+  activities: [
+    {
+      type: 'VoterSessionItem',
+      registered_at: '2023-03-14T13:26:54.211Z',
+    },
+    {
+      type: 'CastRequestItem',
+      registered_at: '2023-03-14T13:26:55.101Z',
+    },
+    {
+      type: 'AffidavitRejectItem',
+      registered_at: '2023-03-14T13:26:56.101Z',
+    }
+  ]
+}

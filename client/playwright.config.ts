@@ -45,7 +45,7 @@ const config: PlaywrightTestConfig = {
     headless: !!process.env.CI,
 
     video: process.env.CI ? "retain-on-failure" : "off",
-    screenshot: process.env.CI ? "only-on-failure" : "off",
+    screenshot: "only-on-failure",
   },
 
   /* Configure projects for major browsers */
