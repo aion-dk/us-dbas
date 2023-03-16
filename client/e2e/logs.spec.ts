@@ -61,7 +61,7 @@ test("traversing board items", async ({ page }) => {
       });
     }
 
-    // Intercept page 1 of the board
+    // Intercept page 2 of the board
     if (url.indexOf("us3/board?page=2") > 0) {
       return route.fulfill({
         status: 200,
