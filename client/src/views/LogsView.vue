@@ -57,6 +57,8 @@ onMounted(() => loadPage(currentPage()));
       </RouterLink>
 
       <span class="LogsView__PageLink">{{ boardStore.currentPage }}</span>
+      <span class="LogsView__PageLink">/</span>
+      <span class="LogsView__PageLink">{{ boardStore.meta.total_pages }}</span>
 
       <RouterLink
         class="LogsView__PageLink"
