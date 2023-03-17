@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { api } from "../lib/api";
 import useAVClient from "../lib/useAVClient";
 
 export default defineStore("useBallotStore", () => {

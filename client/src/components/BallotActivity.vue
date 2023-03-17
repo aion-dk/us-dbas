@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import DateTime from "./DateTime.vue";
-import ExpandableSection from "./ExpandableSection.vue"
+import ExpandableSection from "./ExpandableSection.vue";
 
 defineProps({
   activity: {
@@ -19,13 +19,18 @@ defineProps({
         </div>
 
         <div class="BallotActivity__RegisteredAt">
-          <font-awesome-icon icon="fa-solid fa-clock" class="BallotActivity__Icon" />
+          <font-awesome-icon
+            icon="fa-solid fa-clock"
+            class="BallotActivity__Icon"
+          />
           <DateTime :date-time="activity.registered_at" />
         </div>
 
-
         <div class="BallotActivity__Author">
-          <font-awesome-icon icon="fa-solid fa-user" class="BallotActivity__Icon" />
+          <font-awesome-icon
+            icon="fa-solid fa-user"
+            class="BallotActivity__Icon"
+          />
           <span>
             {{ $t(`components.ballot_activity.${activity.type}.author`) }}
           </span>
@@ -38,12 +43,18 @@ defineProps({
         </p>
 
         <p>
-          <font-awesome-icon icon="fa-solid fa-clock" class="BallotActivity__Icon" />
+          <font-awesome-icon
+            icon="fa-solid fa-clock"
+            class="BallotActivity__Icon"
+          />
           {{ $t("components.ballot_activity.registered_at") }}
           <DateTime :date-time="activity.registered_at" format="long" />
         </p>
         <p>
-          <font-awesome-icon icon="fa-solid fa-user" class="BallotActivity__Icon" />
+          <font-awesome-icon
+            icon="fa-solid fa-user"
+            class="BallotActivity__Icon"
+          />
           {{
             $t("components.ballot_activity.author", {
               author: $t(`components.ballot_activity.${activity.type}.author`),
@@ -51,7 +62,10 @@ defineProps({
           }}
         </p>
         <p>
-          <font-awesome-icon icon="fa-solid fa-circle-info" class="BallotActivity__Icon" />
+          <font-awesome-icon
+            icon="fa-solid fa-circle-info"
+            class="BallotActivity__Icon"
+          />
           {{ $t("components.ballot_activity.meaning") }}
         </p>
         <p>

@@ -1,5 +1,5 @@
-import { test, expect } from "@playwright/test";
-import { latestConfig, foundBallotStatus } from "./mocks.ts";
+import { test } from "@playwright/test";
+import { latestConfig } from "./mocks.ts";
 
 test("changing locale", async ({ page }) => {
   // Mock Network calls

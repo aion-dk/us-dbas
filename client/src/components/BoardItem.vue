@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import DateTime from "../components/DateTime.vue";
 import { hexToShortCode } from "@aion-dk/js-client/dist/lib/av_client/short_codes";
-import ExpandableSection from "./ExpandableSection.vue"
+import ExpandableSection from "./ExpandableSection.vue";
 
 defineProps({
   item: {
@@ -20,17 +20,26 @@ defineProps({
         </span>
 
         <span class="BoardItem__Date">
-          <font-awesome-icon icon="fa-solid fa-clock" class="BoardItem__InlineIcon" />
+          <font-awesome-icon
+            icon="fa-solid fa-clock"
+            class="BoardItem__InlineIcon"
+          />
           <DateTime :date-time="item.registeredAt" format="relative" />
         </span>
 
         <span class="BoardItem__ShortAddress">
-          <font-awesome-icon icon="fa-solid fa-fingerprint" class="BoardItem__InlineIcon" />
+          <font-awesome-icon
+            icon="fa-solid fa-fingerprint"
+            class="BoardItem__InlineIcon"
+          />
           {{ hexToShortCode(item.address.slice(0, 10)) }}
         </span>
 
         <span class="BoardItem__Author">
-          <font-awesome-icon icon="fa-solid fa-user" class="BoardItem__InlineIcon" />
+          <font-awesome-icon
+            icon="fa-solid fa-user"
+            class="BoardItem__InlineIcon"
+          />
           {{ $t(`components.board_item.${item.type}.author`) }}
         </span>
       </template>
@@ -41,17 +50,26 @@ defineProps({
         </p>
 
         <p>
-          <font-awesome-icon icon="fa-solid fa-clock" class="BoardItem__InlineIcon" />
+          <font-awesome-icon
+            icon="fa-solid fa-clock"
+            class="BoardItem__InlineIcon"
+          />
           <DateTime :date-time="item.registeredAt" format="absolute" />
         </p>
 
         <p>
-          <font-awesome-icon icon="fa-solid fa-fingerprint" class="BoardItem__InlineIcon" />
+          <font-awesome-icon
+            icon="fa-solid fa-fingerprint"
+            class="BoardItem__InlineIcon"
+          />
           <span>{{ hexToShortCode(item.address.slice(0, 10)) }}</span>
         </p>
 
         <p>
-          <font-awesome-icon icon="fa-solid fa-user" class="BoardItem__InlineIcon" />
+          <font-awesome-icon
+            icon="fa-solid fa-user"
+            class="BoardItem__InlineIcon"
+          />
           <span>{{ $t(`components.board_item.${item.type}.author`) }}</span>
         </p>
 

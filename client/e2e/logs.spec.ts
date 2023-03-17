@@ -1,10 +1,5 @@
-import { test, expect } from "@playwright/test";
-import {
-  latestConfig,
-  foundBallotStatus,
-  boardItemsPage1,
-  boardItemsPage2,
-} from "./mocks.ts";
+import { test } from "@playwright/test";
+import { latestConfig, boardItemsPage1, boardItemsPage2 } from "./mocks.ts";
 
 test("downloading logs", async ({ page }) => {
   // Mock Network calls
@@ -40,7 +35,7 @@ test("downloading logs", async ({ page }) => {
       name: "Download the full election activity log (json)",
     })
     .click();
-  const download = await downloadPromise;
+  await downloadPromise;
 });
 
 test("traversing board items", async ({ page }) => {
@@ -86,15 +81,15 @@ test("traversing board items", async ({ page }) => {
   await page.getByText("VMMHYWv").click();
 
   // Page 2
-  await page.getByRole('link', { name: 'Next page' }).click();
+  await page.getByRole("link", { name: "Next page" }).click();
   await page.getByText("1yo3CEM").click();
   await page.getByText("12g69GA").click();
 
   // Page 1 again
-  await page.getByRole('link', { name: 'Previos page' }).click();
+  await page.getByRole("link", { name: "Previos page" }).click();
   await page.getByText("16fSovo").click();
   await page.getByText("VMMHYWv").click();
 
   // Configuration only
-  await page.getByText('Configuration only?').click();
+  await page.getByText("Configuration only?").click();
 });

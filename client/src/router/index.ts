@@ -11,7 +11,7 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      redirect: (to) => "/en",
+      redirect: () => "/en",
     },
     {
       path: "/:locale",

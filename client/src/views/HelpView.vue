@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CompactHeader from "../components/CompactHeader.vue";
-import ExpandableSection from "../components/ExpandableSection.vue"
+import ExpandableSection from "../components/ExpandableSection.vue";
 </script>
 
 <template>
@@ -32,19 +32,27 @@ import ExpandableSection from "../components/ExpandableSection.vue"
         <h3>About Ballot Statuses</h3>
 
         <p>
-          <strong>Ballot Received</strong> - Your ballot has been received in the digital ballot box and is awaiting signature verification by local election officials.
+          <strong>Ballot Received</strong> - Your ballot has been received in
+          the digital ballot box and is awaiting signature verification by local
+          election officials.
         </p>
 
         <p>
-          <strong>Ballot Accepted</strong> - Your signature affidavit has been verified and your ballot is accepted for counting.
+          <strong>Ballot Accepted</strong> - Your signature affidavit has been
+          verified and your ballot is accepted for counting.
         </p>
 
         <p>
-          <strong>Ballot Not Accepted</strong> - There is a problem with your signature affidavit. Contact your local election official for next steps and to cure your affidavit.
+          <strong>Ballot Not Accepted</strong> - There is a problem with your
+          signature affidavit. Contact your local election official for next
+          steps and to cure your affidavit.
         </p>
 
         <p>
-          <strong>Ballot Printed for Counting</strong> - Your ballot has been extracted from the digital ballot box and decrypted offline. It has been printed onto a paper ballot for scanning and tabulation with other absentee ballots.
+          <strong>Ballot Printed for Counting</strong> - Your ballot has been
+          extracted from the digital ballot box and decrypted offline. It has
+          been printed onto a paper ballot for scanning and tabulation with
+          other absentee ballots.
         </p>
       </template>
     </ExpandableSection>

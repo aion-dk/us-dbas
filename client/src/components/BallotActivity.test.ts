@@ -1,4 +1,4 @@
-import { assert, expect, test } from "vitest";
+import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import BallotActivity from "./BallotActivity.vue";
 import { createI18n } from "vue-i18n";

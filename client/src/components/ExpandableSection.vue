@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref} from "vue"
+import { ref } from "vue";
 
 const props = defineProps({
   expanded: {
@@ -8,7 +8,7 @@ const props = defineProps({
   },
 });
 
-const _expanded = ref(props.expanded)
+const _expanded = ref(props.expanded);
 </script>
 
 <template>
@@ -26,7 +26,10 @@ const _expanded = ref(props.expanded)
       <slot name="expanded"></slot>
     </div>
 
-    <button class="ExpandableSection__Expander" @click="() => _expanded = !_expanded">
+    <button
+      class="ExpandableSection__Expander"
+      @click="() => (_expanded = !_expanded)"
+    >
       <font-awesome-icon
         v-if="_expanded"
         icon="fa-solid fa-minus"
