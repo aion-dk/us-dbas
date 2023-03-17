@@ -8,6 +8,56 @@
       "contact": "Contact"
     },
     "components": {
+      "board_item": {
+        "GenesisItem": {
+          "type": "Genesis item",
+          "author": "Election Official"
+        },
+        "VoterAuthorizationConfigItem": {
+          "type": "Voter authorization config",
+          "author": "Election Official"
+        },
+        "ContestConfigItem": {
+          "type": "Contest config",
+          "author": "Election Official"
+        },
+        "VotingRoundConfigItem": {
+          "type": "Voting round config",
+          "author": "Election Official"
+        },
+        "BallotConfigItem": {
+          "type": "Ballot config",
+          "author": "Election Official"
+        },
+        "ElectionConfigItem": {
+          "type": "Election config",
+          "author": "Election Official"
+        },
+        "ThresholdConfigItem": {
+          "type": "Ballot encryption key",
+          "author": "Trustee"
+        },
+        "CastRequestItem": {
+          "type": "Ballot cast",
+          "author": "Voter"
+        },
+        "VoterSessionItem": {
+          "type": "Voter session",
+          "author": "Voter"
+        },
+        "BallotCryptogramsItem": {
+          "type": "Ballot cryptogram",
+          "author": "Voter"
+        },
+        "BoardEncryptionCommitmentItem": {
+          "type": "Encryption commitment",
+          "author": "Digital Ballot Box"
+        },
+        "VoterEncryptionCommitmentItem": {
+          "type": "Encryption commitment",
+          "author": "Voter"
+        }
+      },
       "ballot_activity_list": {
         "title": "Activity connected to the tracking code",
         "type": "Activity type",
@@ -91,57 +141,6 @@
       "logs": "Registros",
       "help": "Ayuda",
       "contact": "Contacto"
-    },
-    "components": {
-      "ballot_activity_list": {
-        "title": "Activity connected to the tracking code",
-        "type": "Activity type",
-        "time": "Date and time",
-        "actor": "Actor"
-      }
-    },
-    "views": {
-      "tracker": {
-        "currently_tracking": "You are currently tracking",
-        "cancel_cross_label": "Cancel and track a new ballot",
-        "info": {
-          "title": "Ballot found",
-          "description": "See the status of your ballot below. You can also see all activity connected to your ballot tracking code."
-        },
-        "status_map": {
-          "found": {
-            "title": "Ballot received",
-            "description": "Your ballot package has been received. Check back to verify that your ballot was accepted for counting."
-          },
-          "accepted": {
-            "title": "Ballot accepted",
-            "description": "Your signature affidavit has been verified and your ballot is accepted for counting."
-          },
-          "rejected": {
-            "title": "Ballot not accepted",
-            "description": "There is a problem with your signature affidavit. Contact your local election official for next steps and to cure your affidavit."
-          },
-          "extracted": {
-            "title": "Ballot decrypted for tallying",
-            "description": "Your ballot has been extracted from the digital ballot box and decrypted offline. It has been printed onto a paper ballot for scanning and tabulation with other absentee ballots."
-          }
-        }
-      },
-      "welcome": {
-        "footer": "Did you mean Ballot Check instead?",
-        "locate_tracking_code": "Where do I find my tracking code?",
-        "track_ballot_button": "Track my ballot",
-        "tracking_code_input": "Ballot tracking code",
-        "about": {
-          "header": "Ballot tracker",
-          "p1": "I have voted and I want to track my ballot.",
-          "p2": "To check the status of your ballot, you need to input the tracking code from the Voter receipt."
-        },
-        "error": {
-          "title": "Tracking code not found",
-          "content": "Please check that the tracking code was entered correctly. The code is case sensitive. If you are checking to make sure your ballot was recorded correctly before submitting, use the ballot check site instead. Still having problems? Contact your local election official."
-        }
-      }
     }
   }
 }

@@ -119,6 +119,7 @@ onMounted(() => loadPage(currentPage()));
 .LogsView__Footer {
   text-align: center;
   margin-top: 45px;
+  margin-bottom: 40px;
 }
 
 .LogsView__DownloadButton {

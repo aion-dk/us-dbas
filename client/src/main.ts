@@ -2,31 +2,11 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
-import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import {
-  faPlus,
-  faMinus,
-  faTriangleExclamation,
-  faCircleQuestion,
-  faClock,
-  faUser,
-  faCircleInfo,
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
 import { createI18n } from "vue-i18n";
 import translations from "./assets/translations.json";
 import * as UILibrary from "@assemblyvoting/ui-library"; // Imports components
 import "@assemblyvoting/ui-library/styles";
-
-library.add(faPlus);
-library.add(faMinus);
-library.add(faTriangleExclamation);
-library.add(faCircleQuestion);
-library.add(faClock);
-library.add(faCircleInfo);
-library.add(faUser);
 
 let locale = "en";
 const url = new URL(window.location.href);
