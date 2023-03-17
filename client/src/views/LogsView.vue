@@ -4,7 +4,7 @@ import { options } from "../lib/api";
 import useLocaleStore from "../stores/useLocaleStore";
 import useElectionStore from "../stores/useElectionStore";
 import useBoardStore from "../stores/useBoardStore";
-import { onMounted, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRoute, RouterLink } from "vue-router";
 import BoardItem from "../components/BoardItem.vue";
 
@@ -12,6 +12,8 @@ const route = useRoute();
 const localeStore = useLocaleStore();
 const electionStore = useElectionStore();
 const boardStore = useBoardStore();
+const prevPage = ref(0);
+const nextPage = ref(0);
 
 watch(electionStore, () => loadPage(currentPage()));
 watch(route, () => loadPage(currentPage()));
@@ -24,9 +26,8 @@ function currentPage() {
 }
 
 function loadPage(page: number) {
-  if (electionStore.election.slug) {
+  if (electionStore.election.slug)
     boardStore.loadPage(electionStore.election.slug, page);
-  }
 }
 
 onMounted(() => loadPage(currentPage()));
@@ -48,17 +49,21 @@ onMounted(() => loadPage(currentPage()));
 
     <div class="LogsView__Pagination">
       <RouterLink
-        :class="{
-          LogsView__PageLink: true,
-          ['LogsView__PageLink--current']:
-            i + 1 === boardStore.meta.current_page,
-        }"
-        v-for="(_, i) in Array(boardStore.meta.total_pages)"
-        :to="`/${localeStore.locale}/${electionStore.election.slug}/logs/${
-          i + 1
-        }`"
+        class="LogsView__PageLink"
+        v-if="boardStore.meta.prev_page"
+        :to="`/${localeStore.locale}/${electionStore.election.slug}/logs/${boardStore.meta.prev_page}`"
       >
-        {{ i + 1 }}
+        <font-awesome-icon icon="fa-solid fa-chevron-left" />
+      </RouterLink>
+
+      <span class="LogsView__PageLink">{{ boardStore.currentPage }}</span>
+
+      <RouterLink
+        class="LogsView__PageLink"
+        v-if="boardStore.meta.next_page"
+        :to="`/${localeStore.locale}/${electionStore.election.slug}/logs/${boardStore.meta.next_page}`"
+      >
+        <font-awesome-icon icon="fa-solid fa-chevron-right" />
       </RouterLink>
     </div>
 
