@@ -65,8 +65,8 @@ onMounted(() => loadPage(currentPage()));
       <p>{{ $t("views.logs.intro") }}</p>
       <p>
         <label>
-          Configuration only?
           <input type="checkbox" name="config-items-only" :value="true" v-model="configItemsOnly" />
+          {{ $t("views.logs.config_only") }}
         </label>
       </p>
     </div>

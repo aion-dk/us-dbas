@@ -102,7 +102,8 @@
       "logs": {
         "title": "Election Configuration log",
         "intro": "This log filters out voter activity and only displays the election configuration log.",
-        "download_button": "Download the full election activity log (json)"
+        "download_button": "Download the full election activity log (json)",
+        "config_only": "Configuration only?"
       },
       "tracker": {
         "currently_tracking": "You are currently tracking",
