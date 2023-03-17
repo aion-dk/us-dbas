@@ -5,7 +5,6 @@ import MissingSlugView from "../views/MissingSlugView.vue";
 import LogsView from "../views/LogsView.vue";
 import HelpView from "../views/HelpView.vue";
 import AboutView from "../views/AboutView.vue";
-import ContactView from "../views/ContactView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -41,11 +40,6 @@ const router = createRouter({
       name: "HelpView",
       path: "/:locale/:electionSlug/help",
       component: HelpView,
-    },
-    {
-      name: "ContactView",
-      path: "/:locale/:electionSlug/contact",
-      component: ContactView,
     },
     {
       name: "AboutView",

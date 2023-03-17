@@ -10,6 +10,8 @@
     "components": {
       "board_item": {
         "info": "What does this mean?",
+        "expand": "Click to read more",
+        "collapse": "Click to read less",
         "AffidavitRejectItem": {
           "type": "Rejected affidavit",
           "author": "Election Official",
@@ -114,6 +116,10 @@
       }
     },
     "views": {
+      "help": {
+        "title": "Help Using the Ballot Tracker",
+        "info": "Have questions? We are here to help."
+      },
       "logs": {
         "title": "Election Configuration log",
         "intro": "This log filters out voter activity and only displays the election configuration log.",

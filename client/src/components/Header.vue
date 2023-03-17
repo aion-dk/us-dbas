@@ -61,9 +61,10 @@ onMounted(() => {
       <RouterLink class="Header__Link" :to="`/${locale}/${slug}/help`">
         {{ $t("header.help") }}
       </RouterLink>
-      <RouterLink class="Header__Link" :to="`/${locale}/${slug}/contact`">
+      <a class="Header__Link" :href="config.contactUrl" target="_blank">
         {{ $t("header.contact") }}
-      </RouterLink>
+        <font-awesome-icon icon="fa-solid fa-arrow-up-right-from-square" />
+      </a>
 
       <div class="Header__Flags">
         <img
