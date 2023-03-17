@@ -90,6 +90,7 @@ onMounted(() => loadPage(currentPage()));
 
     <div class="LogsView__Pagination">
       <RouterLink
+        aria-label="Previos page"
         class="LogsView__PageLink"
         v-if="boardStore.meta.prev_page"
         :to="`/${localeStore.locale}/${electionStore.election.slug}/logs/${boardStore.meta.prev_page}`"
@@ -102,6 +103,7 @@ onMounted(() => loadPage(currentPage()));
       <span class="LogsView__PageLink">{{ boardStore.meta.total_pages }}</span>
 
       <RouterLink
+        aria-label="Next page"
         class="LogsView__PageLink"
         v-if="boardStore.meta.next_page"
         :to="`/${localeStore.locale}/${electionStore.election.slug}/logs/${boardStore.meta.next_page}`"
