@@ -61,150 +61,6 @@ commands:
           command: |
             docker tag << parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1} ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
             docker push ${ECR_REGISTRY}/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
-  run-rubocop:
-    parameters:
-      service_name:
-        type: string
-      ecr_registry_id:
-        type: string
-        default: "534003348933"
-      tag_prefix:
-        type: string
-        default: ""
-      aws_access_key_id:
-        type: string
-      aws_secret_access_key:
-        type: string
-    steps:
-      - run:
-          name: Set environment variables
-          command: |
-            echo 'export AWS_ACCESS_KEY_ID="<< parameters.aws_access_key_id >>"' >> "$BASH_ENV"
-            echo 'export AWS_SECRET_ACCESS_KEY="<< parameters.aws_secret_access_key >>"' >> "$BASH_ENV"
-            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
-      - aws-ecr/ecr-login:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-cli-version: latest
-          public-registry: false
-          region: eu-west-1
-          registry-id: ECR_REGISTRY_ID
-      - run:
-          name: Pull the image for testing
-          command: |
-            docker pull 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
-      - run:
-          name: Run rubocop tests
-          command: |
-            docker run --rm 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested bash -c "bundle exec rubocop --config ./.rubocop.yml"
-  run-brakeman:
-    parameters:
-      service_name:
-        type: string
-      ecr_registry_id:
-        type: string
-        default: "534003348933"
-      tag_prefix:
-        type: string
-        default: ""
-      aws_access_key_id:
-        type: string
-      aws_secret_access_key:
-        type: string
-    steps:
-      - run:
-          name: Set environment variables
-          command: |
-            echo 'export AWS_ACCESS_KEY_ID="<< parameters.aws_access_key_id >>"' >> "$BASH_ENV"
-            echo 'export AWS_SECRET_ACCESS_KEY="<< parameters.aws_secret_access_key >>"' >> "$BASH_ENV"
-            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
-      - aws-ecr/ecr-login:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-cli-version: latest
-          public-registry: false
-          region: eu-west-1
-          registry-id: ECR_REGISTRY_ID
-      - run:
-          name: Pull the image for testing
-          command: |
-            docker pull 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
-      - run:
-          name: Run brakeman tests
-          command: |
-            docker run --rm 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested bash -c "bundle exec brakeman -q --no-pager"
-  run-bundler-audit:
-    parameters:
-      service_name:
-        type: string
-      ecr_registry_id:
-        type: string
-        default: "534003348933"
-      tag_prefix:
-        type: string
-        default: ""
-      aws_access_key_id:
-        type: string
-      aws_secret_access_key:
-        type: string
-    steps:
-      - run:
-          name: Set environment variables
-          command: |
-            echo 'export AWS_ACCESS_KEY_ID="<< parameters.aws_access_key_id >>"' >> "$BASH_ENV"
-            echo 'export AWS_SECRET_ACCESS_KEY="<< parameters.aws_secret_access_key >>"' >> "$BASH_ENV"
-            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
-      - aws-ecr/ecr-login:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-cli-version: latest
-          public-registry: false
-          region: eu-west-1
-          registry-id: ECR_REGISTRY_ID
-      - run:
-          name: Pull the image for testing
-          command: |
-            docker pull 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
-      - run:
-          name: Run bundler-audit tests
-          command: |
-            docker run --rm 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested bash -c "bundle exec bundler-audit"
-  run-prspec:
-    parameters:
-      service_name:
-        type: string
-      ecr_registry_id:
-        type: string
-        default: "534003348933"
-      tag_prefix:
-        type: string
-        default: ""
-      aws_access_key_id:
-        type: string
-      aws_secret_access_key:
-        type: string
-    steps:
-      - run:
-          name: Set environment variables
-          command: |
-            echo 'export AWS_ACCESS_KEY_ID="<< parameters.aws_access_key_id >>"' >> "$BASH_ENV"
-            echo 'export AWS_SECRET_ACCESS_KEY="<< parameters.aws_secret_access_key >>"' >> "$BASH_ENV"
-            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
-      - aws-ecr/ecr-login:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-cli-version: latest
-          public-registry: false
-          region: eu-west-1
-          registry-id: ECR_REGISTRY_ID
-      - run:
-          name: Pull the image for testing
-          command: |
-            docker pull 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
-      - run:
-          name: Run bundler-audit tests
-          command: |
-            docker run --rm 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested bash -c "bundle exec bundler-audit"
   tag-tested-image:
     parameters:
       service_name:
@@ -367,85 +223,13 @@ commands:
           name: Run linting for client
           command: |
             docker run --rm 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested bash -c "npm run lint:ci && npm run prettier:ci"
-  run-rspec:
-    parameters:
-      service_name:
-        type: string
-      ecr_registry_id:
-        type: string
-        default: "534003348933"
-      tag_prefix:
-        type: string
-        default: ""
-      aws_access_key_id:
-        type: string
-      aws_secret_access_key:
-        type: string
-    steps:
-      - run:
-          name: Set environment variables
-          command: |
-            echo 'export COMPOSE_DOCKER_CLI_BUILD=1' >> "$BASH_ENV"
-            echo 'export DOCKER_BUILDKIT=1' >> "$BASH_ENV"
-            echo 'export AWS_SECRET_ACCESS_KEY="<< parameters.aws_secret_access_key >>"' >> "$BASH_ENV"
-            echo 'export ECR_REGISTRY_ID="<< parameters.ecr_registry_id >>"' >> "$BASH_ENV"
-      - checkout
-      - run:
-          name: Write Compose override file
-          command: |
-            cat > docker-compose.rspec-ci.override.yml \<< "EOF"
-            version: "3"
-            services:
-              api:
-                image: 534003348933.dkr.ecr.eu-west-1.amazonaws.com/<< parameters.service_name >>:<< parameters.tag_prefix >>${CIRCLE_SHA1}-untested
-            EOF
-      - aws-ecr/ecr-login:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-cli-version: latest
-          public-registry: false
-          region: eu-west-1
-          registry-id: ECR_REGISTRY_ID
-      - run:
-          name: Run containers as a daemon
-          command: |
-            docker-compose -f docker-compose.yml -f docker-compose.rspec-ci.override.yml up --no-build api db redis -d
-      - run:
-          name: Show docker-compose logs
-          command: |
-            docker-compose logs -f
-          background: true
-      - run:
-          name: Run rspec tests in docker
-          command: |
-            docker-compose exec api rails spec
-            docker-compose cp api:/usr/src/app/coverage .
-            docker-compose cp api:/usr/src/app/tmp .
-      - store_artifacts:
-          path: coverage
-      - store_artifacts:
-          path: tmp/screenshots
 
 jobs:
-  lint-dockerfile-api:
-    executor: vm-linux-ubuntu
-    steps:
-      - docker/lint:
-          dockerfile: ./api/Dockerfile
   lint-dockerfile-client:
     executor: vm-linux-ubuntu
     steps:
       - docker/lint:
           dockerfile: ./client/Dockerfile
-  build-image-development-api:
-    executor: vm-linux-ubuntu
-    steps:
-      - build-image:
-          service_name: "service_name_placeholder-api"
-          tag_prefix: "dev-"
-          target: "development"
-          environment: "development"
-          docker_context: "./api"
   build-image-development-client:
     executor: vm-linux-ubuntu
     steps:
@@ -455,15 +239,6 @@ jobs:
           target: "development"
           environment: "development"
           docker_context: "./client"
-  build-image-production-api:
-    executor: vm-linux-ubuntu
-    steps:
-      - build-image:
-          service_name: "service_name_placeholder-api"
-          tag_prefix: ""
-          target: "production"
-          environment: "production"
-          docker_context: "./api"
   build-image-production-client:
     executor: vm-linux-ubuntu
     steps:
@@ -473,44 +248,6 @@ jobs:
           target: "production"
           environment: "production"
           docker_context: "./client"
-  api-rubocop:
-    executor: vm-linux-ubuntu
-    steps:
-      - run-rubocop: &api-service-aws
-          service_name: "service_name_placeholder-api"
-          tag_prefix: "dev-"
-          aws_access_key_id: "${AWS_ACCESS_KEY_ID}"
-          aws_secret_access_key: "${AWS_SECRET_ACCESS_KEY}"
-  api-brakeman:
-    executor: vm-linux-ubuntu
-    steps:
-      - run-brakeman: *api-service-aws
-  api-bundler-audit:
-    executor: vm-linux-ubuntu
-    steps:
-      - run-bundler-audit: *api-service-aws
-  api-rspec:
-    executor: vm-linux-ubuntu
-    steps:
-      - run-rspec: *api-service-aws
-  scan-api:
-    executor: vm-linux-ubuntu
-    environment:
-      ECR_REGISTRY_ID: "534003348933"
-    steps:
-      - aws-ecr/ecr-login:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-cli-version: latest
-          public-registry: false
-          region: eu-west-1
-          registry-id: ECR_REGISTRY_ID
-      - run:
-          name: Pull the image for scanning
-          command: |
-            docker pull ${ECR_REGISTRY_ID}.dkr.ecr.eu-west-1.amazonaws.com/service_name_placeholder-api:${CIRCLE_SHA1}-untested
-      - docker/scan:
-          image: ${ECR_REGISTRY_ID}.dkr.ecr.eu-west-1.amazonaws.com/service_name_placeholder-api:${CIRCLE_SHA1}-untested
   scan-client:
     executor: vm-linux-ubuntu
     environment:
@@ -530,16 +267,6 @@ jobs:
       - docker/scan:
           image: ${ECR_REGISTRY_ID}.dkr.ecr.eu-west-1.amazonaws.com/service_name_placeholder-client:${CIRCLE_SHA1}-untested
           ignored_cves: "CVE-2021-4048,CVE-2021-3756"
-  tag-tested-api-image-dev:
-    executor: vm-linux-ubuntu
-    steps:
-      - tag-tested-image: *api-service-aws
-  tag-tested-api-image-prod:
-    executor: vm-linux-ubuntu
-    steps:
-      - tag-tested-image:
-          <<: *api-service-aws
-          tag_prefix: ""
   client-e2e:
     executor: vm-linux-ubuntu
     steps:
@@ -573,74 +300,19 @@ jobs:
 workflows:
   everything:
     jobs:
-      - lint-dockerfile-api
       - lint-dockerfile-client
-      - build-image-development-api:
-          context:
-            - "GIT"
-            - "ECR-RW"
-          requires:
-            - lint-dockerfile-api
       - build-image-development-client:
           context:
             - "GIT"
             - "ECR-RW"
           requires:
             - lint-dockerfile-client
-      - build-image-production-api:
-          context:
-            - "GIT"
-            - "ECR-RW"
-          requires:
-            - lint-dockerfile-api
       - build-image-production-client:
           context:
             - "GIT"
             - "ECR-RW"
           requires:
             - lint-dockerfile-client
-      - api-rubocop:
-          requires:
-            - build-image-development-api
-          context:
-            - "ECR-RW"
-      - api-brakeman:
-          requires:
-            - build-image-development-api
-          context:
-            - "ECR-RW"
-      - api-bundler-audit:
-          requires:
-            - build-image-development-api
-          context:
-            - "ECR-RW"
-      - api-rspec:
-          requires:
-            - build-image-development-api
-          context:
-            - "ECR-RW"
-      - scan-api:
-          requires:
-            - build-image-production-api
-          context:
-            - "ECR-RW"
-      - tag-tested-api-image-dev:
-          requires:
-            - api-rubocop
-            - api-brakeman
-            - api-bundler-audit
-            - api-rspec
-          context:
-            - "ECR-RW"
-      - tag-tested-api-image-prod:
-          requires:
-            - api-rubocop
-            - api-brakeman
-            - api-bundler-audit
-            - api-rspec
-            - scan-api
-          context:
-            - "ECR-RW"
       - scan-client:
           requires:
             - build-image-production-client
