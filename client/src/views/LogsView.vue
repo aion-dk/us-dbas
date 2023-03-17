@@ -14,11 +14,11 @@ const electionStore = useElectionStore();
 const boardStore = useBoardStore();
 const prevPage = ref(0);
 const nextPage = ref(0);
-const configItemsOnly = ref(false)
+const configItemsOnly = ref(false);
 
 watch(electionStore, () => loadPage(currentPage()));
 watch(route, () => loadPage(currentPage()));
-watch(configItemsOnly, () => loadPage(1))
+watch(configItemsOnly, () => loadPage(1));
 
 function currentPage() {
   return parseInt(
@@ -28,7 +28,7 @@ function currentPage() {
 }
 
 function filter() {
-  if (!configItemsOnly.value) return []
+  if (!configItemsOnly.value) return [];
 
   return [
     "VoterAuthorizationConfigItem",
@@ -40,16 +40,12 @@ function filter() {
     "SegmentsConfigItem ",
     "ElectionConfigItem ",
     "GenesisItem",
-  ]
+  ];
 }
 
 function loadPage(page: number) {
   if (electionStore.election.slug) {
-    boardStore.loadPage(
-      electionStore.election.slug,
-      page,
-      filter()
-    );
+    boardStore.loadPage(electionStore.election.slug, page, filter());
   }
 }
 
@@ -65,7 +61,12 @@ onMounted(() => loadPage(currentPage()));
       <p>{{ $t("views.logs.intro") }}</p>
       <p>
         <label>
-          <input type="checkbox" name="config-items-only" :value="true" v-model="configItemsOnly" />
+          <input
+            type="checkbox"
+            name="config-items-only"
+            :value="true"
+            v-model="configItemsOnly"
+          />
           {{ $t("views.logs.config_only") }}
         </label>
       </p>

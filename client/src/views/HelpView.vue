@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import CompactHeader from "../components/CompactHeader.vue"
+import CompactHeader from "../components/CompactHeader.vue";
 </script>
 
 <template>
@@ -14,17 +14,17 @@
 </template>
 
 <style type="text/css" scoped>
-  .HelpView__Header {
-    text-align: center;
-  }
+.HelpView__Header {
+  text-align: center;
+}
 
-  .HelpView__Title {
-    font-size: 26px;
-    font-weight: 600;
-  }
+.HelpView__Title {
+  font-size: 26px;
+  font-weight: 600;
+}
 
-  .HelpView__Info {
-    font-weight: 400;
-    font-size: 16px;
-  }
+.HelpView__Info {
+  font-weight: 400;
+  font-size: 16px;
+}
 </style>
