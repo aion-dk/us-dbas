@@ -36,7 +36,7 @@ defineProps({
 
 .BallotActivitiesList__ColumnDescriptions {
   list-style: none;
-  padding: 20px 32px;
+  padding: 16px;
   margin: 0;
   display: flex;
   font-size: 14px;
