@@ -35,7 +35,7 @@ test("tracking a ballot", async ({ page }) => {
   await expect(page.locator("h2")).toHaveText("Funny Election");
   await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
   await page.getByRole("button", { name: "Track my ballot" }).click();
-  await page.locator(".BallotActivity__Expander").first().click();
+  await page.locator(".ExpandableSection__Expander").first().click();
   await page
     .getByRole("button", { name: "Cancel and track a new ballot" })
     .click();

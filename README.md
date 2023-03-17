@@ -20,6 +20,6 @@ To configure the client before building it, you can set the following environmen
 
 | Name | Default | Description | 
 | ---- | ------- | ----------- |
-| LOGO_URL | https://wallpaperaccess.com/full/275904.jpg | Fully qualified URL of your logo. |
+| LOGO_URL | https://bit.ly/3Ft20ez | Fully qualified URL of your logo. |
 | DBB_URL | http://dbb:3003 | Fully qualified URL to the Digital Ballot Box. |
 | CONTACT_URL | http://google.com | Fully qualified URL to the contact page. |
