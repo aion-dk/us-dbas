@@ -104,7 +104,15 @@ onMounted(() => {
             class="Welcome__TrackingCode"
           />
 
-          <AVButton class="Welcome__SubmitButton" type="primary" :disabled="_disabled" name="lookup-ballot" id="lookup-ballot" @click="lookupBallot" :label="$t('views.welcome.track_ballot_button')" />
+          <AVButton
+            class="Welcome__SubmitButton"
+            type="primary"
+            :disabled="_disabled"
+            name="lookup-ballot"
+            id="lookup-ballot"
+            @click="lookupBallot"
+            :label="$t('views.welcome.track_ballot_button')"
+          />
         </form>
 
         <p>

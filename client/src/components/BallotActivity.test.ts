@@ -1,6 +1,6 @@
 import { assert, expect, test } from "vitest";
-import {mount} from "@vue/test-utils";
-import BallotActivity from "./BallotActivity.vue"
+import { mount } from "@vue/test-utils";
+import BallotActivity from "./BallotActivity.vue";
 import { createI18n } from "vue-i18n";
 
 const i18n = createI18n({
@@ -18,12 +18,12 @@ const i18n = createI18n({
   },
 });
 
-test("BallotActivity mounts",async()=>{
+test("BallotActivity mounts", async () => {
   const wrapper = mount(BallotActivity, {
     global: {
-      plugins: [i18n]
+      plugins: [i18n],
     },
-    props:{
+    props: {
       activity: {
         registeredAt: "2022-03-02T00:10:12+0100",
         type: "some_type",
@@ -32,4 +32,4 @@ test("BallotActivity mounts",async()=>{
   });
   expect(wrapper.text()).toContain("SomeType");
   expect(wrapper.text()).toContain("Me");
-})
+});

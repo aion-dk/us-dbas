@@ -1,5 +1,10 @@
 import { test, expect } from "@playwright/test";
-import { latestConfig, foundBallotStatus, boardItemsPage1, boardItemsPage2 } from "./mocks.ts";
+import {
+  latestConfig,
+  foundBallotStatus,
+  boardItemsPage1,
+  boardItemsPage2,
+} from "./mocks.ts";
 
 test("downloading logs", async ({ page }) => {
   // Mock Network calls
@@ -74,19 +79,19 @@ test("traversing board items", async ({ page }) => {
   });
 
   await page.goto("/en/us3");
-  await page.getByRole('link', { name: 'Logs' }).click();
+  await page.getByRole("link", { name: "Logs" }).click();
 
   // Page 1
-  await page.getByText('16fSovo').click();
-  await page.getByText('VMMHYWv').click();
+  await page.getByText("16fSovo").click();
+  await page.getByText("VMMHYWv").click();
 
   // Page 2
-  await page.getByRole('link', { name: '2', exact: true }).click();
-  await page.getByText('1yo3CEM').click();
-  await page.getByText('12g69GA').click();
+  await page.getByRole("link", { name: "2", exact: true }).click();
+  await page.getByText("1yo3CEM").click();
+  await page.getByText("12g69GA").click();
 
   // Page 1 again
-  await page.getByRole('link', { name: '1', exact: true }).click();
-  await page.getByText('16fSovo').click();
-  await page.getByText('VMMHYWv').click();
+  await page.getByRole("link", { name: "1", exact: true }).click();
+  await page.getByText("16fSovo").click();
+  await page.getByText("VMMHYWv").click();
 });
