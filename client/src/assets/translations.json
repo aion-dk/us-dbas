@@ -9,61 +9,76 @@
     },
     "components": {
       "board_item": {
+        "info": "What does this mean?",
         "AffidavitRejectItem": {
           "type": "Rejected affidavit",
-          "author": "Election Official"
+          "author": "Election Official",
+          "info": "The affidavit has been rejected"
         },
         "AffidavitAcceptItem": {
           "type": "Accepted affidavit",
-          "author": "Election Official"
+          "author": "Election Official",
+          "info": "The affidavit has been accepted"
         },
         "GenesisItem": {
           "type": "Genesis item",
-          "author": "Election Official"
+          "author": "Election Official",
+          "info": "The election has been created"
         },
         "VoterAuthorizationConfigItem": {
           "type": "Voter authorization config",
-          "author": "Election Official"
+          "author": "Election Official",
+          "info": "Voter authorization has been configured"
         },
         "ContestConfigItem": {
           "type": "Contest config",
-          "author": "Election Official"
+          "author": "Election Official",
+          "info": "Contest information has been updated"
         },
         "VotingRoundConfigItem": {
           "type": "Voting round config",
-          "author": "Election Official"
+          "author": "Election Official",
+          "info": "A voting round has been configured"
         },
         "BallotConfigItem": {
           "type": "Ballot config",
-          "author": "Election Official"
+          "author": "Election Official",
+          "info": "Ballot information has been updated"
         },
         "ElectionConfigItem": {
           "type": "Election config",
-          "author": "Election Official"
+          "author": "Election Official",
+          "info": "The election information has been updated"
         },
         "ThresholdConfigItem": {
           "type": "Ballot encryption key",
-          "author": "Trustee"
+          "author": "Trustee",
+          "info": "Ballot encryption key has been generated"
         },
         "CastRequestItem": {
           "type": "Ballot cast",
-          "author": "Voter"
+          "author": "Voter",
+          "info": "A ballot has been cast and received"
         },
         "VoterSessionItem": {
           "type": "Voter session",
-          "author": "Voter"
+          "author": "Voter",
+          "info": "A voter has authenticated"
         },
         "BallotCryptogramsItem": {
           "type": "Ballot cryptogram",
-          "author": "Voter"
+          "author": "Voter",
+          "info": "Voter and Digital Ballot Box have exchanged cryptographic information establishing trust."
         },
         "BoardEncryptionCommitmentItem": {
           "type": "Encryption commitment",
-          "author": "Digital Ballot Box"
+          "author": "Digital Ballot Box",
+          "info": "Voter and Digital Ballot Box have exchanged cryptographic information establishing trust."
         },
         "VoterEncryptionCommitmentItem": {
           "type": "Encryption commitment",
-          "author": "Voter"
+          "author": "Voter",
+          "info": "Voter and Digital Ballot Box have exchanged cryptographic information establishing trust."
         }
       },
       "ballot_activity_list": {
