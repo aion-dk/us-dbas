@@ -14,9 +14,11 @@ const electionStore = useElectionStore();
 const boardStore = useBoardStore();
 const prevPage = ref(0);
 const nextPage = ref(0);
+const configItemsOnly = ref(false)
 
 watch(electionStore, () => loadPage(currentPage()));
 watch(route, () => loadPage(currentPage()));
+watch(configItemsOnly, () => loadPage(1))
 
 function currentPage() {
   return parseInt(
@@ -25,9 +27,30 @@ function currentPage() {
   );
 }
 
+function filter() {
+  if (!configItemsOnly.value) return []
+
+  return [
+    "VoterAuthorizationConfigItem",
+    "VotingRoundConfigItem",
+    "ThresholdConfigItem",
+    "BallotConfigItem",
+    "ContestConfigItem ",
+    "ContestConfigItem ",
+    "SegmentsConfigItem ",
+    "ElectionConfigItem ",
+    "GenesisItem",
+  ]
+}
+
 function loadPage(page: number) {
-  if (electionStore.election.slug)
-    boardStore.loadPage(electionStore.election.slug, page);
+  if (electionStore.election.slug) {
+    boardStore.loadPage(
+      electionStore.election.slug,
+      page,
+      filter()
+    );
+  }
 }
 
 onMounted(() => loadPage(currentPage()));
@@ -38,10 +61,13 @@ onMounted(() => loadPage(currentPage()));
     <CompactHeader />
 
     <div class="LogsView__Header">
-      <h1>Election Configuration log</h1>
+      <h1>{{ $t("views.logs.title") }}</h1>
+      <p>{{ $t("views.logs.intro") }}</p>
       <p>
-        This log filters out voter activity and only displays the election
-        configuration log.
+        <label>
+          Configuration only?
+          <input type="checkbox" name="config-items-only" :value="true" v-model="configItemsOnly" />
+        </label>
       </p>
     </div>
 
@@ -74,7 +100,7 @@ onMounted(() => loadPage(currentPage()));
         class="LogsView__DownloadButton"
         :href="`${options.baseURL}/${electionStore.election.slug}/download_log`"
       >
-        Download the full election activity log (json)
+        {{ $t("views.logs.download_button") }}
       </a>
     </div>
   </main>
