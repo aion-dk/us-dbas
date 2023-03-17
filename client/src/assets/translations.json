@@ -87,7 +87,8 @@
         "title": "Activity connected to the tracking code",
         "type": "Activity type",
         "time": "Date and time",
-        "actor": "Actor"
+        "actor": "Actor",
+        "identifier": "Identifier"
       },
       "ballot_activity": {
         "registered_at": "Registered at",

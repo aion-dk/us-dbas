@@ -72,6 +72,20 @@ onMounted(() => loadPage(currentPage()));
       </p>
     </div>
 
+    <ul class="LogsView__ColumnDescriptions">
+      <li class="LogsView__ColumnDescriptions--event">
+        {{ $t("components.ballot_activity_list.type") }}
+      </li>
+      <li class="LogsView__ColumnDescriptions--time">
+        {{ $t("components.ballot_activity_list.time") }}
+      </li>
+      <li class="LogsView__ColumnDescriptions--identifier">
+        {{ $t("components.ballot_activity_list.identifier") }}
+      </li>
+      <li class="LogsView__ColumnDescriptions--actor">
+        {{ $t("components.ballot_activity_list.actor") }}
+      </li>
+    </ul>
     <BoardItem v-for="item in boardStore.items" :item="item" />
 
     <div class="LogsView__Pagination">
@@ -157,5 +171,25 @@ onMounted(() => loadPage(currentPage()));
   color: #fff;
   padding: 10px 43px;
   border-radius: 12px;
+}
+
+.LogsView__ColumnDescriptions {
+  list-style: none;
+  padding: 16px;
+  margin: 0;
+  display: flex;
+  font-size: 14px;
+}
+
+.LogsView__ColumnDescriptions--time {
+  width: 170px;
+}
+
+.LogsView__ColumnDescriptions--event {
+  width: 300px;
+}
+
+.LogsView__ColumnDescriptions--identifier {
+  width: 170px;
 }
 </style>
