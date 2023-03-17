@@ -7,13 +7,16 @@ import Infobox from "../components/Infobox.vue";
 import { ref, watch, onMounted } from "vue";
 import BallotActivityList from "../components/BallotActivityList.vue";
 import router from "../router";
+import { useRoute } from "vue-router"
 
+const route = useRoute()
 const localeStore = useLocaleStore();
 const electionStore = useElectionStore();
 const ballotStore = useBallotStore();
 const ballot = ref(null);
 
 watch(ballotStore, () => setBallot());
+watch(route, () => setBallot());
 
 function setBallot() {
   ballot.value = ballotStore.ballot;
