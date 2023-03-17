@@ -104,15 +104,7 @@ onMounted(() => {
             class="Welcome__TrackingCode"
           />
 
-          <button
-            :disabled="_disabled"
-            name="lookup-ballot"
-            id="lookup-ballot"
-            class="Welcome__SubmitButton"
-            @click="lookupBallot"
-          >
-            {{ $t("views.welcome.track_ballot_button") }}
-          </button>
+          <AVButton class="Welcome__SubmitButton" type="primary" :disabled="_disabled" name="lookup-ballot" id="lookup-ballot" @click="lookupBallot" :label="$t('views.welcome.track_ballot_button')" />
         </form>
 
         <p>

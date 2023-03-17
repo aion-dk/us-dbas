@@ -15,6 +15,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { createI18n } from "vue-i18n";
 import translations from "./assets/translations.json";
+import * as UILibrary from "@assemblyvoting/ui-library"; // Imports components
+import "@assemblyvoting/ui-library/styles";
 
 library.add(faPlus);
 library.add(faMinus);
@@ -39,6 +41,7 @@ const app = createApp(App);
 app.use(createPinia());
 app.use(router);
 app.use(i18n);
+app.use(UILibrary.default);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 
