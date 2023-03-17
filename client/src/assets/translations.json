@@ -9,6 +9,14 @@
     },
     "components": {
       "board_item": {
+        "AffidavitRejectItem": {
+          "type": "Rejected affidavit",
+          "author": "Election Official"
+        },
+        "AffidavitAcceptItem": {
+          "type": "Accepted affidavit",
+          "author": "Election Official"
+        },
         "GenesisItem": {
           "type": "Genesis item",
           "author": "Election Official"
