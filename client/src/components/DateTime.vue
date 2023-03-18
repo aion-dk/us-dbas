@@ -2,10 +2,9 @@
 import moment from "moment";
 import "moment/min/locales";
 import "moment-timezone";
+import { ref } from "vue"
 
-const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-defineProps({
+const props = defineProps({
   dateTime: {
     type: String,
     required: true,
@@ -16,6 +15,16 @@ defineProps({
     validate: (s: string) => ["absolute", "relative"].indexOf(s) >= 0,
   },
 });
+
+const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+const value = ref(props.format === "absolute" ? absolute(props.dateTime) : relative(props.dateTime))
+const label = ref(props.format === "absolute" ? relative(props.dateTime) : absolute(props.dateTime))
+const tooltipStyle = `
+--vue-popper-bg: #000;
+--vue-popper-padding: 6px;
+--vue-popper-text-color: #fff;
+--vue-popper-border-radius: 3px;
+`
 
 function relative(date: any) {
   return moment
@@ -35,21 +44,15 @@ function absolute(date: any) {
 </script>
 
 <template>
-  <span
-    v-if="format === 'relative'"
-    class="DateTime"
-    :title="absolute(dateTime)"
-    :aria-label="relative(dateTime)"
-  >
-    {{ relative(dateTime) }}
-  </span>
+  <span class="DateTime" :aria-label="label">
+    <tooltip hover placement="top" :style="tooltipStyle">
+      <template #default>
+        {{ value }}
+      </template>
 
-  <span
-    :aria-label="absolute(dateTime)"
-    v-else
-    class="DateTime"
-    :title="absolute(dateTime)"
-  >
-    {{ absolute(dateTime) }}
+      <template #content>
+        {{ label }}
+      </template>
+    </tooltip>
   </span>
 </template>

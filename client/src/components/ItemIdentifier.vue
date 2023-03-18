@@ -30,15 +30,16 @@ async function copy() {
 
 <template>
   <span class="ItemIdentifier">
+    <font-awesome-icon
+      icon="fa-solid fa-fingerprint"
+      class="ItemIdentifier__Icon"
+    />
+    <span class="ItemIdentifier__Prefix" v-if="prefix">
+      {{ prefix }}
+    </span>
+
     <tooltip hover placement="top" :style="style">
       <template #default>
-        <font-awesome-icon
-          icon="fa-solid fa-fingerprint"
-          class="ItemIdentifier__Icon"
-        />
-        <span class="ItemIdentifier__Prefix" v-if="prefix">
-          {{ prefix }}
-        </span>
         <code class="ItemIdentifier__ShortCode" @click="copy">
           {{ shortAddress }}
         </code>
