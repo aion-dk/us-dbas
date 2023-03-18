@@ -139,7 +139,7 @@
           "description": "See the status of your ballot below. You can also see all activity connected to your ballot tracking code."
         },
         "status_map": {
-          "found": {
+          "pending": {
             "title": "Ballot received",
             "description": "Your ballot package has been received. Check back to verify that your ballot was accepted for counting."
           },

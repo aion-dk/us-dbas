@@ -2,18 +2,27 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
+import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import * as UILibrary from "@assemblyvoting/ui-library"; // Imports components
-import "@assemblyvoting/ui-library/styles";
 import VuePopper from "@kalimahapps/vue-popper";
 import i18n from "./lib/i18n"
+import { faFingerprint, faClock, faUser, faPlus, faMinus, faDownload, faCircleInfo, faCircleQuestion, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faFingerprint)
+library.add(faClock)
+library.add(faUser)
+library.add(faPlus)
+library.add(faMinus)
+library.add(faDownload)
+library.add(faCircleInfo)
+library.add(faCircleQuestion)
+library.add(faMagnifyingGlass)
 
 const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
 app.use(i18n);
-app.use(UILibrary.default);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 app.component("tooltip", VuePopper);

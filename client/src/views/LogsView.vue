@@ -117,7 +117,10 @@ onMounted(() => loadPage(currentPage()));
         class="LogsView__DownloadButton"
         :href="`${options.baseURL}/${electionStore.election.slug}/download_log`"
       >
-        {{ $t("views.logs.download_button") }}
+        <font-awesome-icon icon="fa-solid fa-download" />
+        <span>
+          {{ $t("views.logs.download_button") }}
+        </span>
       </a>
     </div>
   </main>
@@ -193,5 +196,9 @@ onMounted(() => loadPage(currentPage()));
 
 .LogsView__ColumnDescriptions--identifier {
   width: 170px;
+}
+
+svg {
+  margin-right: 5px;
 }
 </style>
