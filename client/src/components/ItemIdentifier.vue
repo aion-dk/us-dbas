@@ -14,12 +14,6 @@ const props = defineProps({
 
 const copied = ref(false)
 const shortAddress = ref(hexToShortCode(props.address.slice(0, 10)));
-const style = `
---vue-popper-bg: #000;
---vue-popper-padding: 6px;
---vue-popper-text-color: #fff;
---vue-popper-border-radius: 3px;
-`
 
 async function copy() {
   await navigator.clipboard.writeText(shortAddress.value);
@@ -38,7 +32,7 @@ async function copy() {
       {{ prefix }}
     </span>
 
-    <tooltip hover placement="top" :style="style">
+    <tooltip hover placement="top">
       <template #default>
         <code class="ItemIdentifier__ShortCode" @click="copy">
           {{ shortAddress }}

@@ -116,8 +116,20 @@ onMounted(() => {
         </form>
 
         <p>
-          <font-awesome-icon icon="fa-solid fa-circle-question" />
-          {{ $t("views.welcome.locate_tracking_code") }}
+          <tooltip hover placement="top">
+            <template #default>
+              <font-awesome-icon icon="fa-solid fa-circle-question" />
+              <span>
+                {{ $t("views.welcome.locate_tracking_code") }}
+              </span>
+            </template>
+
+            <template #content>
+              <span>
+                {{ $t("views.welcome.locate_tracking_code_tooltip") }}
+              </span>
+            </template>
+          </tooltip>
         </p>
       </Infobox>
     </div>
@@ -233,5 +245,9 @@ onMounted(() => {
   font-weight: 700;
   font-size: 18px;
   color: #495057;
+}
+
+svg {
+  margin-right: 5px;
 }
 </style>

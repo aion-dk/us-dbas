@@ -19,12 +19,6 @@ const props = defineProps({
 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const value = ref(props.format === "absolute" ? absolute(props.dateTime) : relative(props.dateTime))
 const label = ref(props.format === "absolute" ? relative(props.dateTime) : absolute(props.dateTime))
-const tooltipStyle = `
---vue-popper-bg: #000;
---vue-popper-padding: 6px;
---vue-popper-text-color: #fff;
---vue-popper-border-radius: 3px;
-`
 
 function relative(date: any) {
   return moment
@@ -45,7 +39,7 @@ function absolute(date: any) {
 
 <template>
   <span class="DateTime" :aria-label="label">
-    <tooltip hover placement="top" :style="tooltipStyle">
+    <tooltip hover placement="top">
       <template #default>
         {{ value }}
       </template>

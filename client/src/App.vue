@@ -76,4 +76,12 @@ body {
   margin: auto;
   padding: 0;
 }
+
+.popper-content-wrapper {
+  max-width: 400px;
+  --vue-popper-bg: #000;
+  --vue-popper-padding: 6px;
+  --vue-popper-text-color: #fff;
+  --vue-popper-border-radius: 3px;
+}
 </style>
