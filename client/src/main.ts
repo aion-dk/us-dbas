@@ -6,7 +6,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import VuePopper from "@kalimahapps/vue-popper";
 import i18n from "./lib/i18n"
-import { faFingerprint, faClock, faUser, faPlus, faMinus, faDownload, faCircleInfo, faCircleQuestion, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faFingerprint, faClock, faUser, faPlus, faArrowUpRightFromSquare, faMinus, faDownload, faCircleInfo, faCircleQuestion, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faFingerprint)
 library.add(faClock)
@@ -17,6 +17,7 @@ library.add(faDownload)
 library.add(faCircleInfo)
 library.add(faCircleQuestion)
 library.add(faMagnifyingGlass)
+library.add(faArrowUpRightFromSquare)
 
 const app = createApp(App);
 

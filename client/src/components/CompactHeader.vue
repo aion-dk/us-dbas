@@ -1,39 +1,31 @@
 <script lang="ts" setup>
-import useElectionStore from "../stores/useElectionStore";
-import { ref, watch, onMounted } from "vue";
-import { useRoute } from "vue-router";
-import useLocaleStore from "../stores/useLocaleStore";
+import { computed } from "vue";
 
-const localeStore = useLocaleStore();
-const route = useRoute();
-const electionStore = useElectionStore();
-const _locale = ref("en");
-const _title = ref("Loading...");
-const _area = ref("Loading...");
+const props = defineProps({
+  locale: {
+    type: String,
+    required: true,
+  },
+  election: {
+    type: Object,
+    required: true,
+  },
+})
 
-watch(route, () => setInfo());
-watch(electionStore, () => setInfo());
-watch(localeStore, () => setInfo());
-
-function setInfo() {
-  _locale.value = route.params.locale.toString();
-  _title.value = electionStore.election?.content?.title[_locale.value];
-  _area.value = [
-    electionStore.election?.jurisdiction,
-    electionStore.election?.state,
+const area = computed(() => [
+    props.election.content?.jurisdiction,
+    props.election.content?.state,
   ]
     .filter((s) => s)
-    .join(", ");
-}
-
-onMounted(() => setInfo());
+    .join(", ")
+)
 </script>
 
 <template>
-  <div class="CompactHeader">
-    <h2 class="CompactHeader__Title">{{ _title }}</h2>
-    <div class="CompactHeader__CircleSpacer" v-if="_area" />
-    <p class="CompactHeader__Area">{{ _area }}</p>
+  <div class="CompactHeader" v-if="election.content">
+    <h2 class="CompactHeader__Title">{{ election.content.title[locale] }}</h2>
+    <div class="CompactHeader__CircleSpacer" v-if="area" />
+    <p class="CompactHeader__Area">{{ area }}</p>
   </div>
 </template>
 

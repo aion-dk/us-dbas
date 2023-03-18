@@ -54,7 +54,10 @@ onMounted(() => loadPage(currentPage()));
 
 <template>
   <main class="LogsView">
-    <CompactHeader />
+    <CompactHeader
+      :election="electionStore.election"
+      :locale="localeStore.locale" />
+
 
     <div class="LogsView__Header">
       <h1>{{ $t("views.logs.title") }}</h1>
