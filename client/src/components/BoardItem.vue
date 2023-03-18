@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import DateTime from "../components/DateTime.vue";
 import ExpandableSection from "./ExpandableSection.vue";
-import ItemIdentifier from "./ItemIdentifier.vue"
+import ItemIdentifier from "./ItemIdentifier.vue";
 
 defineProps({
   item: {
