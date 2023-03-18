@@ -30,7 +30,7 @@ defineProps({
 
 <style type="text/css" scoped>
 .BallotActivitiesList h3 {
-  padding: 20px 32px;
+  padding: 20px 16px;
   margin: 0;
 }
 
