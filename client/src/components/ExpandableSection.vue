@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
+import i18n from "../lib/i18n"
+const { t } = i18n.global
 
 const props = defineProps({
   expanded: {
@@ -9,6 +11,13 @@ const props = defineProps({
 });
 
 const _expanded = ref(props.expanded);
+const _label = ref(t('components.board_item.expand'))
+
+function toggle() {
+  _expanded.value = !_expanded.value
+  _label.value = _expanded.value ? t('components.board_item.collapse') : t('components.board_item.expand')
+
+}
 </script>
 
 <template>
@@ -28,18 +37,17 @@ const _expanded = ref(props.expanded);
 
     <button
       class="ExpandableSection__Expander"
-      @click="() => (_expanded = !_expanded)"
+      @click="toggle"
+      :aria-label="_label"
     >
       <font-awesome-icon
         v-if="_expanded"
         icon="fa-solid fa-minus"
-        :aria-label="$t('components.board_item.collapse')"
       />
 
       <font-awesome-icon
         v-else
         icon="fa-solid fa-plus"
-        :aria-label="$t('components.board_item.expand')"
       />
     </button>
   </div>

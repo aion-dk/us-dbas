@@ -116,12 +116,10 @@ onMounted(() => {
         </form>
 
         <p>
-          <tooltip hover placement="top">
+          <span>{{ $t("views.welcome.locate_tracking_code") }}</span>
+          <tooltip hover placement="bottom">
             <template #default>
-              <font-awesome-icon icon="fa-solid fa-circle-question" />
-              <span>
-                {{ $t("views.welcome.locate_tracking_code") }}
-              </span>
+              <font-awesome-icon icon="fa-solid fa-circle-question" class="Tooltip" />
             </template>
 
             <template #content>
@@ -135,7 +133,20 @@ onMounted(() => {
     </div>
 
     <div class="Welcome__Footer">
-      <p>{{ $t("views.welcome.footer") }}</p>
+      <p>
+        <span>{{ $t("views.welcome.footer") }}</span>
+        <tooltip hover placement="right">
+          <template #default>
+            <font-awesome-icon class="Tooltip" icon="fa-solid fa-circle-info" />
+          </template>
+
+          <template #content>
+            <span>
+              {{ $t("views.welcome.footer_tooltip") }}
+            </span>
+          </template>
+        </tooltip>
+      </p>
     </div>
   </div>
 </template>
@@ -249,5 +260,6 @@ onMounted(() => {
 
 svg {
   margin-right: 5px;
+  margin-left: 5px;
 }
 </style>

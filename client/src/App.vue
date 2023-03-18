@@ -84,4 +84,8 @@ body {
   --vue-popper-text-color: #fff;
   --vue-popper-border-radius: 3px;
 }
+
+.Tooltip {
+  cursor: help;
+}
 </style>
