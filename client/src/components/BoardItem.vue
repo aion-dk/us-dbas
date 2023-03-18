@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import DateTime from "../components/DateTime.vue";
-import { hexToShortCode } from "@aion-dk/js-client/dist/lib/av_client/short_codes";
 import ExpandableSection from "./ExpandableSection.vue";
+import ItemIdentifier from "./ItemIdentifier.vue"
 
 defineProps({
   item: {
@@ -28,11 +28,7 @@ defineProps({
         </span>
 
         <span class="BoardItem__ShortAddress">
-          <font-awesome-icon
-            icon="fa-solid fa-fingerprint"
-            class="BoardItem__InlineIcon"
-          />
-          {{ hexToShortCode(item.address.slice(0, 10)) }}
+          <ItemIdentifier :address="item.address" />
         </span>
 
         <span class="BoardItem__Author">
@@ -54,15 +50,12 @@ defineProps({
             icon="fa-solid fa-clock"
             class="BoardItem__InlineIcon"
           />
+          <span>Registered at: </span>
           <DateTime :date-time="item.registeredAt" format="absolute" />
         </p>
 
         <p>
-          <font-awesome-icon
-            icon="fa-solid fa-fingerprint"
-            class="BoardItem__InlineIcon"
-          />
-          <span>{{ hexToShortCode(item.address.slice(0, 10)) }}</span>
+          <ItemIdentifier prefix="Short address:" :address="item.address" />
         </p>
 
         <p>
@@ -70,6 +63,7 @@ defineProps({
             icon="fa-solid fa-user"
             class="BoardItem__InlineIcon"
           />
+          <span>Author: </span>
           <span>{{ $t(`components.board_item.${item.type}.author`) }}</span>
         </p>
 

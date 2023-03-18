@@ -15,12 +15,12 @@
         "AffidavitRejectItem": {
           "type": "Rejected affidavit",
           "author": "Election Official",
-          "info": "The affidavit has been rejected"
+          "info": "An affidavit has been rejected"
         },
         "AffidavitAcceptItem": {
           "type": "Accepted affidavit",
           "author": "Election Official",
-          "info": "The affidavit has been accepted"
+          "info": "An affidavit has been accepted"
         },
         "GenesisItem": {
           "type": "Genesis item",
@@ -122,10 +122,10 @@
         "info": "Have questions? We are here to help."
       },
       "logs": {
-        "title": "Election Configuration log",
-        "intro": "This log filters out voter activity and only displays the election configuration log.",
+        "title": "Election Logs",
+        "intro": "These are all the election events in chronological order. This allows you to publicly audit the election.",
         "download_button": "Download the full election activity log (json)",
-        "config_only": "Configuration only?"
+        "config_only": "Configuration items only?"
       },
       "tracker": {
         "currently_tracking": "You are currently tracking",
