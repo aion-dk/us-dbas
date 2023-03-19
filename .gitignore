@@ -28,6 +28,7 @@ client/*.local
 
 client/cypress/videos/
 client/cypress/screenshots/
+client/src/node_modules
 
 # Editor directories and files
 client/.vscode/*
