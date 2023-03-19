@@ -121,18 +121,17 @@ onMounted(() => {
           </button>
         </form>
 
-        <p>
-          <span>{{ $t("views.welcome.locate_tracking_code") }}</span>
+        <p class="Tooltip">
           <tooltip hover placement="bottom">
             <template #default>
-              <font-awesome-icon
-                icon="fa-solid fa-circle-question"
-                class="Tooltip"
-              />
+              <span>{{ $t("views.welcome.locate_tracking_code") }}</span>
+              <span :aria-label="$t('views.welcome.locate_tracking_code_tooltip')">
+                <font-awesome-icon icon="fa-solid fa-circle-question" />
+              </span>
             </template>
 
             <template #content>
-              <span>
+              <span id="tracking-code-tooltip">
                 {{ $t("views.welcome.locate_tracking_code_tooltip") }}
               </span>
             </template>
@@ -142,14 +141,13 @@ onMounted(() => {
     </div>
 
     <div class="Welcome__Footer">
-      <p>
-        <span>{{ $t("views.welcome.footer") }}</span>
+      <p class="Tooltip">
         <tooltip hover placement="right">
           <template #default>
-            <font-awesome-icon
-              class="Tooltip"
-              icon="fa-solid fa-circle-info"
-            />
+            <span>{{ $t("views.welcome.footer") }}</span>
+            <span :aria-label="$t('views.welcome.footer_tooltip')">
+              <font-awesome-icon icon="fa-solid fa-circle-info" />
+            </span>
           </template>
 
           <template #content>
