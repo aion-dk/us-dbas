@@ -34,7 +34,7 @@ async function copy() {
 
     <tooltip hover placement="top">
       <template #default>
-        <code class="ItemIdentifier__ShortCode" @click="copy">
+        <code class="ItemIdentifier__ShortCode" @click="copy" role="button">
           {{ shortAddress }}
         </code>
       </template>
