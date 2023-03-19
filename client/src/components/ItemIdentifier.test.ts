@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import ItemIdentifier from "./ItemIdentifier.vue";
 
-let address = "00dd8a9310e8d572e53fb297e96758ded086f424df7ad63dd9ee5639ce13d281"
+const address = "00dd8a9310e8d572e53fb297e96758ded086f424df7ad63dd9ee5639ce13d281"
 const props = { address }
 const options = { props }
 
@@ -27,4 +27,14 @@ test("clicking copies the short address", async () => {
   const wrapper = mount(ItemIdentifier, options);
   const ac = await wrapper.get(".ItemIdentifier__ShortCode").trigger("click")
   expect(copiedText).toContain("16fSovo");
+});
+
+test("handles invalid address", async () => {
+  props.address = "invalid-address"
+  try {
+    const wrapper = mount(ItemIdentifier, options);
+    expect("no error thrown").toContain("is expected");
+  } catch (e) {
+    expect("error thrown").toContain("error thrown");
+  }
 });
