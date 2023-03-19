@@ -24,6 +24,7 @@ defineProps({
         {{ $t("components.ballot_activity_list.actor") }}
       </li>
     </ul>
+
     <BallotActivity :activity="activity" v-for="activity in activities" />
   </div>
 </template>
