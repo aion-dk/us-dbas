@@ -7,9 +7,9 @@ const content = {
     en: "Funny Election",
     da: "Sjovt valg",
   },
-}
-const locale = "en"
-const election = { content }
+};
+const locale = "en";
+const election = { content };
 
 test("it displays the election title", () => {
   const wrapper = mount(CompactHeader, {
@@ -28,21 +28,21 @@ test("it changes the election title when the locale changes", () => {
       locale: "da",
     },
   });
-  expect(wrapper.text()).toContain("Sjovt valg")
-})
+  expect(wrapper.text()).toContain("Sjovt valg");
+});
 
 test("it includes area information", () => {
-  content.state = "Some state"
+  content.state = "Some state";
   const wrapper = mount(CompactHeader, {
     props: { election, locale },
   });
-  expect(wrapper.text()).toContain("Some state")
-})
+  expect(wrapper.text()).toContain("Some state");
+});
 
 test("it includes jurisdiction information", () => {
-  content.jurisdiction = "Some jurisdiction"
+  content.jurisdiction = "Some jurisdiction";
   const wrapper = mount(CompactHeader, {
     props: { election, locale },
   });
-  expect(wrapper.text()).toContain("Some jurisdiction")
-})
+  expect(wrapper.text()).toContain("Some jurisdiction");
+});

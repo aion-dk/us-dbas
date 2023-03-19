@@ -1,10 +1,12 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { computed } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 import config from "../lib/config";
 import router from "../router";
 import enFlag from "../assets/en.svg";
 import esFlag from "../assets/es.svg";
+
+const emit = defineEmits(["changeLocale"]);
 
 const props = defineProps({
   locale: {
@@ -15,13 +17,16 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-})
-
-const _locales = ref(props.election.content?.locales || ["en"])
+});
+const _locales = computed(() => props.election.content?.locales || ["en"]);
 const _flagLocaleMap = {
   en: enFlag,
   es: esFlag,
 };
+
+function setLocale(newLocale) {
+  emit("changeLocale", newLocale);
+}
 </script>
 
 <template>
@@ -33,15 +38,21 @@ const _flagLocaleMap = {
     </RouterLink>
 
     <div class="Header__Links">
-      <RouterLink class="Header__Link" :to="`/${locale}/${election.slug}/about`">
+      <RouterLink
+        class="Header__Link"
+        :to="`/${locale}/${election.slug}/about`"
+      >
         {{ $t("header.about") }}
       </RouterLink>
+
       <RouterLink class="Header__Link" :to="`/${locale}/${election.slug}/logs`">
         {{ $t("header.logs") }}
       </RouterLink>
+
       <RouterLink class="Header__Link" :to="`/${locale}/${election.slug}/help`">
         {{ $t("header.help") }}
       </RouterLink>
+
       <a class="Header__Link" :href="config.contactUrl" target="_blank">
         {{ $t("header.contact") }}
         <font-awesome-icon icon="fa-solid fa-arrow-up-right-from-square" />
@@ -54,8 +65,8 @@ const _flagLocaleMap = {
           :class="{
             Header__Flag: true,
             ['Header__Flag--current']: locale === l,
-            [`Header__Flag--${l}`]: locale === l,
           }"
+          :data-testid="`flag-${l}`"
           @click="() => setLocale(l)"
         />
       </div>

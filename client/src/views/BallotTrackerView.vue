@@ -33,7 +33,8 @@ onMounted(() => setBallot());
   <div class="BallotTracker" v-if="ballot">
     <CompactHeader
       :election="electionStore.election"
-      :locale="localeStore.locale" />
+      :locale="localeStore.locale"
+    />
 
     <div class="BallotTracker__Row">
       <Infobox class="BallotTracker__Infobox">

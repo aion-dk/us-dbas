@@ -10,15 +10,13 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-})
+});
 
-const area = computed(() => [
-    props.election.content?.jurisdiction,
-    props.election.content?.state,
-  ]
+const area = computed(() =>
+  [props.election.content?.jurisdiction, props.election.content?.state]
     .filter((s) => s)
     .join(", ")
-)
+);
 </script>
 
 <template>

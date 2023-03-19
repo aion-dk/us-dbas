@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import { api } from "../lib/api";
 
-export default defineStore("useBoardStore", () => {
+export default defineStore("boardStore", () => {
   const items = ref([]);
   const meta = ref({});
   const currentPage = ref(null);

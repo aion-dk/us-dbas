@@ -47,7 +47,7 @@ test.only("that activities are listed", async () => {
       activities: [
         {
           type: "SessionItem",
-          registeredAt: "2023-01-01T10:00:00+0100"
+          registeredAt: "2023-01-01T10:00:00+0100",
         },
       ],
     },

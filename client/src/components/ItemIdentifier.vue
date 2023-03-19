@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { hexToShortCode } from "@aion-dk/js-client/dist/lib/av_client/short_codes";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const props = defineProps({
   address: {
@@ -12,17 +12,17 @@ const props = defineProps({
   },
 });
 
-const copied = ref(false)
-const shortAddress = ref(hexToShortCode(props.address.slice(0, 10)));
+const copied = ref(false);
+const shortAddress = computed(() => hexToShortCode(props.address.slice(0, 10)));
 
 async function copy() {
   try {
     await navigator.clipboard.writeText(shortAddress.value);
-    copied.value = true
+    copied.value = true;
   } catch (e) {
-    console.error("Unable to copy short address to clipboard", e)
+    console.error("Unable to copy short address to clipboard", e);
   } finally {
-    setTimeout(() => copied.value = false, 300)
+    setTimeout(() => (copied.value = false), 300);
   }
 }
 </script>

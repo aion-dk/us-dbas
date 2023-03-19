@@ -91,5 +91,5 @@ test("traversing board items", async ({ page }) => {
   await page.getByText("VMMHYWv").click();
 
   // Configuration only
-  await page.getByText("Configuration only?").click();
+  await page.getByText("Configuration items only?").click();
 });

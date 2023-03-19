@@ -110,10 +110,11 @@ onMounted(() => {
             :disabled="_disabled"
             name="lookup-ballot"
             id="lookup-ballot"
-            @click="lookupBallot">
+            @click="lookupBallot"
+          >
             <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
             <span>
-              {{ $t('views.welcome.track_ballot_button') }}
+              {{ $t("views.welcome.track_ballot_button") }}
             </span>
           </button>
         </form>
@@ -122,7 +123,10 @@ onMounted(() => {
           <span>{{ $t("views.welcome.locate_tracking_code") }}</span>
           <tooltip hover placement="bottom">
             <template #default>
-              <font-awesome-icon icon="fa-solid fa-circle-question" class="Tooltip" />
+              <font-awesome-icon
+                icon="fa-solid fa-circle-question"
+                class="Tooltip"
+              />
             </template>
 
             <template #content>

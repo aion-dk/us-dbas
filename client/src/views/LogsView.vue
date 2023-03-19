@@ -56,8 +56,8 @@ onMounted(() => loadPage(currentPage()));
   <main class="LogsView">
     <CompactHeader
       :election="electionStore.election"
-      :locale="localeStore.locale" />
-
+      :locale="localeStore.locale"
+    />
 
     <div class="LogsView__Header">
       <h1>{{ $t("views.logs.title") }}</h1>
@@ -89,6 +89,7 @@ onMounted(() => loadPage(currentPage()));
         {{ $t("components.ballot_activity_list.actor") }}
       </li>
     </ul>
+
     <BoardItem v-for="item in boardStore.items" :item="item" />
 
     <div class="LogsView__Pagination">

@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { RouterView, useRoute } from "vue-router";
 import useLocaleStore from "./stores/useLocaleStore";
 import useElectionStore from "./stores/useElectionStore";
 import useBallotStore from "./stores/useBallotStore";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
+import router from "./router";
+import i18n from "./lib/i18n";
 
 const ballotStore = useBallotStore();
 const electionStore = useElectionStore();
@@ -34,6 +36,8 @@ watch(electionStore, () => {
   }
 });
 
+const locale = computed(() => localeStore.locale);
+
 function setTitle() {
   const title = [
     "DBAS",
@@ -41,11 +45,27 @@ function setTitle() {
   ].filter((s) => s);
   window.top.document.title = title.join(" - ");
 }
+
+function changeLocale(newLocale) {
+  const url = new URL(window.location.href);
+  const newUrl = url.pathname.replace(
+    `/${localeStore.locale}/`,
+    `/${newLocale}/`
+  );
+
+  i18n.global.locale = newLocale;
+  localeStore.setLocale(newLocale);
+  router.replace(newUrl);
+}
 </script>
 
 <template>
   <div class="DBAS">
-    <Header :election="electionStore.election" :locale="localeStore.locale" />
+    <Header
+      :election="electionStore.election"
+      :locale="locale"
+      @changeLocale="changeLocale"
+    />
     <div class="DBAS__Content">
       <RouterView class="DBAS__InnerContent" />
     </div>
