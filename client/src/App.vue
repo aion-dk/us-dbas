@@ -45,7 +45,7 @@ function setTitle() {
 
 <template>
   <div class="DBAS">
-    <Header />
+    <Header :election="electionStore.election" :locale="localeStore.locale" />
     <div class="DBAS__Content">
       <RouterView class="DBAS__InnerContent" />
     </div>

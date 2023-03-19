@@ -1,64 +1,45 @@
 <script lang="ts" setup>
-import { ref, watch, onMounted } from "vue";
+import { ref } from "vue";
 import { RouterLink, useRoute } from "vue-router";
-import useElectionStore from "../stores/useElectionStore";
-import useLocaleStore from "../stores/useLocaleStore";
 import config from "../lib/config";
 import router from "../router";
 import enFlag from "../assets/en.svg";
 import esFlag from "../assets/es.svg";
 
-const localeStore = useLocaleStore();
-const electionStore = useElectionStore();
-const route = useRoute();
-const slug = ref(null);
-const locale = ref("en");
-const locales = ref(["en"]);
+const props = defineProps({
+  locale: {
+    type: String,
+    default: "en",
+  },
+  election: {
+    type: Object,
+    required: true,
+  },
+})
 
-watch(electionStore, (newElectionStore) => setElectionInfo());
-watch(localeStore, () => (locale.value = localeStore.locale));
-
-function setElectionInfo() {
-  if (electionStore.election && electionStore.election.slug)
-    slug.value = electionStore.election?.slug;
-  locales.value = electionStore.election.content.locales;
-}
-
-function setLocale(locale) {
-  const oldLocale = localeStore.locale;
-  localeStore.setLocale(locale);
-
-  const url = window.location.href;
-  const newUrl = url.replace(`/${oldLocale}/`, `/${locale}/`);
-  window.location.href = newUrl;
-}
-
-const localeImages = {
+const _locales = ref(props.election.content?.locales || ["en"])
+const _flagLocaleMap = {
   en: enFlag,
   es: esFlag,
 };
-
-onMounted(() => {
-  locale.value = localeStore.locale;
-});
 </script>
 
 <template>
   <nav class="Header">
     <img class="Header__Logo" :src="config.logoUrl" alt="DBAS Logo" />
 
-    <RouterLink class="Header__Title" :to="`/${locale}/${slug}`" v-if="slug">
+    <RouterLink class="Header__Title" :to="`/${locale}/${election.slug}`">
       {{ $t("header.dbas") }}
     </RouterLink>
 
-    <div class="Header__Links" v-if="slug">
-      <RouterLink class="Header__Link" :to="`/${locale}/${slug}/about`">
+    <div class="Header__Links">
+      <RouterLink class="Header__Link" :to="`/${locale}/${election.slug}/about`">
         {{ $t("header.about") }}
       </RouterLink>
-      <RouterLink class="Header__Link" :to="`/${locale}/${slug}/logs`">
+      <RouterLink class="Header__Link" :to="`/${locale}/${election.slug}/logs`">
         {{ $t("header.logs") }}
       </RouterLink>
-      <RouterLink class="Header__Link" :to="`/${locale}/${slug}/help`">
+      <RouterLink class="Header__Link" :to="`/${locale}/${election.slug}/help`">
         {{ $t("header.help") }}
       </RouterLink>
       <a class="Header__Link" :href="config.contactUrl" target="_blank">
@@ -68,8 +49,8 @@ onMounted(() => {
 
       <div class="Header__Flags">
         <img
-          v-for="l in locales"
-          :src="localeImages[l]"
+          v-for="l in _locales"
+          :src="_flagLocaleMap[l]"
           :class="{
             Header__Flag: true,
             ['Header__Flag--current']: locale === l,
