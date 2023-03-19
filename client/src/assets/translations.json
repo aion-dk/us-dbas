@@ -5,7 +5,11 @@
       "about": "About",
       "logs": "Logs",
       "help": "Help",
-      "contact": "Contact"
+      "contact": "Contact",
+      "change_locale": {
+        "en": "Switch to English",
+        "es": "Cambiar a Español"
+      }
     },
     "components": {
       "item_identifier": {

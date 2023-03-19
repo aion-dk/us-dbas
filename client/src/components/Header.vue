@@ -67,6 +67,8 @@ function setLocale(newLocale) {
             ['Header__Flag--current']: locale === l,
           }"
           :data-testid="`flag-${l}`"
+          :alt="$t(`header.change_locale.${l}`)"
+          role="button"
           @click="() => setLocale(l)"
         />
       </div>

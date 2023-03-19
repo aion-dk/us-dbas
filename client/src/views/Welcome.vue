@@ -72,15 +72,17 @@ onMounted(() => {
 <template>
   <div class="Welcome">
     <div class="Welcome__Header">
-      <h2 class="Welcome__Title">{{ _title }}</h2>
-      <h3 class="Welcome__Info">{{ _info }}</h3>
+      <h1 class="Welcome__Title">
+        <span>{{ _title }}</span>
+        <small>{{ _info }}</small>
+      </h1>
     </div>
 
     <div v-if="_error" class="Welcome__Error" role="alert">
-      <h3>
+      <p class="title">
         <font-awesome-icon icon="fa-solid fa-triangle-exclamation" />
         {{ $t("views.welcome.error.title") }}
-      </h3>
+      </p>
 
       <p>{{ $t("views.welcome.error.content") }}</p>
     </div>
@@ -126,6 +128,8 @@ onMounted(() => {
               <font-awesome-icon
                 icon="fa-solid fa-circle-question"
                 class="Tooltip"
+                role="region"
+                aria-live="polite"
               />
             </template>
 
@@ -144,7 +148,12 @@ onMounted(() => {
         <span>{{ $t("views.welcome.footer") }}</span>
         <tooltip hover placement="right">
           <template #default>
-            <font-awesome-icon class="Tooltip" icon="fa-solid fa-circle-info" />
+            <font-awesome-icon
+              role="region"
+              class="Tooltip"
+              icon="fa-solid fa-circle-info"
+              aria-live="polite"
+            />
           </template>
 
           <template #content>
@@ -259,7 +268,7 @@ onMounted(() => {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 }
 
-.Welcome__Error h3 {
+.Welcome__Error p.title {
   font-weight: 700;
   font-size: 18px;
   color: #495057;
