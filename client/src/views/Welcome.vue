@@ -128,8 +128,6 @@ onMounted(() => {
               <font-awesome-icon
                 icon="fa-solid fa-circle-question"
                 class="Tooltip"
-                role="region"
-                aria-live="polite"
               />
             </template>
 
@@ -149,10 +147,8 @@ onMounted(() => {
         <tooltip hover placement="right">
           <template #default>
             <font-awesome-icon
-              role="region"
               class="Tooltip"
               icon="fa-solid fa-circle-info"
-              aria-live="polite"
             />
           </template>
 
