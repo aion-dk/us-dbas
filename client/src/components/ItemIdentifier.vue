@@ -16,9 +16,14 @@ const copied = ref(false)
 const shortAddress = ref(hexToShortCode(props.address.slice(0, 10)));
 
 async function copy() {
-  await navigator.clipboard.writeText(shortAddress.value);
-  copied.value = true
-  setTimeout(() => copied.value = false, 300)
+  try {
+    await navigator.clipboard.writeText(shortAddress.value);
+    copied.value = true
+  } catch (e) {
+    console.error("Unable to copy short address to clipboard", e)
+  } finally {
+    setTimeout(() => copied.value = false, 300)
+  }
 }
 </script>
 
