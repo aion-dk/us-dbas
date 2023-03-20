@@ -36,9 +36,7 @@ test("tracking a ballot", async ({ page }) => {
   await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
   await page.getByRole("button", { name: "Track my ballot" }).click();
   await page.locator(".ExpandableSection__Expander").first().click();
-  await page
-    .getByRole("button", { name: "Cancel and track a new ballot" })
-    .click();
+  await page.getByRole("button", { name: "Cancel tracking 5ksv8Ee" }).click();
   await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
 });
 
@@ -108,9 +106,6 @@ test("tracking a rejected ballot has the right text", async ({ page }) => {
   await expect(page.locator("h1")).toHaveText("Funny Election");
   await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
   await page.getByRole("button", { name: "Track my ballot" }).click();
-  await page
-    .getByRole("heading", { name: "You are currently tracking" })
-    .click();
 
   expect(page.locator(".BallotTracker__StatusInfo h3")).toHaveText(
     "Ballot not accepted"

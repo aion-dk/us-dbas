@@ -50,6 +50,7 @@ onMounted(() => setBallot());
         <button
           class="BallotTracker__Cancel"
           @click="cancel"
+          data-testid="cancel"
           :aria-label="
             $t('views.tracker.cancel_cross_label', {
               trackingCode: ballot.trackingCode,

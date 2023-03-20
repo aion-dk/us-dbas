@@ -28,7 +28,7 @@ test("downloading logs", async ({ page }) => {
   });
 
   await page.goto("/en/us3");
-  await page.getByRole("link", { name: "Logs" }).click();
+  await page.getByRole("menuitem", { name: "Logs" }).click();
   const downloadPromise = page.waitForEvent("download");
   await page
     .getByRole("link", {
@@ -74,7 +74,7 @@ test("traversing board items", async ({ page }) => {
   });
 
   await page.goto("/en/us3");
-  await page.getByRole("link", { name: "Logs" }).click();
+  await page.getByRole("menuitem", { name: "Logs" }).click();
 
   // Page 1
   await page.getByText("16fSovo").click();
