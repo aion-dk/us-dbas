@@ -137,7 +137,7 @@
       },
       "tracker": {
         "currently_tracking": "You are currently tracking",
-        "cancel_cross_label": "Cancel and track a new ballot",
+        "cancel_cross_label": "Cancel tracking {trackingCode}",
         "info": {
           "title": "Ballot found",
           "description": "See the status of your ballot below. You can also see all activity connected to your ballot tracking code."

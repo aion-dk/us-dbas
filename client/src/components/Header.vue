@@ -30,8 +30,13 @@ function setLocale(newLocale) {
 </script>
 
 <template>
-  <nav class="Header">
-    <img class="Header__Logo" :src="config.logoUrl" alt="DBAS Logo" />
+  <nav class="Header" role="menubar">
+    <img
+      class="Header__Logo"
+      aria-hidden="true"
+      :src="config.logoUrl"
+      alt="DBAS Logo"
+    />
 
     <RouterLink class="Header__Title" :to="`/${locale}/${election.slug}`">
       {{ $t("header.dbas") }}
@@ -40,20 +45,34 @@ function setLocale(newLocale) {
     <div class="Header__Links">
       <RouterLink
         class="Header__Link"
+        role="menuitem"
         :to="`/${locale}/${election.slug}/about`"
       >
         {{ $t("header.about") }}
       </RouterLink>
 
-      <RouterLink class="Header__Link" :to="`/${locale}/${election.slug}/logs`">
+      <RouterLink
+        role="menuitem"
+        class="Header__Link"
+        :to="`/${locale}/${election.slug}/logs`"
+      >
         {{ $t("header.logs") }}
       </RouterLink>
 
-      <RouterLink class="Header__Link" :to="`/${locale}/${election.slug}/help`">
+      <RouterLink
+        role="menuitem"
+        class="Header__Link"
+        :to="`/${locale}/${election.slug}/help`"
+      >
         {{ $t("header.help") }}
       </RouterLink>
 
-      <a class="Header__Link" :href="config.contactUrl" target="_blank">
+      <a
+        role="menuitem"
+        class="Header__Link"
+        :href="config.contactUrl"
+        target="_blank"
+      >
         {{ $t("header.contact") }}
         <font-awesome-icon icon="fa-solid fa-arrow-up-right-from-square" />
       </a>
@@ -68,7 +87,8 @@ function setLocale(newLocale) {
           }"
           :data-testid="`flag-${l}`"
           :alt="$t(`header.change_locale.${l}`)"
-          role="button"
+          role="menuitem"
+          tabindex="0"
           @click="() => setLocale(l)"
         />
       </div>

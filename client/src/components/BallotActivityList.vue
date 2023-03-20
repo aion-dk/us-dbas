@@ -10,10 +10,10 @@ defineProps({
 </script>
 
 <template>
-  <div class="BallotActivitiesList">
+  <div class="BallotActivitiesList" role="log">
     <h3>{{ $t("components.ballot_activity_list.title") }}</h3>
 
-    <ul class="BallotActivitiesList__ColumnDescriptions">
+    <ul class="BallotActivitiesList__ColumnDescriptions" aria-hidden="true">
       <li class="BallotActivitiesList__ColumnDescriptions--event">
         {{ $t("components.ballot_activity_list.type") }}
       </li>

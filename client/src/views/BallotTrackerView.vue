@@ -30,30 +30,34 @@ onMounted(() => setBallot());
 </script>
 
 <template>
-  <div class="BallotTracker" v-if="ballot">
+  <div class="BallotTracker" v-if="ballot" aria-flowto="tracking-code">
     <CompactHeader
       :election="electionStore.election"
       :locale="localeStore.locale"
     />
 
     <div class="BallotTracker__Row">
-      <Infobox class="BallotTracker__Infobox">
-        <h2 role="status">{{ $t("views.tracker.info.title") }}</h2>
+      <Infobox class="BallotTracker__Infobox" id="infobox">
+        <h2>{{ $t("views.tracker.info.title") }}</h2>
         <p>{{ $t("views.tracker.info.description") }}</p>
       </Infobox>
 
-      <Infobox class="BallotTracker__TrackingCode">
-        <button
-          class="BallotTracker__Cancel"
-          @click="cancel"
-          :aria-label="$t('views.tracker.cancel_cross_label')"
-        >
-          ×
-        </button>
-        <h3>
+      <Infobox class="BallotTracker__TrackingCode" role="alertdialog">
+        <h3 role="alert" id="tracking-code" aria-flowto="infobox">
           <span>{{ $t("views.tracker.currently_tracking") }}</span>
           <code>{{ ballot.trackingCode }}</code>
         </h3>
+        <button
+          class="BallotTracker__Cancel"
+          @click="cancel"
+          :aria-label="
+            $t('views.tracker.cancel_cross_label', {
+              trackingCode: ballot.trackingCode,
+            })
+          "
+        >
+          ×
+        </button>
       </Infobox>
     </div>
 

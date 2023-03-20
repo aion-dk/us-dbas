@@ -125,7 +125,9 @@ onMounted(() => {
           <tooltip hover placement="bottom">
             <template #default>
               <span>{{ $t("views.welcome.locate_tracking_code") }}</span>
-              <span :aria-label="$t('views.welcome.locate_tracking_code_tooltip')">
+              <span
+                :aria-label="$t('views.welcome.locate_tracking_code_tooltip')"
+              >
                 <font-awesome-icon icon="fa-solid fa-circle-question" />
               </span>
             </template>

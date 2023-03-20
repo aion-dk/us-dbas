@@ -90,7 +90,9 @@ onMounted(() => loadPage(currentPage()));
       </li>
     </ul>
 
-    <BoardItem v-for="item in boardStore.items" :item="item" />
+    <div role="log">
+      <BoardItem v-for="item in boardStore.items" :item="item" />
+    </div>
 
     <div class="LogsView__Pagination">
       <RouterLink

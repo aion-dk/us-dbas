@@ -14,11 +14,14 @@ defineProps({
   <div class="BallotActivity">
     <ExpandableSection>
       <template v-slot:collapsed>
-        <div class="BallotActivity__Type">
+        <div class="BallotActivity__Type" aria-label="Activity">
           {{ $t(`components.ballot_activity.${activity.type}.type`) }}
         </div>
 
-        <div class="BallotActivity__RegisteredAt">
+        <div
+          class="BallotActivity__RegisteredAt"
+          aria-label="Activity registered"
+        >
           <font-awesome-icon
             icon="fa-solid fa-clock"
             class="BallotActivity__Icon"
@@ -26,7 +29,7 @@ defineProps({
           <DateTime :date-time="activity.registered_at" />
         </div>
 
-        <div class="BallotActivity__Author">
+        <div class="BallotActivity__Author" aria-label="Activity author">
           <font-awesome-icon
             icon="fa-solid fa-user"
             class="BallotActivity__Icon"

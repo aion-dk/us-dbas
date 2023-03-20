@@ -61,14 +61,16 @@ function changeLocale(newLocale) {
 
 <template>
   <div class="DBAS">
+    <!-- <a href="#main" class="DBAS_SkipToContentLink">Skip to main content</a> -->
+
     <Header
       :election="electionStore.election"
       :locale="locale"
       @changeLocale="changeLocale"
     />
-    <div class="DBAS__Content">
+    <main class="DBAS__Content" id="main">
       <RouterView class="DBAS__InnerContent" />
-    </div>
+    </main>
     <Footer />
   </div>
 </template>
@@ -107,5 +109,14 @@ body {
 
 .Tooltip {
   cursor: help;
+}
+
+.DBAS_SkipToContentLink {
+  position: absolute;
+  margin-top: -100px;
+}
+
+.DBAS_SkipToContentLink:focus {
+  margin-top: 100px;
 }
 </style>

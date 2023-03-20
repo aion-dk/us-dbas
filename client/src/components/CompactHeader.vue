@@ -21,7 +21,7 @@ const area = computed(() =>
 
 <template>
   <div class="CompactHeader" v-if="election.content">
-    <h2 class="CompactHeader__Title">{{ election.content.title[locale] }}</h2>
+    <h1 class="CompactHeader__Title">{{ election.content.title[locale] }}</h1>
     <div class="CompactHeader__CircleSpacer" v-if="area" />
     <p class="CompactHeader__Area">{{ area }}</p>
   </div>
