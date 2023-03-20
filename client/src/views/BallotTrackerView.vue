@@ -15,8 +15,8 @@ const electionStore = useElectionStore();
 const ballotStore = useBallotStore();
 const ballot = ref(null);
 const periodicedTrackingCode = computed(() => {
-  return ballotStore.ballot?.trackingCode?.split("")?.join(". ")
-})
+  return ballotStore.ballot?.trackingCode?.split("")?.join(". ");
+});
 
 watch(ballotStore, () => setBallot());
 watch(route, () => setBallot());

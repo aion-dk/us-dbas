@@ -60,7 +60,7 @@ onMounted(() => loadPage(currentPage()));
     />
 
     <div class="LogsView__Header">
-      <h1>{{ $t("views.logs.title") }}</h1>
+      <h2>{{ $t("views.logs.title") }}</h2>
       <p>{{ $t("views.logs.intro") }}</p>
       <p>
         <label>
@@ -90,9 +90,7 @@ onMounted(() => loadPage(currentPage()));
       </li>
     </ul>
 
-    <div role="log">
-      <BoardItem v-for="item in boardStore.items" :item="item" />
-    </div>
+    <BoardItem v-for="item in boardStore.items" :item="item" />
 
     <div class="LogsView__Pagination">
       <RouterLink
@@ -160,7 +158,7 @@ onMounted(() => loadPage(currentPage()));
   text-align: center;
 }
 
-.LogsView h1 {
+.LogsView h2 {
   margin-top: 47px;
   font-weight: 600;
   font-size: 26px;
