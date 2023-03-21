@@ -8,12 +8,13 @@ import { ref, watch, computed, onMounted } from "vue";
 import BallotActivityList from "../components/BallotActivityList.vue";
 import router from "../router";
 import { useRoute } from "vue-router";
+import type { Ballot } from "../Types";
 
 const route = useRoute();
 const localeStore = useLocaleStore();
 const electionStore = useElectionStore();
 const ballotStore = useBallotStore();
-const ballot = ref(null);
+const ballot = ref<Ballot>(null);
 const periodicedTrackingCode = computed(() => {
   return ballotStore.ballot?.trackingCode?.split("")?.join(". ");
 });

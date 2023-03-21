@@ -2,8 +2,9 @@ import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import DateTime from "./DateTime.vue";
 
-const props = {
+const props: any = {
   dateTime: new Date().toISOString(),
+  timeZone: "CET",
 };
 const options = { props };
 
