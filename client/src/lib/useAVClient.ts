@@ -1,9 +1,10 @@
 import { AVClient } from "@aion-dk/js-client";
+import { dbbUrl } from "./config"
 
 export default async function useAVClient(slug: string) {
-  const dbbUrl = `http://dbb:3003/${slug}`;
-  console.log(`Connecting to DBB: ${dbbUrl}`);
-  const avClient = await new AVClient(dbbUrl);
+  const url = `${dbbUrl}/${slug}`;
+  console.log(`Connecting to DBB: ${url}`);
+  const avClient = await new AVClient(url);
   await avClient.initialize();
   await avClient.getLatestConfig();
   return avClient;

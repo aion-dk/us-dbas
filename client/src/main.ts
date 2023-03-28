@@ -4,11 +4,6 @@ import App from "./App.vue";
 import router from "./router";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import VuePopper from "@kalimahapps/vue-popper";
-
 import i18n from "./lib/i18n";
 import {
   faFingerprint,
@@ -24,6 +19,10 @@ import {
   faCircleQuestion,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import VuePopper from "@kalimahapps/vue-popper";
 
 library.add(faFingerprint);
 library.add(faClock);
