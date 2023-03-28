@@ -20,6 +20,11 @@
         "info": "What does this mean?",
         "expand": "Click to read more",
         "collapse": "Click to read less",
+        "ExtractionConfirmationItem": {
+          "type": "Votes extracted and decrypted",
+          "author": "Election Official / Trustees",
+          "info": "Votes where extracted from the DBB and decrypted."
+        },
         "AffidavitRejectItem": {
           "type": "Rejected affidavit",
           "author": "Election Official",
