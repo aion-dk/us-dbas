@@ -1,30 +1,31 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import useElectionStore from "../stores/useElectionStore";
+import useConfigStore from "../stores/useConfigStore";
 import { ref, watch, onMounted } from "vue";
 import Infobox from "../components/Infobox.vue";
 import useBallotStore from "../stores/useBallotStore";
 import router from "../router";
 import useLocaleStore from "../stores/useLocaleStore";
+import useVerificationStore from "../stores/useVerificationStore";
+import Error from "../components/Error.vue";
 
 const localeStore = useLocaleStore();
 const ballotStore = useBallotStore();
-const electionStore = useElectionStore();
+const configStore = useConfigStore();
 const route = useRoute();
 const _electionSlug = ref(route.params.electionSlug);
 const _locale = ref(localeStore.locale);
 const _title = ref("Loading..");
 const _info = ref("Loading..");
 const _trackingCode = ref(null);
-const _error = ref(false);
+const _verificationCode = ref(null);
+const _error = ref(null);
 const _disabled = ref(false);
+const verificationStore = useVerificationStore();
 
 function setInfo() {
-  _title.value = electionStore.election?.content?.title[_locale.value];
-  _info.value = [
-    electionStore.election?.content?.jurisdiction,
-    electionStore.election?.content?.state,
-  ]
+  _title.value = configStore.election.title[_locale.value];
+  _info.value = [configStore.election.jurisdiction, configStore.election.state]
     .filter((s) => s)
     .join(", ");
 }
@@ -33,13 +34,10 @@ async function lookupBallot(event: Event) {
   event.preventDefault();
   event.stopPropagation();
   _disabled.value = true;
-  _error.value = false;
+  _error.value = null;
 
-  if (_trackingCode.value && electionStore.election.slug) {
-    await ballotStore.loadBallot(
-      _trackingCode.value,
-      electionStore.election.slug
-    );
+  if (_trackingCode.value && configStore.boardSlug) {
+    await ballotStore.loadBallot(_trackingCode.value, configStore.boardSlug);
   }
 
   if (ballotStore.ballot?.status) {
@@ -47,10 +45,35 @@ async function lookupBallot(event: Event) {
       `/${_locale.value}/${_electionSlug.value}/track/${_trackingCode.value}`
     );
   } else {
-    _error.value = true;
+    _error.value = "track.invalid_code";
   }
 
   _disabled.value = false;
+}
+
+async function initiateVerification(event: Event) {
+  event.preventDefault();
+  event.stopPropagation();
+  _disabled.value = true;
+  _error.value = null;
+
+  try {
+    await verificationStore.generatePairingCode(
+      _electionSlug.value as string,
+      _verificationCode.value
+    );
+    await router.push({
+      name: "BallotVerifierView",
+      params: {
+        pairingCode: verificationStore.pairingCode,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    _error.value = "verify.invalid_code";
+  } finally {
+    _disabled.value = false;
+  }
 }
 
 watch(route, (newRoute) => {
@@ -59,7 +82,7 @@ watch(route, (newRoute) => {
   setInfo();
 });
 
-watch(electionStore, () => {
+watch(configStore, () => {
   setInfo();
 });
 
@@ -79,15 +102,7 @@ onMounted(() => {
         <small>{{ _info }}</small>
       </h1>
     </div>
-
-    <div v-if="_error" class="Welcome__Error" role="alert">
-      <p class="title">
-        <font-awesome-icon icon="fa-solid fa-triangle-exclamation" />
-        {{ $t("views.welcome.error.title") }}
-      </p>
-
-      <p>{{ $t("views.welcome.error.content") }}</p>
-    </div>
+    <Error v-if="_error" :errorPath="_error" />
 
     <div class="Welcome__Content">
       <Infobox class="Welcome__About">
@@ -111,7 +126,7 @@ onMounted(() => {
           <button
             class="Welcome__SubmitButton"
             type="submit"
-            :disabled="_disabled"
+            :disabled="_disabled || !_trackingCode"
             name="lookup-ballot"
             id="lookup-ballot"
             @click="lookupBallot"
@@ -137,6 +152,64 @@ onMounted(() => {
             <template #content>
               <span id="tracking-code-tooltip">
                 {{ $t("views.welcome.locate_tracking_code_tooltip") }}
+              </span>
+            </template>
+          </tooltip>
+        </p>
+      </Infobox>
+    </div>
+
+    <div class="Welcome__Content">
+      <Infobox class="Welcome__About">
+        <h3>{{ $t("views.welcome.verify.header") }}</h3>
+        <p>{{ $t("views.welcome.verify.p1") }}</p>
+        <p>{{ $t("views.welcome.verify.p2") }}</p>
+      </Infobox>
+
+      <Infobox class="Welcome__Tracking">
+        <form @submit="initiateVerification">
+          <input
+            :disabled="_disabled"
+            type="text"
+            name="verification-code"
+            id="verification-code"
+            :placeholder="$t('views.welcome.verification_code_input')"
+            v-model="_verificationCode"
+            class="Welcome__TrackingCode"
+            data-1p-ignore
+          />
+
+          <button
+            class="Welcome__SubmitButton"
+            type="submit"
+            :disabled="_disabled || !_verificationCode"
+            name="initiate-verification"
+            id="initiate-verification"
+            @click="initiateVerification"
+          >
+            <font-awesome-icon icon="fa-solid fa-fingerprint" />
+            <span>
+              {{ $t("views.welcome.initiate_verification_button") }}
+            </span>
+          </button>
+        </form>
+
+        <p class="Tooltip">
+          <tooltip hover placement="bottom">
+            <template #default>
+              <span>{{ $t("views.welcome.locate_verification_code") }}</span>
+              <span
+                :aria-label="
+                  $t('views.welcome.locate_verification_code_tooltip')
+                "
+              >
+                <font-awesome-icon icon="fa-solid fa-circle-question" />
+              </span>
+            </template>
+
+            <template #content>
+              <span id="tracking-code-tooltip">
+                {{ $t("views.welcome.locate_verification_code_tooltip") }}
               </span>
             </template>
           </tooltip>
@@ -193,6 +266,7 @@ onMounted(() => {
 
 .Welcome__Content {
   display: flex;
+  margin-bottom: 40px;
 }
 
 .Welcome__About {
@@ -255,21 +329,6 @@ onMounted(() => {
 .Welcome__SubmitButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-.Welcome__Error {
-  background-color: #fcede9;
-  border: none;
-  border-left: solid 6px #ea4e2c;
-  padding: 17px 36px;
-  margin-bottom: 40px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-}
-
-.Welcome__Error p.title {
-  font-weight: 700;
-  font-size: 18px;
-  color: #495057;
 }
 
 svg {
