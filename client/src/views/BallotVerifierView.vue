@@ -21,6 +21,34 @@ function redirectUnlessPairingCode() {
   if (!verificationStore.pairingCode) cancel();
 }
 
+const parsedOption = (
+  selection: any,
+  contest: any,
+  pile: any,
+  index: number
+) => {
+  const isRanked =
+    configStore.getContest(contest.reference).markingType.voteVariation ===
+    "ranked";
+  const optionImage =
+    (
+      configStore.getContestOption(
+        contest.reference,
+        selection.reference
+      ) as any
+    ).image || null;
+
+  const option: any = {
+    title: configStore.getContestOption(contest.reference, selection.reference)
+      .title[localeStore.locale],
+  };
+
+  if (isRanked) option.rank = index + 1;
+  if (optionImage) option.image = optionImage;
+
+  return option;
+};
+
 onMounted(redirectUnlessPairingCode);
 </script>
 
@@ -46,32 +74,32 @@ onMounted(redirectUnlessPairingCode);
             {{ configStore.getContest(contest.reference).title[$i18n.locale] }}
           </h3>
           <div
-            v-for="(pile, index) in contest.piles"
+            v-for="(pile, pIndex) in contest.piles"
             class="BallotVerifier__Pile"
-            :key="index"
+            :key="pIndex"
           >
             <div class="BallotVerifier__PileMultiplier">
               x {{ pile.multiplier }}
             </div>
-            <div
+            <AVOption
               v-if="pile.optionSelections.length === 0"
-              class="BallotVerifier__Option"
-            >
-              {{ $t("views.verifier.blank_pile") }}
-            </div>
-            <div
+              :key="`pile-${pIndex}-option-blank`"
+              :option="{
+                title: $t('views.verifier.blank_pile'),
+              }"
+              disabled
+              checked
+              displayMode
+            />
+            <AVOption
               v-else
-              v-for="(selection, index) in pile.optionSelections"
-              :key="index"
-              class="BallotVerifier__Option"
-            >
-              {{
-                configStore.getContestOption(
-                  contest.reference,
-                  selection.reference
-                ).title[$i18n.locale]
-              }}
-            </div>
+              v-for="(selection, oIndex) in pile.optionSelections"
+              :key="`pile-${pIndex}-option-${oIndex}`"
+              :option="parsedOption(selection, contest, pile, oIndex)"
+              disabled
+              checked
+              displayMode
+            />
           </div>
         </div>
       </Infobox>
@@ -134,6 +162,7 @@ onMounted(redirectUnlessPairingCode);
 }
 
 .BallotVerifier__PileMultiplier {
+  text-align: right;
   font-size: 20px;
   font-weight: bold;
   background: black;
