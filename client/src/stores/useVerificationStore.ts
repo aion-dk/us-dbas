@@ -12,6 +12,11 @@ export default defineStore("verificationStore", () => {
     ballot.value = await avVerifier.decryptBallot();
   }
 
+  function reset() {
+    pairingCode.value = null
+    ballot.value = null
+  }
+
   async function generatePairingCode(
     electionSlug: string,
     verificationCode: string
@@ -25,5 +30,5 @@ export default defineStore("verificationStore", () => {
     decryptWhenAvailable(avVerifier);
   }
 
-  return { generatePairingCode, pairingCode, ballot };
+  return { generatePairingCode, pairingCode, ballot, reset };
 });
