@@ -17,11 +17,10 @@ export default defineStore("verificationStore", () => {
     verificationCode: string
   ) {
     const avVerifier = await useAVVerifier(electionSlug);
-    const ballotAddress = await avVerifier.findBallot(verificationCode);
-    const path = `${electionSlug}/verification/spoil_status?id=${ballotAddress}`;
-    const { data } = await api.get(path);
+    await avVerifier.findBallot(verificationCode);
 
-    pairingCode.value = await avVerifier.submitVerifierKey(data.item.address);
+    const spoilAddress = await avVerifier.pollForSpoilRequest()
+    pairingCode.value = await avVerifier.submitVerifierKey(spoilAddress);
 
     decryptWhenAvailable(avVerifier);
   }
