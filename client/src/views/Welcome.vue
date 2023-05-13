@@ -57,21 +57,24 @@ async function initiateVerification(event: Event) {
   _error.value = null;
 
   try {
-    await verificationStore.generatePairingCode(
-      _electionSlug.value.toString(),
-      _verificationCode.value
-    );
-    await router.push({
-      name: "BallotVerifierView",
-      params: {
-        pairingCode: verificationStore.pairingCode,
-      },
-    });
+    await verificationStore.findBallot(_verificationCode.value);
+
+    verificationStore.generatePairingCode();
+
+    setTimeout(async () => {
+      if (verificationStore.pairingCode) return;
+
+      await router.push({
+        name: "BallotVerifierFound",
+        params: {
+          verificationCode: _verificationCode.value,
+        },
+      });
+    }, 2000);
   } catch (e) {
     console.error(e);
-    _error.value = "verify.invalid_code";
-  } finally {
     _disabled.value = false;
+    _error.value = "verify.invalid_code";
   }
 }
 
@@ -85,8 +88,21 @@ watch(configStore, () => {
   setInfo();
 });
 
+watch(verificationStore, async (newStore) => {
+  if (!newStore.pairingCode) return;
+
+  await router.push({
+    name: "BallotVerifierView",
+    params: {
+      pairingCode: newStore.pairingCode,
+    },
+  });
+});
+
 onMounted(() => {
   verificationStore.reset();
+  verificationStore.setupAVVerifier(_electionSlug.value as string);
+
   setInfo();
   (
     document.querySelector(".Welcome__TrackingCode") as HTMLInputElement
