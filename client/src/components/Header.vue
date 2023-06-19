@@ -6,6 +6,7 @@ import DropDown from "./DropDown.vue";
 import { uniq } from "lodash";
 import i18n from "../lib/i18n";
 import type { DropdownOption } from "@/Types";
+import HamburgerIcon from "@/components/HamburgerIcon.vue";
 const { t } = i18n.global;
 
 const props = defineProps({
@@ -18,6 +19,21 @@ const props = defineProps({
     required: true,
   },
 });
+
+const links = [
+  {
+    text: "header.about",
+    route: `/${props.locale}/${props.election.slug}/about`,
+  },
+  {
+    text: "header.logs",
+    route: `/${props.locale}/${props.election.slug}/logs`,
+  },
+  {
+    text: "header.help",
+    route: `/${props.locale}/${props.election.slug}/help`,
+  },
+];
 
 const emit = defineEmits(["changeLocale"]);
 
@@ -33,47 +49,48 @@ const availableLocales = computed(() => {
 });
 
 function setLocale(newLocale: string) {
-  console.log("Setting new locale", newLocale);
   emit("changeLocale", newLocale);
+}
+
+function toggleMobileMenu() {
+  let menuButton = document.getElementById("BurgerButton");
+  let menu = document.getElementById("LinksMobile");
+  menuButton.classList.toggle("active");
+  menu.classList.toggle("open");
 }
 </script>
 
 <template>
-  <nav class="Header" role="menubar">
-    <img
-      class="Header__Logo"
-      aria-hidden="true"
-      :src="config.logoUrl"
-      alt="DBAS Logo"
-    />
+  <AVNavbar class="Navbar">
+    <div class="Header__Brand">
+      <img
+        class="Header__Logo"
+        aria-hidden="true"
+        :src="config.logoUrl"
+        alt="DBAS Logo"
+      />
 
-    <RouterLink class="Header__Title" :to="`/${locale}/${election.slug}`">
-      {{ $t("header.dbas") }}
-    </RouterLink>
+      <RouterLink class="Header__Title" :to="`/${locale}/${election.slug}`">
+        {{ $t("header.dbas") }}
+      </RouterLink>
+    </div>
+    <button
+      id="BurgerButton"
+      class="Header__BurgerButton"
+      @click="toggleMobileMenu"
+    >
+      <HamburgerIcon :stroke="'#495057'" class="Header__BurgerIcon" />
+    </button>
 
     <div class="Header__Links">
       <RouterLink
-        class="Header__Link"
-        role="menuitem"
-        :to="`/${locale}/${election.slug}/about`"
-      >
-        {{ $t("header.about") }}
-      </RouterLink>
-
-      <RouterLink
         role="menuitem"
         class="Header__Link"
-        :to="`/${locale}/${election.slug}/logs`"
+        v-for="link in links"
+        :key="link.route"
+        :to="link.route"
       >
-        {{ $t("header.logs") }}
-      </RouterLink>
-
-      <RouterLink
-        role="menuitem"
-        class="Header__Link"
-        :to="`/${locale}/${election.slug}/help`"
-      >
-        {{ $t("header.help") }}
+        {{ $t(link.text) }}
       </RouterLink>
 
       <a
@@ -95,20 +112,66 @@ function setLocale(newLocale: string) {
         @change="(value) => setLocale(value)"
       />
     </div>
-  </nav>
+  </AVNavbar>
+  <div id="LinksMobile" class="Header__LinksMobile">
+    <RouterLink
+      role="menuitem"
+      class="Header__Link"
+      v-for="link in links"
+      :key="link.route"
+      :to="link.route"
+      @click="toggleMobileMenu"
+    >
+      {{ $t(link.text) }}
+    </RouterLink>
+
+    <a
+      role="menuitem"
+      class="Header__Link"
+      :href="config.contactUrl"
+      target="_blank"
+    >
+      {{ $t("header.contact") }}
+      <font-awesome-icon
+        aria-hidden="true"
+        icon="fa-solid fa-arrow-up-right-from-square"
+      />
+    </a>
+    <DropDown
+      class="Header__Link"
+      :options="availableLocales"
+      @change="(value) => setLocale(value)"
+    />
+  </div>
 </template>
 
 <style type="text/css" scoped>
-.Header {
-  display: flex;
-  font-family: "Open Sans";
-  align-items: center;
-  box-shadow: 0px 4px 10px #ccc;
-  position: fixed;
-  width: 100%;
-  z-index: 2;
-  background-color: #fff;
+.AVNavbar.Navbar {
+  position: relative;
   box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+.Header__Brand {
+  display: flex;
+  align-items: center;
+}
+
+.Header__BurgerButton {
+  display: none;
+  border: 0;
+  border-radius: 5px;
+  padding: 1.5rem;
+  margin-right: 0.5rem;
+  background: transparent;
+}
+
+.Header__BurgerButton.active {
+  background: #efefef;
+}
+
+.Header__BurgerIcon {
+  scale: 1.5;
 }
 
 .Header__Title {
@@ -135,6 +198,15 @@ function setLocale(newLocale: string) {
   display: flex;
 }
 
+.Header__LinksMobile {
+  background: white;
+  display: none;
+}
+
+.Header__Link.router-link-active {
+  background-color: #efefef;
+}
+
 .Header__Link {
   padding: 20px;
   font-size: 18px;
@@ -142,6 +214,16 @@ function setLocale(newLocale: string) {
   text-transform: uppercase;
   text-decoration: none;
   color: #495057;
+}
+
+.Header__LinksMobile .Header__Link {
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #495057;
+  border: none;
 }
 
 .Header__Locales {
@@ -152,5 +234,30 @@ function setLocale(newLocale: string) {
   text-decoration: none;
   color: #495057;
   border: none;
+}
+
+@media (max-width: 992px) {
+  .AVNavbar.Navbar {
+    position: relative;
+    min-height: 70px;
+    height: 0;
+  }
+  .Header__Links {
+    display: none;
+  }
+
+  .Header__Title {
+    font-size: 20px;
+  }
+
+  .Header__BurgerButton {
+    display: block;
+  }
+
+  .Header__LinksMobile.open {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

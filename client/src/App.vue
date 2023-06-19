@@ -148,20 +148,29 @@ const setTheme = async (conferenceClient: any) => {
 </template>
 
 <style type="text/css">
+:root {
+  --av-padding: 2.5rem;
+  --av-margin-bottom: 2.5rem;
+}
+
 body {
   padding: 0;
   margin: 0;
 }
 
+.AVCard--default {
+  padding: var(--av-padding) !important;
+}
+
 .DBAS {
   height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
 }
 
 .DBAS__Content {
-  height: calc(100vh - 120px);
-  margin-top: 80px;
+  flex-grow: 1;
   overflow-y: scroll;
 }
 
@@ -172,7 +181,7 @@ body {
 }
 
 .popper-content-wrapper {
-  max-width: 400px;
+  max-width: calc(min(400px, 90vw));
   --vue-popper-bg: #000;
   --vue-popper-padding: 6px;
   --vue-popper-text-color: #fff;
@@ -190,5 +199,20 @@ body {
 
 .DBAS_SkipToContentLink:focus {
   margin-top: 100px;
+}
+
+@media (max-width: 992px) {
+  :root {
+    --av-padding: 1.5rem;
+    --av-margin-bottom: 1.5rem;
+  }
+
+  .DBAS__InnerContent {
+    width: 90vw;
+  }
+
+  .AVCard {
+    padding: var(--av-padding) !important;
+  }
 }
 </style>

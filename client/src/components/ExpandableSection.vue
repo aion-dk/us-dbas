@@ -23,8 +23,9 @@ function toggle() {
 
 <template>
   <div
+    @click="toggle"
+    class="ExpandableSection"
     :class="{
-      ExpandableSection: true,
       ['ExpandableSection--expanded']: _expanded,
     }"
   >
@@ -36,11 +37,7 @@ function toggle() {
       <slot name="expanded"></slot>
     </div>
 
-    <button
-      class="ExpandableSection__Expander"
-      @click="toggle"
-      :aria-label="_label"
-    >
+    <button class="ExpandableSection__Expander" :aria-label="_label">
       <font-awesome-icon v-if="_expanded" icon="fa-solid fa-minus" />
 
       <font-awesome-icon v-else icon="fa-solid fa-plus" />
@@ -57,20 +54,34 @@ function toggle() {
   margin-bottom: 20px;
   flex-direction: column;
   position: relative;
+  cursor: pointer;
+}
+
+.ExpandableSection:hover,
+.ExpandableSection:focus-within {
+  background-color: rgba(0, 0, 0, 10%);
+}
+.ExpandableSection:focus-within {
+  outline: #317be7 2px solid;
 }
 
 .ExpandableSection__Line {
   display: flex;
 }
 
+@media (max-width: 992px) {
+  .ExpandableSection__Line {
+    flex-direction: column;
+  }
+}
+
 .ExpandableSection__Expander {
   background-color: #343a40;
   border-radius: 100%;
-  height: 25px;
-  width: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 24px;
+  width: 24px;
+  display: grid;
+  place-content: center;
   position: absolute;
   top: 16px;
   right: 16px;

@@ -127,6 +127,7 @@ const i18n = createI18n({
             type: "Ballot encryption key",
             author: "Trustee",
             info: "Ballot encryption key has been generated",
+            encryption_key: "Ballot encryption key identifier is:",
           },
           CastRequestItem: {
             type: "Ballot cast",
@@ -174,12 +175,13 @@ const i18n = createI18n({
           SpoilRequestItem: {
             type: "Spoil Request",
             author: "You",
-            info: "You have challenged the integrity of the voting system and performed the Benaloh challenge.",
+            details:
+              "You have challenged the integrity of the voting system and performed the Benaloh challenge.",
           },
           SessionExpiryItem: {
             type: "Explicit Session Expiry",
             author: "You",
-            info: "You have explicitly expired your voter session.",
+            details: "You have explicitly expired your voter session.",
           },
           AffidavitAcceptItem: {
             type: "Affidavit Accepted",

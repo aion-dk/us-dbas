@@ -235,6 +235,7 @@ jobs:
     steps:
       - build-image:
           service_name: "us-dbas"
+          # service_name: "election-verification-site"
           tag_prefix: "dev-"
           target: "development"
           environment: "development"
@@ -244,6 +245,7 @@ jobs:
     steps:
       - build-image:
           service_name: "us-dbas"
+          # service_name: "election-verification-site"
           tag_prefix: ""
           target: "production"
           environment: "production"
@@ -271,6 +273,7 @@ jobs:
     steps:
       - run-e2e: &client-service-aws
           service_name: "us-dbas"
+          # service_name: "election-verification-site"
           tag_prefix: "dev-"
           aws_access_key_id: "${AWS_ACCESS_KEY_ID}"
           aws_secret_access_key: "${AWS_SECRET_ACCESS_KEY}"

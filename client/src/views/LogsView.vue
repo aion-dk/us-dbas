@@ -47,6 +47,10 @@ function loadPage(page: number) {
   }
 }
 
+function downloadLog() {
+  window.location.href = `${options.baseURL}/${configStore.boardSlug}/download_log`;
+}
+
 onMounted(() => loadPage(currentPage()));
 </script>
 
@@ -119,15 +123,12 @@ onMounted(() => loadPage(currentPage()));
     </div>
 
     <div class="LogsView__Footer">
-      <a
-        class="LogsView__DownloadButton"
-        :href="`${options.baseURL}/${configStore.boardSlug}/download_log`"
-      >
+      <AVButton @click="downloadLog" size="small" type="neutral">
         <font-awesome-icon icon="fa-solid fa-download" />
-        <span>
+        <span style="text-wrap: normal">
           {{ $t("views.logs.download_button") }}
         </span>
-      </a>
+      </AVButton>
     </div>
   </main>
 </template>
@@ -151,9 +152,9 @@ onMounted(() => loadPage(currentPage()));
 }
 
 .LogsView {
-  width: 900px;
+  max-width: 900px;
   margin: auto;
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
 }
 
 .LogsView__Header * {
@@ -190,6 +191,11 @@ onMounted(() => loadPage(currentPage()));
   margin: 0;
   display: flex;
   font-size: 14px;
+}
+@media (max-width: 992px) {
+  .LogsView__ColumnDescriptions {
+    display: none;
+  }
 }
 
 .LogsView__ColumnDescriptions--time {
