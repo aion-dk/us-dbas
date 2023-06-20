@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { latestConfig, translations } from "./mocks";
+import { latestConfig } from "./mocks";
 
 test("verifying a ballot", async ({ page }) => {
   // Mock Network calls
@@ -15,14 +15,14 @@ test("verifying a ballot", async ({ page }) => {
       });
     }
 
-    // Intercept Translation calls
-    if (url.indexOf("/translations") > 0) {
-      return route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify(translations),
-      });
-    }
+    // // Intercept DBB verification lookup call
+    // if (url.indexOf("us3/verification/vote_track") > 0) {
+    //   return route.fulfill({
+    //     status: 200,
+    //     contentType: "application/json",
+    //     body: verificationCodeFound,
+    //   });
+    // }
 
     return route.continue();
   });
@@ -54,15 +54,6 @@ test("verifying with an invalid verification code", async ({ page }) => {
         status: 404,
         contentType: "application/json",
         body: "",
-      });
-    }
-
-    // Intercept Translation calls
-    if (url.indexOf("/translations") > 0) {
-      return route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify(translations),
       });
     }
 

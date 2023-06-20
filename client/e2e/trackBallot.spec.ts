@@ -1,10 +1,5 @@
 import { test, expect } from "@playwright/test";
-import {
-  latestConfig,
-  foundBallotStatus,
-  rejectedBallotStatus,
-  translations,
-} from "./mocks";
+import { latestConfig, foundBallotStatus, rejectedBallotStatus } from "./mocks";
 
 test("tracking a ballot", async ({ page }) => {
   // Mock Network calls
@@ -26,15 +21,6 @@ test("tracking a ballot", async ({ page }) => {
         status: 200,
         contentType: "application/json",
         body: JSON.stringify(foundBallotStatus),
-      });
-    }
-
-    // Intercept Translation calls
-    if (url.indexOf("/translations") > 0) {
-      return route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify(translations),
       });
     }
 
@@ -73,15 +59,6 @@ test("tracking a non-existing ballot shows an error", async ({ page }) => {
       });
     }
 
-    // Intercept Translation calls
-    if (url.indexOf("/translations") > 0) {
-      return route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify(translations),
-      });
-    }
-
     return route.continue();
   });
 
@@ -115,15 +92,6 @@ test("tracking a rejected ballot has the right text", async ({ page }) => {
         status: 200,
         contentType: "application/json",
         body: JSON.stringify(rejectedBallotStatus),
-      });
-    }
-
-    // Intercept Translation calls
-    if (url.indexOf("/translations") > 0) {
-      return route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify(translations),
       });
     }
 
