@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch, ref, onMounted } from "vue";
+import { watch, ref } from "vue";
 import { RouterView, useRoute } from "vue-router";
 import useLocaleStore from "./stores/useLocaleStore";
 import useConfigStore from "./stores/useConfigStore";
@@ -11,7 +11,6 @@ import router from "./router";
 import { loadLocaleMessages, setLocale } from "./lib/i18n";
 import i18n from "./lib/i18n";
 import type { Locale } from "./Types";
-import defaultSplashImg from "./assets/splash.jpg";
 
 const ballotStore = useBallotStore();
 const configStore = useConfigStore();
@@ -19,24 +18,32 @@ const localeStore = useLocaleStore();
 const route = useRoute();
 const isLoaded = ref(false);
 
-onMounted(async () => {
-  const slug = route.params.electionSlug.toString();
-  await configStore.loadConfig(slug);
-  await setConfigurations(slug);
-  setTitle();
+watch(route, async (newRoute) => {
+  const slug = newRoute.params.electionSlug;
 
-  if (route.params.trackingCode) {
-    await ballotStore.loadBallot(
-      route.params.trackingCode.toString(),
-      configStore.boardSlug
-    );
+  if (slug) {
+    await configStore.loadConfig(slug.toString());
+    await setConfigurations(slug.toString());
   }
 
-  isLoaded.value = true;
+  const locale = newRoute.params.locale.toString();
+  if (locale) localeStore.setLocale(locale);
 });
 
-watch(route, async (newRoute) => {
-  localeStore.setLocale(newRoute.params.locale.toString());
+watch(configStore, async () => {
+  setTitle();
+  if (route.params.electionSlug) {
+    await configStore.loadConfig(route.params.electionSlug.toString());
+
+    isLoaded.value = true;
+
+    if (route.params.trackingCode) {
+      await ballotStore.loadBallot(
+        route.params.trackingCode.toString(),
+        configStore.boardSlug
+      );
+    }
+  }
 });
 
 function updateLocale(newLocale: Locale) {
@@ -58,17 +65,12 @@ function setTitle() {
 }
 
 const setConfigurations = async (slug: string) => {
-  const { conferenceClient } = useConferenceConnector(slug);
-  setLanguage(conferenceClient);
-  setTheme(conferenceClient);
-};
-
-const setLanguage = async (conferenceClient: any) => {
   let browserLocale = navigator.languages.find((locale) =>
     i18n.global.availableLocales.includes(locale as Locale)
   );
-
   if (browserLocale) setLocale(browserLocale as Locale);
+
+  const { conferenceClient } = useConferenceConnector(slug);
 
   let paramLocale = router.currentRoute.value.params.locale?.toString();
 
@@ -91,42 +93,6 @@ const setLanguage = async (conferenceClient: any) => {
         )
       );
     }
-  }
-};
-
-const setTheme = async (conferenceClient: any) => {
-  if (!configStore.electionStatus || !configStore.electionTheme) {
-    // Setting Splash Image
-    configStore.setElectionStatus(await conferenceClient.getStatus());
-
-    const splashStyle = `\n
-      .election-banner {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        z-index: -99;
-        min-height: 580px;
-        width: 100vw;
-        background-image: url("${
-          configStore.electionStatus?.theme?.splash
-            ? configStore.electionStatus?.theme?.splash
-            : defaultSplashImg
-        }");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-      } \n`;
-
-    // Setting Theme
-    configStore.setElectionTheme(
-      await conferenceClient
-        .getStylingData()
-        .then((theme: string) => (theme += splashStyle))
-    );
-
-    const themeStylingTag: HTMLStyleElement = document.createElement("style");
-    themeStylingTag.innerHTML = splashStyle.toString();
-    document.head.appendChild(themeStylingTag);
   }
 };
 </script>
