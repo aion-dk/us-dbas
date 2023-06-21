@@ -8,6 +8,7 @@ import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import router from "./router";
 import i18n from "./lib/i18n";
+import type { Locale } from "./Types";
 
 const ballotStore = useBallotStore();
 const configStore = useConfigStore();
@@ -51,6 +52,11 @@ function setTitle() {
 
 type Locale = `en` | `es`;
 
+const setConfigurations = async (slug: string) => {
+  const { conferenceClient } = useConferenceConnector(slug);
+  setLanguage(conferenceClient);
+};
+
 function changeLocale(newLocale: Locale) {
   console.log(newLocale);
   const url = new URL(window.location.href);
@@ -59,10 +65,31 @@ function changeLocale(newLocale: Locale) {
     `/${newLocale}/`
   );
 
-  i18n.global.locale = newLocale as any; // Apparently there is an incompatibility between i18n legacy mode and vue composition API.
-  localeStore.setLocale(newLocale);
-  router.replace(newUrl);
-}
+  if (browserLocale) setLocale(browserLocale as Locale);
+
+  let paramLocale = router.currentRoute.value.params.locale?.toString();
+
+  if (configStore.election.locales) {
+    let preferredLocale = configStore.election.locales.includes(paramLocale)
+      ? paramLocale
+      : null;
+    let browserLocale = navigator.languages.find((locale) =>
+      configStore.election.locales.includes(locale)
+    );
+    setLocale(
+      preferredLocale || browserLocale || configStore.election.locales[0]
+    );
+
+    for (let i = 0; i < configStore.election.locales.length; i++) {
+      loadLocaleMessages(
+        configStore.election.locales[i],
+        await conferenceClient.getTranslationsData(
+          configStore.election.locales[i]
+        )
+      );
+    }
+  }
+};
 </script>
 
 <template>
