@@ -175,7 +175,6 @@ onMounted(() => {
       <AVCard class="Welcome__Card_Overrides">
         <h3>{{ $t("views.welcome.verify.header") }}</h3>
         <p>{{ $t("views.welcome.verify.p1") }}</p>
-        <p>{{ $t("views.welcome.verify.p2") }}</p>
       </AVCard>
       <AVCard class="Welcome__Card_Overrides Welcome__Tracking">
         <form @submit="initiateVerification">
@@ -201,47 +200,7 @@ onMounted(() => {
             @click="initiateVerification"
           />
         </form>
-
-        <p class="Tooltip">
-          <tooltip hover placement="bottom">
-            <template #default>
-              <span>{{ $t("views.welcome.locate_verification_code") }}</span>
-              <span
-                :aria-label="
-                  $t('views.welcome.locate_verification_code_tooltip')
-                "
-              >
-                <font-awesome-icon icon="fa-solid fa-circle-question" />
-              </span>
-            </template>
-
-            <template #content>
-              <span id="tracking-code-tooltip">
-                {{ $t("views.welcome.locate_verification_code_tooltip") }}
-              </span>
-            </template>
-          </tooltip>
-        </p>
       </AVCard>
-    </div>
-
-    <div class="Welcome__Footer">
-      <p class="Tooltip">
-        <tooltip hover placement="right">
-          <template #default>
-            <span>{{ $t("views.welcome.footer") }}</span>
-            <span :aria-label="$t('views.welcome.footer_tooltip')">
-              <font-awesome-icon icon="fa-solid fa-circle-info" />
-            </span>
-          </template>
-
-          <template #content>
-            <span>
-              {{ $t("views.welcome.footer_tooltip") }}
-            </span>
-          </template>
-        </tooltip>
-      </p>
     </div>
   </div>
 </template>
@@ -257,14 +216,6 @@ onMounted(() => {
   padding: 0;
   margin: 0;
   color: #212529;
-}
-
-.Welcome__Info {
-  color: #6c757d;
-  font-size: 26px;
-  margin: 0;
-  padding: 0;
-  font-weight: 600;
 }
 
 .Welcome__Header {
@@ -288,14 +239,6 @@ onMounted(() => {
   min-width: 40%;
 }
 
-.Welcome__Footer {
-  margin-top: 24px;
-}
-
-.Welcome__Widget {
-  width: 100%;
-}
-
 .Welcome__Tracking form {
   display: flex;
   flex-direction: column;
@@ -316,25 +259,6 @@ onMounted(() => {
   padding: 0 20px;
   font-size: 16px;
   margin-bottom: 1rem;
-}
-
-.Welcome__SubmitButton {
-  box-sizing: border-box;
-  width: 100%;
-  background-color: #343a40;
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  height: 44px;
-  line-height: 44px;
-  margin-top: 16px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.Welcome__SubmitButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 svg {
