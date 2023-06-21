@@ -22,11 +22,13 @@ export const en = {
     },
   },
   header: {
-    dbas: "Digital Ballot Audit Site",
+    dbas: "VoteHub Ballot Verification",
     about: "About",
     logs: "Logs",
     help: "Help",
     contact: "Contact",
+    check: "Ballot checker",
+    track: "Ballot tracker",
     change_locale: {
       en: "Switch to English",
       es: "Cambiar a Español",
@@ -250,22 +252,10 @@ export const en = {
       },
     },
     welcome: {
-      locate_tracking_code: "Where can I find my Ballot Tracking Code?",
-      locate_tracking_code_tooltip:
-        "Your ballot tracking code was displayed in the VoteHub app after you submitted your ballot. It was also sent to the email address in your voter registration record. Can't find your code? You can re-open the VoteHub app and enter your identifying information to retrieve the Tracking Code.",
-      track_ballot_button: "Track My Ballot",
-      tracking_code_input: "Ballot Tracking Code",
-      initiate_verification_button: "Check My Ballot",
-      verification_code_input: "Ballot Checking Code",
-      verify: {
-        header: "Check My Ballot",
-        p1: "Enter the ballot checking code displayed in the VoteHub app",
-      },
-      about: {
-        header: "Ballot Tracker",
-        p1: "I have voted and I want to track my ballot",
-        p2: "To check the status of your ballot, you need to input the tracking code from the Voter receipt.",
-      },
+      title: "Have you already submitted your ballot?",
+      intro: "Use this site to verify your ballot is recorded and received correctly. You can also view all activity in the VoteHub system through the Election Log tab.",
+      yes: "Yes",
+      no: "No",
     },
   },
 };

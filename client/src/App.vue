@@ -79,15 +79,6 @@ function changeLocale(newLocale: Locale) {
     setLocale(
       preferredLocale || browserLocale || configStore.election.locales[0]
     );
-
-    for (let i = 0; i < configStore.election.locales.length; i++) {
-      loadLocaleMessages(
-        configStore.election.locales[i],
-        await conferenceClient.getTranslationsData(
-          configStore.election.locales[i]
-        )
-      );
-    }
   }
 };
 </script>

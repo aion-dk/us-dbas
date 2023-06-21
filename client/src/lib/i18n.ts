@@ -1,4 +1,3 @@
-import translations from "../assets/translations.json";
 import { createI18n } from "vue-i18n";
 import { nextTick } from "vue";
 import type { Locale } from "../Types";
