@@ -17,11 +17,16 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  displayElectionName: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const emit = defineEmits(["changeLocale"]);
 
 const _locales = computed(() => uniq(props.election.locales || ["en"]));
+const name = computed(() => props.election.title[props.locale]);
 const availableLocales = computed(() => {
   return _locales.value.map((l: unknown): DropdownOption => {
     return {
@@ -47,33 +52,50 @@ function setLocale(newLocale: string) {
       alt="DBAS Logo"
     />
 
-    <RouterLink class="Header__Title" :to="`/${locale}/${election.slug}`">
-      {{ $t("header.dbas") }}
+    <RouterLink class="Header__Title" :to="`/${locale}/${election.slug}`" v-if="displayElectionName">
+      <span>{{ $t("header.dbas") }}</span>
+      <span class="sub">{{ name }}</span>
     </RouterLink>
 
     <div class="Header__Links">
       <RouterLink
-        class="Header__Link"
         role="menuitem"
-        :to="`/${locale}/${election.slug}/about`"
+        class="Header__Link"
+        :to="{ name: 'BallotVerifierStart' }"
       >
-        {{ $t("header.about") }}
+        <span>{{ $t("header.check") }}</span>
       </RouterLink>
 
       <RouterLink
         role="menuitem"
         class="Header__Link"
-        :to="`/${locale}/${election.slug}/logs`"
+        :to="{ name: 'BallotTrackerStart' }"
       >
-        {{ $t("header.logs") }}
+        <span>{{ $t("header.track") }}</span>
       </RouterLink>
 
       <RouterLink
         role="menuitem"
         class="Header__Link"
-        :to="`/${locale}/${election.slug}/help`"
+        :to="{ name: 'LogsView' }"
       >
-        {{ $t("header.help") }}
+        <span>{{ $t("header.logs") }}</span>
+      </RouterLink>
+
+      <RouterLink
+        class="Header__Link"
+        role="menuitem"
+        :to="{ name: 'AboutView' }"
+      >
+        <span>{{ $t("header.about") }}</span>
+      </RouterLink>
+
+      <RouterLink
+        role="menuitem"
+        class="Header__Link"
+        :to="{ name: 'HelpView' }"
+      >
+        <span>{{ $t("header.help") }}</span>
       </RouterLink>
 
       <a
@@ -82,11 +104,13 @@ function setLocale(newLocale: string) {
         :href="config.contactUrl"
         target="_blank"
       >
-        {{ $t("header.contact") }}
-        <font-awesome-icon
-          aria-hidden="true"
-          icon="fa-solid fa-arrow-up-right-from-square"
-        />
+        <span>
+          <font-awesome-icon
+            aria-hidden="true"
+            icon="fa-solid fa-arrow-up-right-from-square"
+          />
+          {{ $t("header.contact") }}
+        </span>
       </a>
 
       <DropDown
@@ -109,15 +133,22 @@ function setLocale(newLocale: string) {
   z-index: 2;
   background-color: #fff;
   box-sizing: border-box;
+  height: 70px;
 }
 
 .Header__Title {
   font-weight: 600;
-  font-size: 26px;
+  font-size: 22px;
   margin: 0;
   padding: 0;
   text-decoration: none;
   color: #495057;
+  display: flex;
+  flex-direction: column;
+}
+
+.Header__Title .sub {
+  font-size: 16px;
 }
 
 .Header__Logo {
@@ -146,11 +177,15 @@ function setLocale(newLocale: string) {
 
 .Header__Locales {
   margin-right: 20px;
-  font-size: 18px;
-  font-weight: 700;
-  text-transform: uppercase;
+  font-size: 16px;
   text-decoration: none;
   color: #495057;
   border: none;
+}
+
+.Header__Links .router-link-active span {
+  border: solid 2px #DEE2E6;
+  border-radius: 12px;
+  padding: 7px 8px;
 }
 </style>

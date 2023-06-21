@@ -82,9 +82,14 @@ function changeLocale(newLocale: Locale) {
 </template>
 
 <style type="text/css">
+::root {
+  font-family: "Open Sans";
+}
+
 body {
   padding: 0;
   margin: 0;
+  font-family: "Open Sans";
 }
 
 .DBAS {
