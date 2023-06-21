@@ -11,7 +11,6 @@ import router from "./router";
 import { loadLocaleMessages, setLocale } from "./lib/i18n";
 import i18n from "./lib/i18n";
 import type { Locale } from "./Types";
-import defaultSplashImg from "./assets/splash.jpg";
 
 const ballotStore = useBallotStore();
 const configStore = useConfigStore();
@@ -60,7 +59,6 @@ function setTitle() {
 const setConfigurations = async (slug: string) => {
   const { conferenceClient } = useConferenceConnector(slug);
   setLanguage(conferenceClient);
-  setTheme(conferenceClient);
 };
 
 const setLanguage = async (conferenceClient: any) => {
@@ -91,42 +89,6 @@ const setLanguage = async (conferenceClient: any) => {
         )
       );
     }
-  }
-};
-
-const setTheme = async (conferenceClient: any) => {
-  if (!configStore.electionStatus || !configStore.electionTheme) {
-    // Setting Splash Image
-    configStore.setElectionStatus(await conferenceClient.getStatus());
-
-    const splashStyle = `\n
-      .election-banner {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        z-index: -99;
-        min-height: 580px;
-        width: 100vw;
-        background-image: url("${
-          configStore.electionStatus?.theme?.splash
-            ? configStore.electionStatus?.theme?.splash
-            : defaultSplashImg
-        }");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-      } \n`;
-
-    // Setting Theme
-    configStore.setElectionTheme(
-      await conferenceClient
-        .getStylingData()
-        .then((theme: string) => (theme += splashStyle))
-    );
-
-    const themeStylingTag: HTMLStyleElement = document.createElement("style");
-    themeStylingTag.innerHTML = splashStyle.toString();
-    document.head.appendChild(themeStylingTag);
   }
 };
 </script>

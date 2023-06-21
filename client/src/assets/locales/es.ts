@@ -5,4 +5,4 @@ export const es = {
     da: "Dansk",
     es: "Español",
   },
-}
+};

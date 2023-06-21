@@ -183,7 +183,8 @@ export const en = {
       VoterSessionItem: {
         type: "Sign in",
         author: "You",
-        details: "This activity is logged when a voter has been authorized to use digital return by successfully responding to the one-time access code prompt in the VoteHub app. If voters do not complete the voting process in this session, they will need to be re-authorized when they re-open the voting app.",
+        details:
+          "This activity is logged when a voter has been authorized to use digital return by successfully responding to the one-time access code prompt in the VoteHub app. If voters do not complete the voting process in this session, they will need to be re-authorized when they re-open the voting app.",
       },
     },
   },
@@ -267,4 +268,4 @@ export const en = {
       },
     },
   },
-}
+};
