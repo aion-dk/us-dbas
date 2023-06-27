@@ -35,56 +35,50 @@ onMounted(() => setBallot());
 
 <template>
   <div class="BallotTracker" v-if="ballot" aria-flowto="tracking-code">
-    <CompactHeader
-      :election="configStore.election"
-      :locale="localeStore.locale"
-    />
+    <h1 class="h1">{{ $t("views.tracker.info.title") }}</h1>
 
-    <div class="BallotTracker__Row">
-      <Infobox class="BallotTracker__Infobox" id="infobox">
-        <h2>{{ $t("views.tracker.info.title") }}</h2>
-        <p>{{ $t("views.tracker.info.description") }}</p>
-      </Infobox>
+    <Infobox class="BallotTracker__TrackingCode" role="alertdialog">
+      <h3 role="alert" id="tracking-code" aria-flowto="infobox">
+        <span>{{ $t("views.tracker.currently_tracking") }}</span>
+        <code :aria-label="periodicedTrackingCode">
+          {{ ballot.trackingCode }}
+        </code>
+      </h3>
+      <button
+        class="BallotTracker__Cancel"
+        @click="cancel"
+        data-testid="cancel"
+        :aria-label="
+          $t('views.tracker.cancel_cross_label', {
+            trackingCode: ballot.trackingCode,
+          })
+        "
+      >
+        ×
+      </button>
+    </Infobox>
 
-      <Infobox class="BallotTracker__TrackingCode" role="alertdialog">
-        <h3 role="alert" id="tracking-code" aria-flowto="infobox">
-          <span>{{ $t("views.tracker.currently_tracking") }}</span>
-          <code :aria-label="periodicedTrackingCode">
-            {{ ballot.trackingCode }}
-          </code>
-        </h3>
-        <button
-          class="BallotTracker__Cancel"
-          @click="cancel"
-          data-testid="cancel"
-          :aria-label="
-            $t('views.tracker.cancel_cross_label', {
-              trackingCode: ballot.trackingCode,
-            })
-          "
-        >
-          ×
-        </button>
-      </Infobox>
-    </div>
-
-    <div class="BallotTracker__Row">
-      <Infobox class="BallotTracker__StatusInfo">
-        <h3>{{ $t(`views.tracker.status_map.${ballot.status}.title`) }}</h3>
-        <p>{{ $t(`views.tracker.status_map.${ballot.status}.description`) }}</p>
-      </Infobox>
-    </div>
+    <Infobox class="BallotTracker__StatusInfo">
+      <h3>{{ $t(`views.tracker.status_map.${ballot.status}.title`) }}</h3>
+      <p>{{ $t(`views.tracker.status_map.${ballot.status}.description`) }}</p>
+    </Infobox>
 
     <div
-      class="BallotTracker__Row BallotTracker__Row--stacked"
+      class="BallotTracker__ActivityList"
       v-if="ballot.activities.length"
     >
-      <BallotActivityList :activities="ballot.activities" />
+      <h3 class="h1">{{ $t(`views.tracker.activity_log`) }}</h3>
+      <BallotActivityList :showHeader="false" :activities="ballot.activities" />
     </div>
   </div>
 </template>
 
 <style type="text/css" scoped>
+.h1 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
 .BallotTracker {
   font-family: "Open Sans";
 }
@@ -99,12 +93,8 @@ onMounted(() => setBallot());
 }
 
 .BallotTracker__TrackingCode {
-  margin-left: 40px;
-  flex-grow: 1;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-top: 40px;
   position: relative;
 }
 
@@ -121,6 +111,7 @@ onMounted(() => setBallot());
   font-size: 40px;
   font-family: "Red Hat Mono";
   letter-spacing: 5px;
+  font-weight: 400;
 }
 
 .BallotTracker__TrackingCode h3 span {
@@ -131,11 +122,12 @@ onMounted(() => setBallot());
 }
 
 .BallotTracker__StatusInfo {
-  width: 100%;
+  margin-top: 40px;
 }
 
 .BallotTracker__StatusInfo h3 {
   font-size: 24px;
+  font-weight: 600;
 }
 
 .BallotTracker__Cancel {
@@ -147,5 +139,9 @@ onMounted(() => setBallot());
   font-size: 40px;
   cursor: pointer;
   color: #adb5bd;
+}
+
+.BallotTracker__ActivityList {
+  margin-top: 40px;
 }
 </style>

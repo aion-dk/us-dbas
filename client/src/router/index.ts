@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Welcome from "../views/Welcome.vue";
 import BallotTrackerView from "../views/BallotTrackerView.vue";
-import BallotTrackerStart from "../views/BallotTrackerView.vue";
+import BallotTrackerStart from "../views/BallotTrackerStart.vue";
 import BallotVerifierStart from "../views/BallotVerifierView.vue";
 import BallotVerifierView from "../views/BallotVerifierView.vue";
 import MissingSlugView from "../views/MissingSlugView.vue";

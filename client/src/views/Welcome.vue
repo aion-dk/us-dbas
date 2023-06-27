@@ -26,7 +26,7 @@ const subtitle = computed(() => {
       <div class="Welcome__Subtitle">{{ subtitle }}</div>
     </h1>
 
-    <p>{{ $t("views.welcome.intro") }}</p>
+    <p class="Welcome__Intro">{{ $t("views.welcome.intro") }}</p>
 
     <Infobox class="Welcome__Alert">
       <h2 class="Welcome__AlertTitle">{{ $t("views.welcome.title") }}</h2>
@@ -78,6 +78,10 @@ const subtitle = computed(() => {
     max-width: 700px;
     margin: auto;
     margin-top: 70px;
+  }
+
+  .Welcome__Intro {
+    color: #6C757D;
   }
 
   .Welcome__AlertTitle {

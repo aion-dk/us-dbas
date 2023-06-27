@@ -17,7 +17,7 @@ export const en = {
       invalid_code: {
         title: "TRACKING CODE NOT FOUND",
         description:
-          "Please verify that the tracking code was entered correctly. The code is case sensitive. If you are checking to make sure your ballot was recorded correctly before submitting, use the ballot check site instead. Still having problems? Contact your local election official.",
+          "Please verify that the tracking code was entered correctly. The code is case sensitive. If you are checking to make sure your ballot was recorded correctly before submitting, use the ballot check tab instead. Still having problems? Contact your local election official.",
       },
     },
   },
@@ -158,7 +158,7 @@ export const en = {
       AffidavitRejectItem: {
         type: "Affidavit Rejected",
         author: "Election Official",
-        details:
+        info:
           "This activity is logged when an absentee ballot affidavit has been reviewed and not approved by election officials. The corresponding cast ballot is now flagged as not accepted for counting and will not be available for export for ballot decryption and printing.",
       },
       SpoilRequestItem: {
@@ -174,23 +174,36 @@ export const en = {
       AffidavitAcceptItem: {
         type: "Affidavit Accepted",
         author: "Election Official",
-        details:
+        info:
           "This activity is logged when an absentee ballot affidavit has been reviewed and approved by election officials. The corresponding cast ballot is now flagged as accepted for counting. ",
       },
       CastRequestItem: {
         type: "Ballot Cast",
         author: "You",
-        details: "Your ballot has been received.",
+        info: "Your ballot has been received.",
       },
       VoterSessionItem: {
         type: "Sign in",
         author: "You",
-        details:
+        info:
           "This activity is logged when a voter has been authorized to use digital return by successfully responding to the one-time access code prompt in the VoteHub app. If voters do not complete the voting process in this session, they will need to be re-authorized when they re-open the voting app.",
       },
     },
   },
   views: {
+    BallotTrackerStart: {
+      header: "Ballot Tracker",
+      p1: "Enter the Ballot Tracking Code displayed in the VoteHub app and sent to your email.",
+      p2: "Use the Ballot Tracker to track the status of your digital ballot after it has been submitted.",
+      tracking_code_input: "Ballot Tracking Code",
+      track_ballot_button: "Track My Ballot",
+      locate_tracking_code: "Where can I find my Ballot Tracking Code?",
+      locate_tracking_code_tooltip: "Your ballot tracking code was displayed in the VoteHub app after you submitted your ballot. It was also sent to the email address in your voter registration record. Can't find your code? You can re-open the VoteHub app and enter your identifying information to retrieve the Tracking Code.",
+      footer: {
+        prefix: "Did you mean",
+        suffix: "instead?",
+      },
+    },
     verifier: {
       found: {
         title: "Ballot Checking Code Found",
@@ -220,12 +233,11 @@ export const en = {
       config_only: "Configuration items only?",
     },
     tracker: {
-      currently_tracking: "You are currently tracking ",
+      activity_log: "Activity connected to the tracking code",
+      currently_tracking: "Ballot Tracking Code",
       cancel_cross_label: "Cancel tracking %{trackingCode}",
       info: {
-        title: "Ballot Found",
-        description:
-          "See the status of your ballot below. You can also see all activity connected to your ballot tracking code.",
+        title: "Ballot was found in digital ballot box",
       },
       status_map: {
         pending: {

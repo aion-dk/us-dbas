@@ -6,12 +6,16 @@ defineProps({
     type: Array,
     required: true,
   },
+  showHeader: {
+    type: Boolean,
+    default: true,
+  },
 });
 </script>
 
 <template>
   <div class="BallotActivitiesList" role="log">
-    <h3>{{ $t("components.ballot_activity_list.title") }}</h3>
+    <h3 v-if="showHeader">{{ $t("components.ballot_activity_list.title") }}</h3>
 
     <ul class="BallotActivitiesList__ColumnDescriptions" aria-hidden="true">
       <li class="BallotActivitiesList__ColumnDescriptions--event">
