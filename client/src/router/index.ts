@@ -27,14 +27,14 @@ const router = createRouter({
       component: Welcome,
     },
     {
-      name: "BallotTrackerStart",
-      path: "/:locale/:electionSlug/track",
-      component: BallotTrackerStart,
-    },
-    {
       name: "BallotTrackerView",
       path: "/:locale/:electionSlug/track/:trackingCode",
       component: BallotTrackerView,
+    },
+    {
+      name: "BallotTrackerStart",
+      path: "/:locale/:electionSlug/track",
+      component: BallotTrackerStart,
     },
     {
       name: "BallotVerifierStart",

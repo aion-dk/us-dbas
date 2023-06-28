@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-import { RouterLink } from "vue-router";
+import { useRoute, RouterLink } from "vue-router";
 import config from "../lib/config";
 import DropDown from "./DropDown.vue";
 import { uniq } from "lodash";
 import i18n from "../lib/i18n";
 import type { DropdownOption } from "@/Types";
+
 const { t } = i18n.global;
+const route = useRoute()
 
 const props = defineProps({
   locale: {
@@ -41,6 +43,18 @@ function setLocale(newLocale: string) {
   console.log("Setting new locale", newLocale);
   emit("changeLocale", newLocale);
 }
+
+const routeGroups = {
+  track: ["BallotTrackerView", "BallotTrackerStart"],
+  verify: ["BallotVerifierView", "BallotVerifierStart", "BallotVerifierFound"],
+}
+
+function classes(name) {
+  return {
+    Header__Link: true,
+    "router-link-active": (routeGroups[name] || []).indexOf(route.name) >= 0,
+  }
+}
 </script>
 
 <template>
@@ -60,7 +74,7 @@ function setLocale(newLocale: string) {
     <div class="Header__Links">
       <RouterLink
         role="menuitem"
-        class="Header__Link"
+        :class="classes('verify')"
         :to="{ name: 'BallotVerifierStart' }"
       >
         <span>{{ $t("header.check") }}</span>
@@ -68,7 +82,7 @@ function setLocale(newLocale: string) {
 
       <RouterLink
         role="menuitem"
-        class="Header__Link"
+        :class="classes('track')"
         :to="{ name: 'BallotTrackerStart' }"
       >
         <span>{{ $t("header.track") }}</span>
@@ -76,14 +90,14 @@ function setLocale(newLocale: string) {
 
       <RouterLink
         role="menuitem"
-        class="Header__Link"
+        :class="classes('LogsView')"
         :to="{ name: 'LogsView' }"
       >
         <span>{{ $t("header.logs") }}</span>
       </RouterLink>
 
       <RouterLink
-        class="Header__Link"
+        :class="classes('AboutView')"
         role="menuitem"
         :to="{ name: 'AboutView' }"
       >
@@ -92,7 +106,7 @@ function setLocale(newLocale: string) {
 
       <RouterLink
         role="menuitem"
-        class="Header__Link"
+        :class="classes('HelpView')"
         :to="{ name: 'HelpView' }"
       >
         <span>{{ $t("header.help") }}</span>
