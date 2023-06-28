@@ -205,6 +205,16 @@ export const en = {
       },
     },
     verifier: {
+      start: {
+        title: "Check My Ballot",
+        intro: "Enter the ballot checking code displayed in the VoteHub app",
+        placeholder: "Ballot Checking Code",
+        submit: "Check My Ballot",
+        footer: {
+          prefix: "Are you trying to track your submitted ballot with the",
+          suffix: "",
+        },
+      },
       found: {
         title: "Ballot Checking Code Found",
         description:
