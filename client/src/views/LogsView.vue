@@ -87,10 +87,9 @@ onMounted(() => loadPage(currentPage()));
         {{ $t("components.ballot_activity_list.actor") }}
       </li>
     </ul>
-
     <BoardItem
-      v-for="(item, key) in boardStore.items"
-      :key="key"
+      v-for="item in boardStore.items"
+      :key="item.address"
       :item="item"
     />
 
