@@ -63,6 +63,7 @@ onMounted(redirectUnlessPairingCode);
   <div class="BallotVerifier">
     <AVCard v-if="verificationStore.ballot" class="BallotVerifier__Spoiled">
       <h1 class="BallotVerifier__Title">{{ $t("views.verifier.spoiled.title") }}</h1>
+      <p>{{ $t("views.verifier.spoiled.description") }}</p>
       <div
         v-for="contest in verificationStore.ballot"
         :key="contest.reference"
@@ -123,11 +124,16 @@ onMounted(redirectUnlessPairingCode);
   justify-content: center;
 }
 
+.BallotVerifier p {
+  text-align: center;
+}
+
 .BallotVerifier__Spoiled {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 800px;
+  padding: 60px !important;
 }
 
 .BallotVerifier__Title {
