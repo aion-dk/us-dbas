@@ -5,7 +5,7 @@ import CompactHeader from "../components/CompactHeader.vue";
 import Infobox from "../components/Infobox.vue";
 import router from "../router";
 import { onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, RouterLink } from "vue-router";
 import useVerificationStore from "../stores/useVerificationStore";
 import Timedown from "@/components/Timedown.vue";
 
@@ -79,6 +79,8 @@ onMounted(redirectUnlessPairingCode);
           </p>
         </div>
       </div>
+
+      <RouterLink class="BallotVerifier__Finish" :to="{ name: 'BallotVerifierStart' }">Finish</RouterLink>
     </AVCard>
 
     <div v-else class="BallotVerifier__Spoiled">
@@ -172,7 +174,7 @@ onMounted(redirectUnlessPairingCode);
   background: var(--neutrals-g-100, #F7F7F7);
   padding: 12px;
   align-items: baseline;
-  min-width: 600px;
+  width: 600px;
 }
 
 .BallotVerifier__Pile {
@@ -186,14 +188,12 @@ onMounted(redirectUnlessPairingCode);
   margin-bottom: -10px;
 }
 
-.BallotVerifier__Contest p {
-  padding: 0;
-  margin: 0;
-}
-
 .BallotVerifier__Option {
   display: flex;
   align-items: center;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 5px;
 }
 
 .BallotVerifier__PileMultiplier {
@@ -209,5 +209,26 @@ onMounted(redirectUnlessPairingCode);
   padding: 60px 40px !important;
   box-sizing: border-box;
   width: 100%;
+}
+
+.BallotVerifier__Finish {
+  display: flex;
+  padding: 10px;
+/*  box-sizing: border-box;*/
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 12px;
+  border: none;
+  background: var(--neutrals-g-800, #343A40);
+  color: var(--neutrals-white, #FFF);
+  text-align: center;
+  font-size: 16px;
+  font-family: Open Sans;
+  font-style: normal;
+  line-height: 24px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 600px;
 }
 </style>
