@@ -280,4 +280,7 @@ export const en = {
       no: "No",
     },
   },
+  timedown: {
+    title: "The passkey will expire in %{timeLeft}",
+  },
 };
