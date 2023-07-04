@@ -45,17 +45,18 @@ onMounted(() => {
 <template>
   <div class="Timedown">
     <div class="Timedown__Progress" :style="style" />
+    <div>
+      {{ $t("timedown.title", { timeLeft: displayValue }) }}
+    </div>
   </div>
 
-  <div>
-    {{ $t("timedown.title", { timeLeft: displayValue }) }}
-  </div>
 </template>
 
 <style type="text/css" scoped>
 .Timedown {
   width: 100%;
   box-sizing: border-box;
+  text-align: left;
 }
 
 .Timedown__Progress {

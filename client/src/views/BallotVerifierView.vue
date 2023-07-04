@@ -81,7 +81,7 @@ onMounted(redirectUnlessPairingCode);
       </div>
     </AVCard>
 
-    <div v-else>
+    <div v-else class="BallotVerifier__Spoiled">
       <AVCard class="BallotVerifier__Card">
         <div class="BallotVerifier__InProgress">
           <h1 class="BallotVerifier__Title">
@@ -207,5 +207,7 @@ onMounted(redirectUnlessPairingCode);
 
 .BallotVerifier__Card {
   padding: 60px 40px !important;
+  box-sizing: border-box;
+  width: 100%;
 }
 </style>
