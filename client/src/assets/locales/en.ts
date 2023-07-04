@@ -24,7 +24,11 @@ export const en = {
   header: {
     dbas: "VoteHub Ballot Verification",
     about: "About",
-    logs: "Logs",
+    logs: {
+      logs: "Logs",
+      config: "Configuration logs",
+      activity: "Activity logs",
+    },
     help: "Help",
     contact: "Contact",
     check: "Ballot checker",
@@ -236,10 +240,16 @@ export const en = {
       info: "Have questions? We are here to help.",
     },
     logs: {
-      title: "Election Configuration log",
-      intro:
-        "This log filters out voter activity and only displays the election configuration log.",
-      download_button: "Download the full election activity log (json)",
+      config: {
+        title: "Election Configuration log",
+        intro:
+          "This log filters out voter activity and only displays the election configuration log.",
+      },
+      activity: {
+        title: "Election Activity log",
+        intro: "This log shows all activity in the digital ballot box.",
+      },
+      download_button: "Download the full election log (json)",
       config_only: "Configuration items only?",
     },
     tracker: {

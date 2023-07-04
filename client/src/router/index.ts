@@ -53,11 +53,7 @@ const router = createRouter({
     },
     {
       name: "LogsView",
-      path: "/:locale/:electionSlug/logs",
-      component: LogsView,
-    },
-    {
-      path: "/:locale/:electionSlug/logs/:page",
+      path: "/:locale/:electionSlug/logs/:type/:page?",
       component: LogsView,
     },
     {

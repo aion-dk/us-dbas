@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useRoute, RouterLink } from "vue-router";
 import config from "../lib/config";
 import DropDown from "./DropDown.vue";
@@ -47,6 +47,7 @@ function setLocale(newLocale: string) {
 const routeGroups = {
   track: ["BallotTrackerView", "BallotTrackerStart"],
   verify: ["BallotVerifierView", "BallotVerifierStart", "BallotVerifierFound"],
+  logs: ["LogsView"],
 }
 
 function classes(name) {
@@ -89,11 +90,20 @@ function classes(name) {
       </RouterLink>
 
       <RouterLink
+        id="logs"
         role="menuitem"
-        :class="classes('LogsView')"
-        :to="{ name: 'LogsView' }"
+        :class="classes('logs')"
+        :to="{ name: 'LogsView', params: { type: 'config', page: 1 } }"
       >
-        <span>{{ $t("header.logs") }}</span>
+        <span>{{ $t("header.logs.logs") }}</span>
+        <ul id="logs-submenu">
+          <li>
+            <RouterLink :to="{ name: 'LogsView', params: { type: 'config', page: 1} }">{{ $t("header.logs.config") }}</RouterLink>
+          </li>
+          <li>
+            <RouterLink :to="{ name: 'LogsView', params: { type: 'activity', page: 1} }">{{ $t("header.logs.activity") }}</RouterLink>
+          </li>
+        </ul>
       </RouterLink>
 
       <RouterLink
@@ -201,5 +211,25 @@ function classes(name) {
   border: solid 2px #DEE2E6;
   border-radius: 12px;
   padding: 7px 8px;
+}
+
+#logs-submenu {
+  display: none;
+  position: absolute;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  box-shadow: 0px 4px 10px #ccc;
+  margin-top: 24px;
+}
+
+#logs-submenu a {
+  display: block;
+  padding: 16px 20px;
+}
+
+#logs:hover #logs-submenu {
+  display: block;
 }
 </style>
