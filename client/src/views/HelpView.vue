@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import CompactHeader from "../components/CompactHeader.vue";
 import ExpandableSection from "../components/ExpandableSection.vue";
 import useConfigStore from "../stores/useConfigStore";
 import useLocaleStore from "../stores/useLocaleStore";

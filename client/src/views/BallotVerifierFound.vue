@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import useConfigStore from "../stores/useConfigStore";
 import useLocaleStore from "../stores/useLocaleStore";
-import CompactHeader from "../components/CompactHeader.vue";
 import Infobox from "../components/Infobox.vue";
 import { watch, onMounted } from "vue";
 import router from "@/router";
@@ -33,11 +32,6 @@ onMounted(async () => {
 
 <template>
   <div class="BallotVerifier">
-    <CompactHeader
-      :election="configStore.election"
-      :locale="localeStore.locale"
-    />
-
     <div class="BallotVerifier__Found">
       <Infobox class="BallotVerifier__Infobox" id="infobox">
         <h2>{{ $t("views.verifier.found.title") }}</h2>
@@ -50,6 +44,10 @@ onMounted(async () => {
 <style type="text/css" scoped>
 .BallotVerifier {
   font-family: "Open Sans";
+  text-align: center;
+  max-width: 800px;
+  display: flex;
+  padding-top: 100px;
 }
 
 .BallotVerifier__Infobox {

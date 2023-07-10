@@ -191,7 +191,9 @@ h1 {
 }
 
 .footer {
+  margin: auto;
   margin-top: 24px;
   padding: 0;
+  max-width: 740px;
 }
 </style>

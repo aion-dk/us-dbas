@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import CompactHeader from "../components/CompactHeader.vue";
 import { options } from "../lib/api";
 import useLocaleStore from "../stores/useLocaleStore";
 import useConfigStore from "../stores/useConfigStore";

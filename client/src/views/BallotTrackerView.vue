@@ -2,7 +2,6 @@
 import useConfigStore from "../stores/useConfigStore";
 import useBallotStore from "../stores/useBallotStore";
 import useLocaleStore from "../stores/useLocaleStore";
-import CompactHeader from "../components/CompactHeader.vue";
 import Infobox from "../components/Infobox.vue";
 import { ref, watch, computed, onMounted } from "vue";
 import BallotActivityList from "../components/BallotActivityList.vue";

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import useConfigStore from "../stores/useConfigStore";
 import useLocaleStore from "../stores/useLocaleStore";
-import CompactHeader from "../components/CompactHeader.vue";
 import Infobox from "../components/Infobox.vue";
 import router from "../router";
 import { onMounted } from "vue";
@@ -184,7 +183,7 @@ onMounted(redirectUnlessPairingCode);
 }
 
 .BallotVerifier__Pile {
-  margin-bottom: 20px;
+/*  margin-bottom: 20px;*/
 }
 
 .BallotVerifier__Contest svg {
