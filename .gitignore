@@ -45,4 +45,3 @@ client/src/test-results/
 client/playwright-report/
 
 */.env
-.vscode

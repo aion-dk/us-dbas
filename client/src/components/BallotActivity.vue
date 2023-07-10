@@ -63,6 +63,9 @@ defineProps({
               author: $t(`components.ballot_activity.${activity.type}.author`),
             })
           }}
+          <span>
+            {{ $t(`components.ballot_activity.${activity.type}.author`) }}
+          </span>
         </p>
         <p>
           <font-awesome-icon
@@ -72,7 +75,7 @@ defineProps({
           {{ $t("components.ballot_activity.meaning") }}
         </p>
         <p>
-          {{ $t(`components.ballot_activity.${activity.type}.details`) }}
+          {{ $t(`components.ballot_activity.${activity.type}.info`) }}
         </p>
       </template>
     </ExpandableSection>

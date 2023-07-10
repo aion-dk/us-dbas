@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { watch, ref, onMounted } from "vue";
+import { watch, computed, ref } from "vue";
 import { RouterView, useRoute } from "vue-router";
 import useLocaleStore from "./stores/useLocaleStore";
 import useConfigStore from "./stores/useConfigStore";
 import useBallotStore from "./stores/useBallotStore";
-import { useConferenceConnector } from "./lib/conferenceServices";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import router from "./router";
-import { loadLocaleMessages, setLocale } from "./lib/i18n";
 import i18n from "./lib/i18n";
 import type { Locale } from "./Types";
 
@@ -18,36 +16,35 @@ const localeStore = useLocaleStore();
 const route = useRoute();
 const isLoaded = ref(false);
 
-onMounted(async () => {
-  const slug = route.params.electionSlug.toString();
-  await configStore.loadConfig(slug);
-  await setConfigurations(slug);
-  setTitle();
-
-  if (route.params.trackingCode) {
-    await ballotStore.loadBallot(
-      route.params.trackingCode.toString(),
-      configStore.boardSlug
-    );
-  }
-
-  isLoaded.value = true;
-});
-
 watch(route, async (newRoute) => {
-  localeStore.setLocale(newRoute.params.locale.toString());
+  const slug = newRoute.params.electionSlug;
+
+  if (slug) await configStore.loadConfig(slug.toString());
+
+  const locale = newRoute.params.locale.toString();
+  if (locale) localeStore.setLocale(locale);
 });
 
-function updateLocale(newLocale: Locale) {
-  const newUrl = route.fullPath.replace(
-    `/${localeStore.locale}/`,
-    `/${newLocale}/`
-  );
+watch(localeStore, async (n) => {
+  await router.push({ name: route.name, params: { locale: n.locale } });
+  i18n.global.locale = n.locale as Locale;
+});
 
-  router.replace(newUrl);
-  setLocale(newLocale);
-  localeStore.setLocale(newLocale);
-}
+watch(configStore, async () => {
+  setTitle();
+  if (route.params.electionSlug) {
+    await configStore.loadConfig(route.params.electionSlug.toString());
+
+    isLoaded.value = true;
+
+    if (route.params.trackingCode) {
+      await ballotStore.loadBallot(
+        route.params.trackingCode.toString(),
+        configStore.boardSlug
+      );
+    }
+  }
+});
 
 function setTitle() {
   const title = ["DBAS", configStore.election.title[localeStore.locale]].filter(
@@ -55,53 +52,13 @@ function setTitle() {
   );
   if (window.top) window.top.document.title = title.join(" - ");
 }
-
-const setConfigurations = async (slug: string) => {
-  const { conferenceClient } = useConferenceConnector(slug);
-  setLanguage(conferenceClient);
-};
-
-const setLanguage = async (conferenceClient: any) => {
-  let browserLocale = navigator.languages.find((locale) =>
-    i18n.global.availableLocales.includes(locale as Locale)
-  );
-
-  if (browserLocale) setLocale(browserLocale as Locale);
-
-  let paramLocale = router.currentRoute.value.params.locale?.toString();
-
-  if (configStore.election.locales) {
-    let preferredLocale = configStore.election.locales.includes(paramLocale)
-      ? paramLocale
-      : null;
-    let browserLocale = navigator.languages.find((locale) =>
-      configStore.election.locales.includes(locale)
-    );
-    setLocale(
-      preferredLocale || browserLocale || configStore.election.locales[0]
-    );
-
-    for (let i = 0; i < configStore.election.locales.length; i++) {
-      loadLocaleMessages(
-        configStore.election.locales[i],
-        await conferenceClient.getTranslationsData(
-          configStore.election.locales[i]
-        )
-      );
-    }
-  }
-};
 </script>
 
 <template>
   <div class="DBAS" v-if="isLoaded">
     <!-- <a href="#main" class="DBAS_SkipToContentLink">Skip to main content</a> -->
 
-    <Header
-      :election="configStore.election"
-      :locale="localeStore.locale"
-      @changeLocale="updateLocale"
-    />
+    <Header :election="configStore.election" :locale="localeStore.locale" />
     <main class="DBAS__Content" id="main">
       <RouterView class="DBAS__InnerContent" />
     </main>
@@ -110,9 +67,14 @@ const setLanguage = async (conferenceClient: any) => {
 </template>
 
 <style type="text/css">
+::root {
+  font-family: "Open Sans";
+}
+
 body {
   padding: 0;
   margin: 0;
+  font-family: "Open Sans";
 }
 
 .DBAS {

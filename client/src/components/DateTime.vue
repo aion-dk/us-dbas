@@ -2,7 +2,7 @@
 import moment from "moment";
 import "moment/min/locales";
 import "moment-timezone";
-import { ref } from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
   dateTime: {
@@ -20,16 +20,16 @@ const props = defineProps({
   },
 });
 
-const value = ref(
-  props.format === "absolute"
+const value = computed(() => {
+  return props.format === "absolute"
     ? absolute(props.dateTime)
-    : relative(props.dateTime)
-);
-const label = ref(
-  props.format === "absolute"
+    : relative(props.dateTime);
+});
+const label = computed(() => {
+  return props.format === "absolute"
     ? relative(props.dateTime)
-    : absolute(props.dateTime)
-);
+    : absolute(props.dateTime);
+});
 
 function relative(date: any) {
   return moment

@@ -1,20 +1,9 @@
 <script setup lang="ts">
-import CompactHeader from "../components/CompactHeader.vue";
 import ExpandableSection from "../components/ExpandableSection.vue";
-import useConfigStore from "../stores/useConfigStore";
-import useLocaleStore from "../stores/useLocaleStore";
-
-const configStore = useConfigStore();
-const localeStore = useLocaleStore();
 </script>
 
 <template>
   <main class="HelpView">
-    <CompactHeader
-      :election="configStore.election"
-      :locale="localeStore.locale"
-    />
-
     <div class="HelpView__Header">
       <h2 class="HelpView__Title">{{ $t("views.help.title") }}</h2>
       <p class="HelpView__Info">{{ $t("views.help.info") }}</p>

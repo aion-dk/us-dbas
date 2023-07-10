@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { api } from "../lib/api";
-import type { Election, ElectionStatus } from "../Types";
+import type { Election } from "../Types";
 import type {
   ContestContent,
   LatestConfigItems,
@@ -13,8 +13,6 @@ export default defineStore("useConfigStore", () => {
   const latestConfig = ref<LatestConfigItems | null>(null);
   const election = ref<Election | null>(null);
   const bcTimeout = computed(() => election.value?.content?.bcTimeout);
-  const electionStatus = ref<ElectionStatus | null>(null);
-  const electionTheme = ref<string>(null);
 
   const setSlug = (newSlug: string) => {
     boardSlug.value = newSlug;
@@ -55,14 +53,6 @@ export default defineStore("useConfigStore", () => {
     });
   };
 
-  const setElectionStatus = async (newStatus: ElectionStatus) => {
-    electionStatus.value = newStatus;
-  };
-
-  const setElectionTheme = async (newTheme: string) => {
-    electionTheme.value = newTheme;
-  };
-
   return {
     latestConfig,
     boardSlug,
@@ -71,9 +61,5 @@ export default defineStore("useConfigStore", () => {
     getContest,
     getContestOption,
     bcTimeout,
-    electionStatus,
-    setElectionStatus,
-    electionTheme,
-    setElectionTheme,
   };
 });

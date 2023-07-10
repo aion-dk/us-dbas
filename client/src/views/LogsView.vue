@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import CompactHeader from "../components/CompactHeader.vue";
 import { options } from "../lib/api";
 import useLocaleStore from "../stores/useLocaleStore";
 import useConfigStore from "../stores/useConfigStore";
 import useBoardStore from "../stores/useBoardStore";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { useRoute, RouterLink } from "vue-router";
 import BoardItem from "../components/BoardItem.vue";
 
@@ -13,10 +12,12 @@ const localeStore = useLocaleStore();
 const configStore = useConfigStore();
 const boardStore = useBoardStore();
 const configItemsOnly = ref<boolean>(false);
+const type = computed(() => route.params.type);
 
 watch(configStore, () => loadPage(currentPage()));
 watch(route, () => loadPage(currentPage()));
 watch(configItemsOnly, () => loadPage(1));
+watch(type, () => (configItemsOnly.value = type.value === "config"));
 
 function currentPage() {
   return parseInt(
@@ -52,25 +53,9 @@ onMounted(() => loadPage(currentPage()));
 
 <template>
   <main class="LogsView">
-    <CompactHeader
-      :election="configStore.election"
-      :locale="localeStore.locale"
-    />
-
     <div class="LogsView__Header">
-      <h2>{{ $t("views.logs.title") }}</h2>
-      <p>{{ $t("views.logs.intro") }}</p>
-      <p>
-        <label>
-          <input
-            type="checkbox"
-            name="config-items-only"
-            :value="true"
-            v-model="configItemsOnly"
-          />
-          {{ $t("views.logs.config_only") }}
-        </label>
-      </p>
+      <h2>{{ $t(`views.logs.${type}.title`) }}</h2>
+      <p>{{ $t(`views.logs.${type}.intro`) }}</p>
     </div>
 
     <ul class="LogsView__ColumnDescriptions">
@@ -98,7 +83,7 @@ onMounted(() => loadPage(currentPage()));
         aria-label="Previous page"
         class="LogsView__PageLink"
         v-if="boardStore.meta.prev_page"
-        :to="`/${localeStore.locale}/${configStore.boardSlug}/logs/${boardStore.meta.prev_page}`"
+        :to="`/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.prev_page}`"
       >
         <font-awesome-icon icon="fa-solid fa-chevron-left" />
       </RouterLink>
@@ -111,7 +96,7 @@ onMounted(() => loadPage(currentPage()));
         aria-label="Next page"
         class="LogsView__PageLink"
         v-if="boardStore.meta.next_page"
-        :to="`/${localeStore.locale}/${configStore.boardSlug}/logs/${boardStore.meta.next_page}`"
+        :to="`/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.next_page}`"
       >
         <font-awesome-icon icon="fa-solid fa-chevron-right" />
       </RouterLink>

@@ -19,6 +19,7 @@ import {
   faCircleQuestion,
   faMagnifyingGlass,
   faTriangleExclamation,
+  faEnvelopeOpenText,
 } from "@fortawesome/free-solid-svg-icons";
 import * as UILibrary from "@assemblyvoting/ui-library";
 import "@assemblyvoting/ui-library/styles";
@@ -40,6 +41,7 @@ library.add(faArrowUpRightFromSquare);
 library.add(faChevronRight);
 library.add(faChevronLeft);
 library.add(faTriangleExclamation);
+library.add(faEnvelopeOpenText);
 
 const app = createApp(App);
 
@@ -52,6 +54,4 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 // eslint-disable-next-line vue/multi-word-component-names
 app.component("tooltip", VuePopper);
 
-router.isReady().then(() => {
-  app.mount("#dbas-client");
-});
+app.mount("#dbas-client");

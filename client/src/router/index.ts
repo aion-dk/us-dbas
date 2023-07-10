@@ -1,6 +1,8 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Welcome from "../views/Welcome.vue";
 import BallotTrackerView from "../views/BallotTrackerView.vue";
+import BallotTrackerStart from "../views/BallotTrackerStart.vue";
+import BallotVerifierStart from "../views/BallotVerifierStart.vue";
 import BallotVerifierView from "../views/BallotVerifierView.vue";
 import MissingSlugView from "../views/MissingSlugView.vue";
 import LogsView from "../views/LogsView.vue";
@@ -30,6 +32,16 @@ const router = createRouter({
       component: BallotTrackerView,
     },
     {
+      name: "BallotTrackerStart",
+      path: "/:locale/:electionSlug/track",
+      component: BallotTrackerStart,
+    },
+    {
+      name: "BallotVerifierStart",
+      path: "/:locale/:electionSlug/verify",
+      component: BallotVerifierStart,
+    },
+    {
       name: "BallotVerifierView",
       path: "/:locale/:electionSlug/verify/:pairingCode",
       component: BallotVerifierView,
@@ -41,11 +53,7 @@ const router = createRouter({
     },
     {
       name: "LogsView",
-      path: "/:locale/:electionSlug/logs",
-      component: LogsView,
-    },
-    {
-      path: "/:locale/:electionSlug/logs/:page",
+      path: "/:locale/:electionSlug/logs/:type/:page?",
       component: LogsView,
     },
     {

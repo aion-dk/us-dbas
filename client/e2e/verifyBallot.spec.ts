@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { latestConfig, translations } from "./mocks";
+import { latestConfig } from "./mocks";
 
 test("verifying a ballot", async ({ page }) => {
   // Mock Network calls
@@ -15,22 +15,23 @@ test("verifying a ballot", async ({ page }) => {
       });
     }
 
-    // Intercept Translation calls
-    if (url.indexOf("/translations") > 0) {
-      return route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify(translations),
-      });
-    }
+    // // Intercept DBB verification lookup call
+    // if (url.indexOf("us3/verification/vote_track") > 0) {
+    //   return route.fulfill({
+    //     status: 200,
+    //     contentType: "application/json",
+    //     body: verificationCodeFound,
+    //   });
+    // }
 
     return route.continue();
   });
 
   await page.goto("/en/us3");
-  await expect(page.locator("h1")).toHaveText("Funny Election");
-  await page.getByPlaceholder("Verification code").fill("5ksv8Ee");
-  await page.getByRole("button", { name: "Verify my ballot" }).click();
+  await expect(page.locator("h1")).toContainText("Funny Election");
+  await page.getByRole("link", { name: "No", exact: true }).click();
+  await page.getByPlaceholder("Ballot Checking Code").fill("5ksv8Ee");
+  await page.locator('[data-test="btn"]').click();
   // await expect(page.toHaveContent("pairing code"))
 });
 
@@ -57,24 +58,16 @@ test("verifying with an invalid verification code", async ({ page }) => {
       });
     }
 
-    // Intercept Translation calls
-    if (url.indexOf("/translations") > 0) {
-      return route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify(translations),
-      });
-    }
-
     return route.continue();
   });
 
   await page.goto("/en/us3");
-  await expect(page.locator("h1")).toHaveText("Funny Election");
-  await page.getByPlaceholder("Verification code").fill("invalid-code");
-  await page.getByRole("button", { name: "Verify my ballot" }).click();
+  await expect(page.locator("h1")).toContainText("Funny Election");
+  await page.getByRole("link", { name: "No", exact: true }).click();
+  await page.getByPlaceholder("Ballot Checking Code").fill("invalid-code");
+  await page.getByRole("button", { name: "Check My Ballot" }).click();
   await expect(page.locator(".Error__Title")).toContainText(
-    "Invalid verification code"
+    "CHECKING CODE NOT FOUND"
   );
-  await page.getByPlaceholder("Verification code").fill("invalid-code");
+  await page.getByPlaceholder("Ballot Checking Code").fill("invalid-code");
 });
