@@ -29,8 +29,8 @@ test("verifying a ballot", async ({ page }) => {
 
   await page.goto("/en/us3");
   await expect(page.locator("h1")).toContainText("Funny Election");
-  await page.getByRole('link', { name: 'No', exact: true }).click();
-  await page.getByPlaceholder('Ballot Checking Code').fill('5ksv8Ee');
+  await page.getByRole("link", { name: "No", exact: true }).click();
+  await page.getByPlaceholder("Ballot Checking Code").fill("5ksv8Ee");
   await page.locator('[data-test="btn"]').click();
   // await expect(page.toHaveContent("pairing code"))
 });
@@ -63,11 +63,11 @@ test("verifying with an invalid verification code", async ({ page }) => {
 
   await page.goto("/en/us3");
   await expect(page.locator("h1")).toContainText("Funny Election");
-  await page.getByRole('link', { name: 'No', exact: true }).click();
-  await page.getByPlaceholder('Ballot Checking Code').fill('invalid-code');
+  await page.getByRole("link", { name: "No", exact: true }).click();
+  await page.getByPlaceholder("Ballot Checking Code").fill("invalid-code");
   await page.getByRole("button", { name: "Check My Ballot" }).click();
   await expect(page.locator(".Error__Title")).toContainText(
     "CHECKING CODE NOT FOUND"
   );
-  await page.getByPlaceholder('Ballot Checking Code').fill('invalid-code');
+  await page.getByPlaceholder("Ballot Checking Code").fill("invalid-code");
 });

@@ -17,7 +17,6 @@ const _locale = ref(localeStore.locale);
 const _title = ref("Loading..");
 const _info = ref("Loading..");
 const _trackingCode = ref(null);
-const _verificationCode = ref(null);
 const _error = ref(null);
 const _disabled = ref(false);
 const verificationStore = useVerificationStore();
@@ -77,7 +76,9 @@ onMounted(() => {
 
   setInfo();
   (
-    document.querySelector(".BallotTrackerStart__TrackingCode") as HTMLInputElement
+    document.querySelector(
+      ".BallotTrackerStart__TrackingCode"
+    ) as HTMLInputElement
   )?.focus();
 });
 </script>
@@ -119,16 +120,22 @@ onMounted(() => {
           <tooltip hover placement="bottom">
             <template #default>
               <span
-                :aria-label="$t('views.BallotTrackerStart.locate_tracking_code_tooltip')"
+                :aria-label="
+                  $t('views.BallotTrackerStart.locate_tracking_code_tooltip')
+                "
               >
                 <font-awesome-icon icon="fa-solid fa-circle-question" />
               </span>
-              <span>{{ $t("views.BallotTrackerStart.locate_tracking_code") }}</span>
+              <span>{{
+                $t("views.BallotTrackerStart.locate_tracking_code")
+              }}</span>
             </template>
 
             <template #content>
               <span id="tracking-code-tooltip">
-                {{ $t("views.BallotTrackerStart.locate_tracking_code_tooltip") }}
+                {{
+                  $t("views.BallotTrackerStart.locate_tracking_code_tooltip")
+                }}
               </span>
             </template>
           </tooltip>
@@ -137,7 +144,9 @@ onMounted(() => {
     </div>
     <p class="footer">
       {{ $t("views.BallotTrackerStart.footer.prefix") }}
-      <RouterLink :to="{ name: 'BallotVerifierStart' }">Ballot Check</RouterLink>
+      <RouterLink :to="{ name: 'BallotVerifierStart' }"
+        >Ballot Check</RouterLink
+      >
       {{ $t("views.BallotTrackerStart.footer.suffix") }}
     </p>
   </div>
@@ -202,7 +211,7 @@ svg {
 
 .Tooltip {
   text-align: center;
-  color: #6C757D;
+  color: #6c757d;
 }
 
 .footer {

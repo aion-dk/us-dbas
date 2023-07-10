@@ -62,10 +62,7 @@ onMounted(() => setBallot());
       <p>{{ $t(`views.tracker.status_map.${ballot.status}.description`) }}</p>
     </Infobox>
 
-    <div
-      class="BallotTracker__ActivityList"
-      v-if="ballot.activities.length"
-    >
+    <div class="BallotTracker__ActivityList" v-if="ballot.activities.length">
       <h3 class="h1">{{ $t(`views.tracker.activity_log`) }}</h3>
       <BallotActivityList :showHeader="false" :activities="ballot.activities" />
     </div>

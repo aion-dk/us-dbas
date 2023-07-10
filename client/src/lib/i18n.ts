@@ -1,6 +1,4 @@
 import { createI18n } from "vue-i18n";
-import { nextTick } from "vue";
-import type { Locale } from "../Types";
 import { en } from "../assets/locales/en";
 import { es } from "../assets/locales/es";
 

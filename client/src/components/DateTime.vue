@@ -23,12 +23,12 @@ const props = defineProps({
 const value = computed(() => {
   return props.format === "absolute"
     ? absolute(props.dateTime)
-    : relative(props.dateTime)
+    : relative(props.dateTime);
 });
 const label = computed(() => {
   return props.format === "absolute"
     ? relative(props.dateTime)
-    : absolute(props.dateTime)
+    : absolute(props.dateTime);
 });
 
 function relative(date: any) {

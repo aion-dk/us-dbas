@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useRoute, RouterLink } from "vue-router";
 import config from "../lib/config";
 import DropDown from "./DropDown.vue";
@@ -9,8 +9,8 @@ import type { DropdownOption } from "@/Types";
 import useLocaleStore from "../stores/useLocaleStore";
 
 const { t } = i18n.global;
-const route = useRoute()
-const localeStore = useLocaleStore()
+const route = useRoute();
+const localeStore = useLocaleStore();
 
 const props = defineProps({
   locale: {
@@ -40,20 +40,20 @@ const availableLocales = computed(() => {
 });
 
 function setLocale(newLocale: string) {
-  localeStore.setLocale(newLocale)
+  localeStore.setLocale(newLocale);
 }
 
 const routeGroups = {
   track: ["BallotTrackerView", "BallotTrackerStart"],
   verify: ["BallotVerifierView", "BallotVerifierStart", "BallotVerifierFound"],
   logs: ["LogsView"],
-}
+};
 
 function classes(name) {
   return {
     Header__Link: true,
     "router-link-active": (routeGroups[name] || []).indexOf(route.name) >= 0,
-  }
+  };
 }
 </script>
 
@@ -66,7 +66,11 @@ function classes(name) {
       alt="DBAS Logo"
     />
 
-    <RouterLink class="Header__Title" :to="`/${locale}/${election.slug}`" v-if="displayElectionName">
+    <RouterLink
+      class="Header__Title"
+      :to="`/${locale}/${election.slug}`"
+      v-if="displayElectionName"
+    >
       <span>{{ $t("header.dbas") }}</span>
       <span class="sub">{{ name }}</span>
     </RouterLink>
@@ -97,10 +101,16 @@ function classes(name) {
         <span>{{ $t("header.logs.logs") }}</span>
         <ul id="logs-submenu">
           <li>
-            <RouterLink :to="{ name: 'LogsView', params: { type: 'config', page: 1} }">{{ $t("header.logs.config") }}</RouterLink>
+            <RouterLink
+              :to="{ name: 'LogsView', params: { type: 'config', page: 1 } }"
+              >{{ $t("header.logs.config") }}</RouterLink
+            >
           </li>
           <li>
-            <RouterLink :to="{ name: 'LogsView', params: { type: 'activity', page: 1} }">{{ $t("header.logs.activity") }}</RouterLink>
+            <RouterLink
+              :to="{ name: 'LogsView', params: { type: 'activity', page: 1 } }"
+              >{{ $t("header.logs.activity") }}</RouterLink
+            >
           </li>
         </ul>
       </RouterLink>
@@ -207,7 +217,7 @@ function classes(name) {
 }
 
 .Header__Links .router-link-active span {
-  border: solid 2px #DEE2E6;
+  border: solid 2px #dee2e6;
   border-radius: 12px;
   padding: 7px 8px;
 }

@@ -29,10 +29,12 @@ test("downloading logs", async ({ page }) => {
 
   await page.goto("/en/us3");
   await page.getByRole("menuitem", { name: "Logs" }).click();
-  await page.getByRole('link', { name: 'Activity logs' }).click();
+  await page.getByRole("link", { name: "Activity logs" }).click();
 
-  const downloadPromise = page.waitForEvent('download');
-  await page.getByRole('link', { name: 'Download the full election log (json)' }).click();
+  const downloadPromise = page.waitForEvent("download");
+  await page
+    .getByRole("link", { name: "Download the full election log (json)" })
+    .click();
   const download = await downloadPromise;
 });
 

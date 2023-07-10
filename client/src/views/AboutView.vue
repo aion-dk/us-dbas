@@ -1,10 +1,4 @@
-<script setup lang="ts">
-import useConfigStore from "../stores/useConfigStore";
-import useLocaleStore from "../stores/useLocaleStore";
-
-const configStore = useConfigStore();
-const localeStore = useLocaleStore();
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <main class="AboutView">
@@ -23,7 +17,7 @@ const localeStore = useLocaleStore();
 
 .AboutView h1 {
   text-align: center;
-  color: var(--neutrals-g-800, #343A40);
+  color: var(--neutrals-g-800, #343a40);
   text-align: center;
   font-size: 26px;
   font-family: Open Sans;
@@ -33,7 +27,7 @@ const localeStore = useLocaleStore();
 }
 
 .AboutView h2 {
-  color: var(--neutrals-g-800, #343A40);
+  color: var(--neutrals-g-800, #343a40);
   font-size: 24px;
   font-family: Open Sans;
   font-style: normal;

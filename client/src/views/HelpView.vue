@@ -1,10 +1,5 @@
 <script setup lang="ts">
 import ExpandableSection from "../components/ExpandableSection.vue";
-import useConfigStore from "../stores/useConfigStore";
-import useLocaleStore from "../stores/useLocaleStore";
-
-const configStore = useConfigStore();
-const localeStore = useLocaleStore();
 </script>
 
 <template>

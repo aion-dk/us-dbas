@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import useConfigStore from "../stores/useConfigStore";
-import useLocaleStore from "../stores/useLocaleStore";
 import Infobox from "../components/Infobox.vue";
 import { watch, onMounted } from "vue";
 import router from "@/router";
 import useVerificationStore from "@/stores/useVerificationStore";
 
-const localeStore = useLocaleStore();
-const configStore = useConfigStore();
 const verificationStore = useVerificationStore();
 
 async function checkForPairingCode(store: any) {

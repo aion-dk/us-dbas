@@ -2,21 +2,18 @@
 import { useRoute, RouterLink } from "vue-router";
 import useConfigStore from "../stores/useConfigStore";
 import { ref, watch, onMounted } from "vue";
-import useBallotStore from "../stores/useBallotStore";
 import router from "../router";
 import useLocaleStore from "../stores/useLocaleStore";
 import useVerificationStore from "../stores/useVerificationStore";
 import Error from "../components/Error.vue";
 
 const localeStore = useLocaleStore();
-const ballotStore = useBallotStore();
 const configStore = useConfigStore();
 const route = useRoute();
 const _electionSlug = ref(route.params.electionSlug);
 const _locale = ref(localeStore.locale);
 const _title = ref("Loading..");
 const _info = ref("Loading..");
-const _trackingCode = ref(null);
 const _verificationCode = ref(null);
 const _error = ref(null);
 const _disabled = ref(false);
@@ -84,7 +81,9 @@ onMounted(() => {
 
   setInfo();
   (
-    document.querySelector(".BallotTrackerStart__TrackingCode") as HTMLInputElement
+    document.querySelector(
+      ".BallotTrackerStart__TrackingCode"
+    ) as HTMLInputElement
   )?.focus();
 });
 </script>
@@ -125,7 +124,9 @@ onMounted(() => {
     </div>
     <p class="footer">
       {{ $t("views.verifier.start.footer.prefix") }}
-      <RouterLink :to="{ name: 'BallotTrackerStart' }">Ballot Tracker</RouterLink>
+      <RouterLink :to="{ name: 'BallotTrackerStart' }"
+        >Ballot Tracker</RouterLink
+      >
       {{ $t("views.verifier.start.footer.suffix") }}
     </p>
   </div>

@@ -49,7 +49,6 @@ onMounted(() => {
       {{ $t("timedown.title", { timeLeft: displayValue }) }}
     </div>
   </div>
-
 </template>
 
 <style type="text/css" scoped>

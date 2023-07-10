@@ -7,7 +7,7 @@ import useBallotStore from "./stores/useBallotStore";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import router from "./router";
-import i18n from "./lib/i18n"
+import i18n from "./lib/i18n";
 
 const ballotStore = useBallotStore();
 const configStore = useConfigStore();
@@ -25,9 +25,9 @@ watch(route, async (newRoute) => {
 });
 
 watch(localeStore, async (n) => {
-  await router.push({ name: route.name, params: { locale: n.locale } })
-  i18n.global.locale = n.locale
-})
+  await router.push({ name: route.name, params: { locale: n.locale } });
+  i18n.global.locale = n.locale;
+});
 
 watch(configStore, async () => {
   setTitle();
@@ -62,10 +62,7 @@ const setConfigurations = async (slug: string) => {
   <div class="DBAS" v-if="isLoaded">
     <!-- <a href="#main" class="DBAS_SkipToContentLink">Skip to main content</a> -->
 
-    <Header
-      :election="configStore.election"
-      :locale="localeStore.locale"
-    />
+    <Header :election="configStore.election" :locale="localeStore.locale" />
     <main class="DBAS__Content" id="main">
       <RouterView class="DBAS__InnerContent" />
     </main>

@@ -160,8 +160,7 @@ export const en = {
       AffidavitRejectItem: {
         type: "Affidavit Rejected",
         author: "Election Official",
-        info:
-          "This activity is logged when an absentee ballot affidavit has been reviewed and not approved by election officials. The corresponding cast ballot is now flagged as not accepted for counting and will not be available for export for ballot decryption and printing.",
+        info: "This activity is logged when an absentee ballot affidavit has been reviewed and not approved by election officials. The corresponding cast ballot is now flagged as not accepted for counting and will not be available for export for ballot decryption and printing.",
       },
       SpoilRequestItem: {
         type: "Spoil Request",
@@ -176,8 +175,7 @@ export const en = {
       AffidavitAcceptItem: {
         type: "Affidavit Accepted",
         author: "Election Official",
-        info:
-          "This activity is logged when an absentee ballot affidavit has been reviewed and approved by election officials. The corresponding cast ballot is now flagged as accepted for counting. ",
+        info: "This activity is logged when an absentee ballot affidavit has been reviewed and approved by election officials. The corresponding cast ballot is now flagged as accepted for counting. ",
       },
       CastRequestItem: {
         type: "Ballot Cast",
@@ -187,8 +185,7 @@ export const en = {
       VoterSessionItem: {
         type: "Sign in",
         author: "You",
-        info:
-          "This activity is logged when a voter has been authorized to use digital return by successfully responding to the one-time access code prompt in the VoteHub app. If voters do not complete the voting process in this session, they will need to be re-authorized when they re-open the voting app.",
+        info: "This activity is logged when a voter has been authorized to use digital return by successfully responding to the one-time access code prompt in the VoteHub app. If voters do not complete the voting process in this session, they will need to be re-authorized when they re-open the voting app.",
       },
     },
   },
@@ -218,7 +215,8 @@ export const en = {
       tracking_code_input: "Ballot Tracking Code",
       track_ballot_button: "Track My Ballot",
       locate_tracking_code: "Where can I find my Ballot Tracking Code?",
-      locate_tracking_code_tooltip: "Your ballot tracking code was displayed in the VoteHub app after you submitted your ballot. It was also sent to the email address in your voter registration record. Can't find your code? You can re-open the VoteHub app and enter your identifying information to retrieve the Tracking Code.",
+      locate_tracking_code_tooltip:
+        "Your ballot tracking code was displayed in the VoteHub app after you submitted your ballot. It was also sent to the email address in your voter registration record. Can't find your code? You can re-open the VoteHub app and enter your identifying information to retrieve the Tracking Code.",
       footer: {
         prefix: "Did you mean",
         suffix: "instead?",
@@ -301,7 +299,8 @@ export const en = {
     },
     welcome: {
       title: "Have you already submitted your ballot?",
-      intro: "Use this site to verify your ballot is recorded and received correctly. You can also view all activity in the VoteHub system through the Election Log tab.",
+      intro:
+        "Use this site to verify your ballot is recorded and received correctly. You can also view all activity in the VoteHub system through the Election Log tab.",
       yes: "Yes",
       no: "No",
     },

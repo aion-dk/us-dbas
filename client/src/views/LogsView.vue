@@ -12,12 +12,12 @@ const localeStore = useLocaleStore();
 const configStore = useConfigStore();
 const boardStore = useBoardStore();
 const configItemsOnly = ref<boolean>(false);
-const type = computed(() => route.params.type)
+const type = computed(() => route.params.type);
 
 watch(configStore, () => loadPage(currentPage()));
 watch(route, () => loadPage(currentPage()));
 watch(configItemsOnly, () => loadPage(1));
-watch(type, () => configItemsOnly.value = type.value === "config")
+watch(type, () => (configItemsOnly.value = type.value === "config"));
 
 function currentPage() {
   return parseInt(
