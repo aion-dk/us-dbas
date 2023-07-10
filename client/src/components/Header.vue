@@ -52,7 +52,8 @@ const routeGroups: RouteGroups = {
 function classes(name: string) {
   return {
     Header__Link: true,
-    "router-link-active": (routeGroups[name] || []).indexOf(route.name.toString()) >= 0,
+    "router-link-active":
+      (routeGroups[name] || []).indexOf(route.name.toString()) >= 0,
   };
 }
 </script>

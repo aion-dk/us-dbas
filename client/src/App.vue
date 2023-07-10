@@ -27,7 +27,7 @@ watch(route, async (newRoute) => {
 
 watch(localeStore, async (n) => {
   await router.push({ name: route.name, params: { locale: n.locale } });
-  i18n.global.locale = (n.locale as Locale);
+  i18n.global.locale = n.locale as Locale;
 });
 
 watch(configStore, async () => {

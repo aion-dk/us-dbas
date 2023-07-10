@@ -17,4 +17,4 @@ export type DropdownOption = {
 
 export type RouteGroups = { [key: string]: string[] };
 
-export type Locale = "en" | "es"
+export type Locale = "en" | "es";
