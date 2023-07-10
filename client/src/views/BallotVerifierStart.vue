@@ -29,27 +29,6 @@ function setInfo() {
     .join(", ");
 }
 
-async function lookupBallot(event: Event) {
-  event.preventDefault();
-  event.stopPropagation();
-  _disabled.value = true;
-  _error.value = null;
-
-  if (_trackingCode.value && configStore.boardSlug) {
-    await ballotStore.loadBallot(_trackingCode.value, configStore.boardSlug);
-  }
-
-  if (ballotStore.ballot?.status) {
-    router.push(
-      `/${_locale.value}/${_electionSlug.value}/track/${_trackingCode.value}`
-    );
-  } else {
-    _error.value = "track.invalid_code";
-  }
-
-  _disabled.value = false;
-}
-
 async function initiateVerification(event: Event) {
   event.preventDefault();
   event.stopPropagation();
@@ -120,7 +99,7 @@ onMounted(() => {
           <p>{{ $t("views.verifier.start.intro") }}</p>
         </div>
 
-        <form @submit="lookupBallot">
+        <form @submit="initiateVerification">
           <input
             :disabled="_disabled"
             type="text"

@@ -10,11 +10,6 @@ const localeStore = useLocaleStore();
 
 <template>
   <main class="HelpView">
-    <CompactHeader
-      :election="configStore.election"
-      :locale="localeStore.locale"
-    />
-
     <div class="HelpView__Header">
       <h2 class="HelpView__Title">{{ $t("views.help.title") }}</h2>
       <p class="HelpView__Info">{{ $t("views.help.info") }}</p>

@@ -221,7 +221,7 @@ function classes(name) {
   margin: 0;
   background-color: #fff;
   box-shadow: 0px 4px 10px #ccc;
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
 #logs-submenu a {

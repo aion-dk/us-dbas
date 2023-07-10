@@ -195,6 +195,24 @@ export const en = {
     },
   },
   views: {
+    about: {
+      title: "About this website",
+      content: `
+        <p>This site gives voters the ability to independently verify that their ballot is received and counted correctly. All activity in the VoteHub digital ballot box is viewable and auditable so the public can independently verify the results of the election are correct.</p>
+
+        <h2>Ballot Check</h2>
+        <p>Voters can use this tab to independently verify that their ballot is recorded and sealed correctly in the VoteHub voting app.  This ballot check is performed before a ballot is submitted. The check is an important tool to ensure every voter's ballot is cast correctly.  After a ballot is submitted, voters can use the Ballot Tracker to verify that it was received correctly and confirm later when the signature affidavit has been verified and their ballot is accepted and printed for counting. Learn more about the security features of VoteHub here.</p>
+
+        <h2>Ballot Tracker</h2>
+        <p>Voters can use this tab to verify their ballot was received correctly in the VoteHub digital ballot box. Voters can also track when their signature affidavit is verified and when their ballot is decrypted and printed offline for counting.  Voters cannot view or change their ballots after they have been submitted, and the site does not ask for or reveal any information about the voter's identity.</p>
+
+        <h2>Election Activity Log</h2>
+        <p>The public can use this tab to view and audit all activity in the VoteHub digital ballot box.</p>
+
+        <h2>Election Configuration Log</h2>
+        <p>The public can use this tab to view and audit all activity connected to the election configuration and backend activities. </p>
+      `,
+    },
     BallotTrackerStart: {
       header: "Ballot Tracker",
       p1: "Enter the Ballot Tracking Code displayed in the VoteHub app and sent to your email.",
