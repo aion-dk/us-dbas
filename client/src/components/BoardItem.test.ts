@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import BoardItem from "./BoardItem.vue";
 import { createI18n } from "vue-i18n";
-import { en } from "../assets/locales/en.ts";
+import { en } from "../assets/locales/en";
 
 const i18n = createI18n({ locale: "en", messages: { en } });
 

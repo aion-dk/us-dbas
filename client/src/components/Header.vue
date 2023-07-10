@@ -5,7 +5,7 @@ import config from "../lib/config";
 import DropDown from "./DropDown.vue";
 import { uniq } from "lodash";
 import i18n from "../lib/i18n";
-import type { DropdownOption } from "@/Types";
+import type { DropdownOption, RouteGroups } from "@/Types";
 import useLocaleStore from "../stores/useLocaleStore";
 
 const { t } = i18n.global;
@@ -43,16 +43,16 @@ function setLocale(newLocale: string) {
   localeStore.setLocale(newLocale);
 }
 
-const routeGroups = {
+const routeGroups: RouteGroups = {
   track: ["BallotTrackerView", "BallotTrackerStart"],
   verify: ["BallotVerifierView", "BallotVerifierStart", "BallotVerifierFound"],
   logs: ["LogsView"],
 };
 
-function classes(name) {
+function classes(name: string) {
   return {
     Header__Link: true,
-    "router-link-active": (routeGroups[name] || []).indexOf(route.name) >= 0,
+    "router-link-active": (routeGroups[name] || []).indexOf(route.name.toString()) >= 0,
   };
 }
 </script>

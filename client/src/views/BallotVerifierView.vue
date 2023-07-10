@@ -20,7 +20,7 @@ function redirectUnlessPairingCode() {
   if (!verificationStore.pairingCode) cancel();
 }
 
-function getOptionName(contest, selection) {
+function getOptionName(contest: any, selection: any) {
   return configStore.getContestOption(contest.reference, selection.reference)
     .title[localeStore.locale];
 }

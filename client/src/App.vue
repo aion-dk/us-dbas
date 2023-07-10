@@ -8,6 +8,7 @@ import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import router from "./router";
 import i18n from "./lib/i18n";
+import type { Locale } from "./Types";
 
 const ballotStore = useBallotStore();
 const configStore = useConfigStore();
@@ -26,7 +27,7 @@ watch(route, async (newRoute) => {
 
 watch(localeStore, async (n) => {
   await router.push({ name: route.name, params: { locale: n.locale } });
-  i18n.global.locale = n.locale;
+  i18n.global.locale = (n.locale as Locale);
 });
 
 watch(configStore, async () => {
@@ -51,11 +52,6 @@ function setTitle() {
   );
   if (window.top) window.top.document.title = title.join(" - ");
 }
-
-const setConfigurations = async (slug: string) => {
-  const { conferenceClient } = useConferenceConnector(slug);
-  setLanguage(conferenceClient);
-};
 </script>
 
 <template>
