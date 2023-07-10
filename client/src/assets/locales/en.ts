@@ -1,8 +1,6 @@
 export const en = {
   locales: {
     en: "English",
-    de: "Deutsch",
-    da: "Dansk",
     es: "Español",
   },
   errors: {

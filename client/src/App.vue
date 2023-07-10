@@ -7,8 +7,7 @@ import useBallotStore from "./stores/useBallotStore";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import router from "./router";
-import i18n from "./lib/i18n";
-import type { Locale } from "./Types";
+import i18n from "./lib/i18n"
 
 const ballotStore = useBallotStore();
 const configStore = useConfigStore();
@@ -24,6 +23,11 @@ watch(route, async (newRoute) => {
   const locale = newRoute.params.locale.toString();
   if (locale) localeStore.setLocale(locale);
 });
+
+watch(localeStore, async (n) => {
+  await router.push({ name: route.name, params: { locale: n.locale } })
+  i18n.global.locale = n.locale
+})
 
 watch(configStore, async () => {
   setTitle();
@@ -41,8 +45,6 @@ watch(configStore, async () => {
   }
 });
 
-const locale = computed(() => localeStore.locale);
-
 function setTitle() {
   const title = ["DBAS", configStore.election.title[localeStore.locale]].filter(
     (s) => s
@@ -50,36 +52,9 @@ function setTitle() {
   if (window.top) window.top.document.title = title.join(" - ");
 }
 
-type Locale = `en` | `es`;
-
 const setConfigurations = async (slug: string) => {
   const { conferenceClient } = useConferenceConnector(slug);
   setLanguage(conferenceClient);
-};
-
-function changeLocale(newLocale: Locale) {
-  console.log(newLocale);
-  const url = new URL(window.location.href);
-  const newUrl = url.pathname.replace(
-    `/${localeStore.locale}/`,
-    `/${newLocale}/`
-  );
-
-  if (browserLocale) setLocale(browserLocale as Locale);
-
-  let paramLocale = router.currentRoute.value.params.locale?.toString();
-
-  if (configStore.election.locales) {
-    let preferredLocale = configStore.election.locales.includes(paramLocale)
-      ? paramLocale
-      : null;
-    let browserLocale = navigator.languages.find((locale) =>
-      configStore.election.locales.includes(locale)
-    );
-    setLocale(
-      preferredLocale || browserLocale || configStore.election.locales[0]
-    );
-  }
 };
 </script>
 
@@ -89,8 +64,7 @@ function changeLocale(newLocale: Locale) {
 
     <Header
       :election="configStore.election"
-      :locale="locale"
-      @changeLocale="changeLocale"
+      :locale="localeStore.locale"
     />
     <main class="DBAS__Content" id="main">
       <RouterView class="DBAS__InnerContent" />

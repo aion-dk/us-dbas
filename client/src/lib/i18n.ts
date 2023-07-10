@@ -11,10 +11,7 @@ if (url.pathname.split("/")[1]) locale = url.pathname.split("/")[1];
 export default createI18n({
   locale: locale,
   fallbackLocale: "en",
-  messages: {
-    en: en,
-    es: es,
-  },
+  messages: { en, es },
   datetimeFormats: {
     en: {
       short: {

@@ -6,9 +6,11 @@ import DropDown from "./DropDown.vue";
 import { uniq } from "lodash";
 import i18n from "../lib/i18n";
 import type { DropdownOption } from "@/Types";
+import useLocaleStore from "../stores/useLocaleStore";
 
 const { t } = i18n.global;
 const route = useRoute()
+const localeStore = useLocaleStore()
 
 const props = defineProps({
   locale: {
@@ -25,8 +27,6 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["changeLocale"]);
-
 const _locales = computed(() => uniq(props.election.locales || ["en"]));
 const name = computed(() => props.election.title[props.locale]);
 const availableLocales = computed(() => {
@@ -40,8 +40,7 @@ const availableLocales = computed(() => {
 });
 
 function setLocale(newLocale: string) {
-  console.log("Setting new locale", newLocale);
-  emit("changeLocale", newLocale);
+  localeStore.setLocale(newLocale)
 }
 
 const routeGroups = {
