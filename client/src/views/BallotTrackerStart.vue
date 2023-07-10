@@ -50,34 +50,6 @@ async function lookupBallot(event: Event) {
   _disabled.value = false;
 }
 
-async function initiateVerification(event: Event) {
-  event.preventDefault();
-  event.stopPropagation();
-  _disabled.value = true;
-  _error.value = null;
-
-  try {
-    await verificationStore.findBallot(_verificationCode.value);
-
-    verificationStore.generatePairingCode();
-
-    setTimeout(async () => {
-      if (verificationStore.pairingCode) return;
-
-      await router.push({
-        name: "BallotVerifierFound",
-        params: {
-          verificationCode: _verificationCode.value,
-        },
-      });
-    }, 2000);
-  } catch (e) {
-    console.error(e);
-    _disabled.value = false;
-    _error.value = "verify.invalid_code";
-  }
-}
-
 watch(route, (newRoute) => {
   _electionSlug.value = newRoute.params.electionSlug;
   _locale.value = newRoute.params.locale.toString();
