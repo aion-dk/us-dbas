@@ -81,7 +81,7 @@ onMounted(() => loadPage(currentPage()));
 
     <div class="LogsView__Pagination">
       <RouterLink
-        aria-label="Previos page"
+        aria-label="Previous page"
         class="LogsView__PageLink"
         v-if="boardStore.meta.prev_page"
         :to="`/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.prev_page}`"

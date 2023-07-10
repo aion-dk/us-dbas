@@ -86,7 +86,7 @@ test("traversing board items", async ({ page }) => {
   await page.getByText("12g69GA").click();
 
   // Page 1 again
-  await page.getByRole("link", { name: "Previos page" }).click();
+  await page.getByRole("link", { name: "Previous page" }).click();
   await page.getByText("16fSovo").click();
   await page.getByText("VMMHYWv").click();
 
