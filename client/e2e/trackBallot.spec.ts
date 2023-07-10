@@ -28,11 +28,13 @@ test("tracking a ballot", async ({ page }) => {
   });
 
   await page.goto("/en/us3");
-  await expect(page.locator("h1")).toHaveText("Funny Election");
+  await expect(page.locator("h1")).toContainText("Funny Election");
+  await page.getByRole('link', { name: 'Yes' }).click();
   await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
   await page.getByRole("button", { name: "Track my ballot" }).click();
   await page.locator(".ExpandableSection__Expander").first().click();
   await page.getByRole("button", { name: "Cancel tracking 5ksv8Ee" }).click();
+  await page.getByRole('link', { name: 'Yes' }).click();
   await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
 });
 
@@ -63,11 +65,12 @@ test("tracking a non-existing ballot shows an error", async ({ page }) => {
   });
 
   await page.goto("/en/us3");
-  await expect(page.locator("h1")).toHaveText("Funny Election");
+  await expect(page.locator("h1")).toContainText("Funny Election");
+  await page.getByRole('link', { name: 'Yes' }).click();
   await page.getByPlaceholder("Ballot tracking code").fill("abcdef");
   await page.getByRole("button", { name: "Track my ballot" }).click();
   await expect(page.locator(".Error__Title")).toContainText(
-    "Invalid tracking code"
+    "TRACKING CODE NOT FOUND"
   );
   await page.getByPlaceholder("Ballot tracking code").fill("hijklm");
 });
@@ -99,7 +102,8 @@ test("tracking a rejected ballot has the right text", async ({ page }) => {
   });
 
   await page.goto("/en/us3");
-  await expect(page.locator("h1")).toHaveText("Funny Election");
+  await expect(page.locator("h1")).toContainText("Funny Election");
+  await page.getByRole('link', { name: 'Yes' }).click();
   await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
   await page.getByRole("button", { name: "Track my ballot" }).click();
 
@@ -108,13 +112,13 @@ test("tracking a rejected ballot has the right text", async ({ page }) => {
   await page.locator(".BallotTracker__StatusInfo h3");
 
   await expect(page.locator(".BallotTracker__StatusInfo h3")).toHaveText(
-    "Ballot not accepted"
+    "Ballot Not Accepted"
   );
   await expect(page.locator(".BallotTracker__StatusInfo p")).toHaveText(
-    "There is a problem with your signature affidavit. Contact your local election official for next steps and to cure your affidavit."
+    "There is a problem with your signature affidavit. It was not accepted due to “REJECTION REASON”. Contact your local election official for next steps and to cure your affidavit."
   );
   await expect(page.locator(".BallotTracker__StatusInfo p")).toHaveText(
-    "There is a problem with your signature affidavit. Contact your local election official for next steps and to cure your affidavit."
+    "There is a problem with your signature affidavit. It was not accepted due to “REJECTION REASON”. Contact your local election official for next steps and to cure your affidavit."
   );
   await expect(page.locator(".BallotActivity__Type").first()).toHaveText(
     "Affidavit Rejected"

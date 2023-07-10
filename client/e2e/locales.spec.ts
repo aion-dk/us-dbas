@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import { latestConfig } from "./mocks";
 
-test.only("changing locale", async ({ page }) => {
+test("changing locale", async ({ page }) => {
   // Mock Network calls
   await page.route("**/*", async (route) => {
     const url = route.request().url();

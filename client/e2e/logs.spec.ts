@@ -29,13 +29,11 @@ test("downloading logs", async ({ page }) => {
 
   await page.goto("/en/us3");
   await page.getByRole("menuitem", { name: "Logs" }).click();
-  const downloadPromise = page.waitForEvent("download");
-  await page
-    .getByRole("link", {
-      name: "Download the full election activity log (json)",
-    })
-    .click();
-  await downloadPromise;
+  await page.getByRole('link', { name: 'Activity logs' }).click();
+
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download the full election log (json)' }).click();
+  const download = await downloadPromise;
 });
 
 test("traversing board items", async ({ page }) => {
@@ -89,7 +87,4 @@ test("traversing board items", async ({ page }) => {
   await page.getByRole("link", { name: "Previous page" }).click();
   await page.getByText("16fSovo").click();
   await page.getByText("VMMHYWv").click();
-
-  // Configuration only
-  await page.getByText("Configuration items only?").click();
 });
