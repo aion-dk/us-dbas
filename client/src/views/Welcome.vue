@@ -30,10 +30,16 @@ const subtitle = computed(() => {
       <h2 class="Welcome__AlertTitle">{{ $t("views.welcome.title") }}</h2>
 
       <div class="Welcome__Buttons">
-        <RouterLink :to="{ name: 'BallotVerifierStart' }" data-test="ballot-verifier">
+        <RouterLink
+          :to="{ name: 'BallotVerifierStart' }"
+          data-test="ballot-verifier"
+        >
           {{ $t("views.welcome.no") }}
         </RouterLink>
-        <RouterLink :to="{ name: 'BallotTrackerStart' }" data-test="ballot-tracker">
+        <RouterLink
+          :to="{ name: 'BallotTrackerStart' }"
+          data-test="ballot-tracker"
+        >
           {{ $t("views.welcome.yes") }}
         </RouterLink>
       </div>
