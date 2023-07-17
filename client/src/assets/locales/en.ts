@@ -190,6 +190,9 @@ export const en = {
     },
   },
   views: {
+    BallotVerifierView: {
+      finish: "Finish",
+    },
     about: {
       title: "About this website",
       content: `
