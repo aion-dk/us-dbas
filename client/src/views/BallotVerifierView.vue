@@ -59,11 +59,9 @@ onMounted(redirectUnlessPairingCode);
         </div>
       </div>
 
-      <RouterLink
-        class="BallotVerifier__Finish"
-        :to="{ name: 'BallotVerifierStart' }"
-        >Finish</RouterLink
-      >
+      <RouterLink class="BallotVerifier__Finish" to="/">
+        {{ $t("views.BallotVerifierView.finish") }}
+      </RouterLink>
     </AVCard>
 
     <div v-else class="BallotVerifier__Spoiled">
