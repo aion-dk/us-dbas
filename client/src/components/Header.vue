@@ -108,8 +108,8 @@ function classes(name: string) {
             >
           </li>
             <RouterLink
-                :to="{ name: 'LogsView', params: { type: 'config', page: 1 } }"
-                >{{ $t("header.logs.config") }}</RouterLink
+              :to="{ name: 'LogsView', params: { type: 'config', page: 1 } }"
+              >{{ $t("header.logs.config") }}</RouterLink
             >
           <li>
           </li>
