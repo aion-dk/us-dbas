@@ -59,7 +59,7 @@ onMounted(redirectUnlessPairingCode);
         </div>
       </div>
 
-      <RouterLink class="BallotVerifier__Finish" to="/">
+      <RouterLink class="BallotVerifier__Finish" :to="{ name: 'Welcome' }">
         {{ $t("views.BallotVerifierView.finish") }}
       </RouterLink>
     </AVCard>
