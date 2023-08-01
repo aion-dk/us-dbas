@@ -59,22 +59,24 @@ function classes(name: string) {
 </script>
 
 <template>
-  <nav class="Header" role="menubar">
-    <img
-      class="Header__Logo"
-      aria-hidden="true"
-      :src="config.logoUrl"
-      alt="DBAS Logo"
-    />
+  <AVNavbar>
+    <div class="Header__logo-section">
+      <img
+        class="Header__Logo"
+        aria-hidden="true"
+        :src="config.logoUrl"
+        alt="Jurisdiction Seal"
+      />
 
-    <RouterLink
-      class="Header__Title"
-      :to="`/${locale}/${election.slug}`"
-      v-if="displayElectionName"
-    >
-      <span>{{ $t("header.dbas") }}</span>
-      <span class="sub">{{ name }}</span>
-    </RouterLink>
+      <RouterLink
+        class="Header__Title"
+        :to="`/${locale}/${election.slug}`"
+        v-if="displayElectionName"
+      >
+        <span>{{ $t("header.dbas") }}</span>
+        <span class="sub">{{ name }}</span>
+      </RouterLink>
+    </div>
 
     <div class="Header__Links">
       <RouterLink
@@ -107,11 +109,12 @@ function classes(name: string) {
               >{{ $t("header.logs.activity") }}</RouterLink
             >
           </li>
-          <RouterLink
-            :to="{ name: 'LogsView', params: { type: 'config', page: 1 } }"
-            >{{ $t("header.logs.config") }}</RouterLink
-          >
-          <li></li>
+          <li>
+            <RouterLink
+              :to="{ name: 'LogsView', params: { type: 'config', page: 1 } }"
+              >{{ $t("header.logs.config") }}</RouterLink
+            >
+          </li>
         </ul>
       </RouterLink>
 
@@ -152,21 +155,14 @@ function classes(name: string) {
         @change="(value) => setLocale(value)"
       />
     </div>
-  </nav>
+  </AVNavbar>
 </template>
 
 <style type="text/css" scoped>
-.Header {
+.Header__logo-section {
   display: flex;
-  font-family: "Open Sans";
+  justify-content: center;
   align-items: center;
-  box-shadow: 0px 4px 10px #ccc;
-  position: fixed;
-  width: 100%;
-  z-index: 2;
-  background-color: #fff;
-  box-sizing: border-box;
-  height: 70px;
 }
 
 .Header__Title {
@@ -175,7 +171,7 @@ function classes(name: string) {
   margin: 0;
   padding: 0;
   text-decoration: none;
-  color: #495057;
+  color: var(--slate-700);
   display: flex;
   flex-direction: column;
 }
@@ -197,29 +193,42 @@ function classes(name: string) {
   justify-content: flex-end;
   align-items: center;
   display: flex;
+  gap: 12px;
 }
 
 .Header__Link {
-  padding: 20px;
+  padding: 8px 16px;
   font-size: 18px;
   font-weight: 700;
   text-transform: uppercase;
   text-decoration: none;
-  color: #495057;
+  color: var(--slate-700);
+  border-radius: 12px;
+  border: transparent 2px solid;
+}
+
+.Header__Link:hover:not(.router-link-active) {
+  background-color: var(--slate-100);
+}
+
+ul > li > .router-link-active   {
+  border: none;
+}
+
+.router-link-active:not(.Header__Title) {
+  border-color: var(--slate-300);
 }
 
 .Header__Locales {
   margin-right: 20px;
   font-size: 16px;
   text-decoration: none;
-  color: #495057;
+  color: var(--slate-700);
   border: none;
-}
-
-.Header__Links .router-link-active span {
-  border: solid 2px #dee2e6;
-  border-radius: 12px;
-  padding: 7px 8px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 4px;
 }
 
 #logs-submenu {
@@ -227,15 +236,20 @@ function classes(name: string) {
   position: absolute;
   list-style: none;
   padding: 0;
-  margin: 0;
-  background-color: #fff;
-  box-shadow: 0px 4px 10px #ccc;
-  margin-top: 20px;
+  margin: 12px 0 0 -16px;
+  background-color: white;
+  box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.15);
+}
+
+#logs-submenu a:hover {
+  background-color: var(--slate-100);
 }
 
 #logs-submenu a {
   display: block;
   padding: 16px 20px;
+  text-decoration: none;
+  color: var(--slate-700);
 }
 
 #logs:hover #logs-submenu {
