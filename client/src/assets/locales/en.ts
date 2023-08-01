@@ -29,7 +29,7 @@ export const en = {
     },
     help: "Help",
     contact: "Contact",
-    check: "Ballot checker",
+    check: "Ballot check",
     track: "Ballot tracker",
     change_locale: {
       en: "Switch to English",
