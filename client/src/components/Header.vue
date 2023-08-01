@@ -211,7 +211,7 @@ function classes(name: string) {
   background-color: var(--slate-100);
 }
 
-ul > li > .router-link-active   {
+ul > li > .router-link-active {
   border: none;
 }
 

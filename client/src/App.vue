@@ -78,28 +78,28 @@ function setTitle() {
   --slate-800: #343a40;
   --slate-900: #212529;
 
-  --avblue-100: #EFF2FC;
-  --avblue-200: #D9DFEF;
-  --avblue-300: #9EAEDA;
-  --avblue-400: #7C8FC1;
-  --avblue-500: #5A6FA7;
+  --avblue-100: #eff2fc;
+  --avblue-200: #d9dfef;
+  --avblue-300: #9eaeda;
+  --avblue-400: #7c8fc1;
+  --avblue-500: #5a6fa7;
   --avblue-600: #163075;
-  --avblue-700: #0D1D46;
-  --avblue-800: #09132F;
-  --avblue-900: #040A17;
+  --avblue-700: #0d1d46;
+  --avblue-800: #09132f;
+  --avblue-900: #040a17;
 
-  --semantic-danger-1: #EA4E2C ;
-  --semantic-danger-2: #ECC9C1;
-  --semantic-danger-3: #FCEDE9;
-  --semantic-success-1: #3FC063;
-  --semantic-success-2: #C5E1CC;
-  --semantic-success-3: #EAF7EE;
-  --semantic-warning-1: #EE9500;
-  --semantic-warning-2: #F5DEB6;
-  --semantic-warning-3: #FEF7EA;
-  --semantic-info-1: #006CE5;
-  --semantic-info-2: #B4CCEB;
-  --semantic-info-3: #E6EFFA;
+  --semantic-danger-1: #ea4e2c;
+  --semantic-danger-2: #ecc9c1;
+  --semantic-danger-3: #fcede9;
+  --semantic-success-1: #3fc063;
+  --semantic-success-2: #c5e1cc;
+  --semantic-success-3: #eaf7ee;
+  --semantic-warning-1: #ee9500;
+  --semantic-warning-2: #f5deb6;
+  --semantic-warning-3: #fef7ea;
+  --semantic-info-1: #006ce5;
+  --semantic-info-2: #b4cceb;
+  --semantic-info-3: #e6effa;
 }
 
 body {
