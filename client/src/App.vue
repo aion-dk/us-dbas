@@ -138,8 +138,8 @@ function setTitle() {
   --semantic-info-3: #e6effa;
 
   /* This is not being correctly imported from the UI lib and couldn't find out why, but this will do the trick. */
-  .AVSteps--step[data-v-f80d8c8d]:before,
-  .AVSteps--step[data-v-f80d8c8d]:after {
+  .AVSteps--step[data-v-a4539298]:before,
+  .AVSteps--step[data-v-a4539298]:after {
     transform: rotate(90deg);
   }
 }
