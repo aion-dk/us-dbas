@@ -7,7 +7,7 @@ import { uniq } from "lodash";
 import i18n from "../lib/i18n";
 import type { DropdownOption, RouteGroups } from "@/Types";
 import useLocaleStore from "../stores/useLocaleStore";
-import type { Locale } from '../Types';
+import type { Locale } from "../Types";
 
 const { t } = i18n.global;
 const route = useRoute();

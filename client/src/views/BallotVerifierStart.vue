@@ -6,7 +6,7 @@ import router from "../router";
 import useLocaleStore from "../stores/useLocaleStore";
 import useVerificationStore from "../stores/useVerificationStore";
 import Error from "../components/Error.vue";
-import type { Locale } from '../Types';
+import type { Locale } from "../Types";
 
 const localeStore = useLocaleStore();
 const configStore = useConfigStore();

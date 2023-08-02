@@ -4,7 +4,7 @@ import { RouterView, useRoute } from "vue-router";
 import useLocaleStore from "./stores/useLocaleStore";
 import useConfigStore from "./stores/useConfigStore";
 import useBallotStore from "./stores/useBallotStore";
-import useVerificationStore from './stores/useVerificationStore';
+import useVerificationStore from "./stores/useVerificationStore";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import router from "./router";
@@ -68,8 +68,8 @@ watch([route, verificationStore], async () => {
         footer.index = 1;
         break;
       case "BallotVerifierView":
-        if(!verificationStore.ballot) footer.index = 2
-        else footer.index = 3
+        if (!verificationStore.ballot) footer.index = 2;
+        else footer.index = 3;
         break;
       default:
         footer.index = 0;
@@ -94,7 +94,11 @@ function setTitle() {
     <main class="DBAS__Content" id="main">
       <RouterView class="DBAS__InnerContent" />
     </main>
-    <Footer v-if="footer.show" :current-step="footer.index" :steps="i18n.global.messages[localeStore.locale].footer" />
+    <Footer
+      v-if="footer.show"
+      :current-step="footer.index"
+      :steps="i18n.global.messages[localeStore.locale].footer"
+    />
   </div>
 </template>
 
