@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch, computed, ref } from "vue";
+import { watch, ref } from "vue";
 import { RouterView, useRoute } from "vue-router";
 import useLocaleStore from "./stores/useLocaleStore";
 import useConfigStore from "./stores/useConfigStore";
@@ -67,8 +67,39 @@ function setTitle() {
 </template>
 
 <style type="text/css">
-::root {
-  font-family: "Open Sans";
+:root {
+  --slate-100: #f7f7f7;
+  --slate-200: #e9ecef;
+  --slate-300: #dee2e6;
+  --slate-400: #ced4da;
+  --slate-500: #adb5bd;
+  --slate-600: #6c757d;
+  --slate-700: #495057;
+  --slate-800: #343a40;
+  --slate-900: #212529;
+
+  --avblue-100: #eff2fc;
+  --avblue-200: #d9dfef;
+  --avblue-300: #9eaeda;
+  --avblue-400: #7c8fc1;
+  --avblue-500: #5a6fa7;
+  --avblue-600: #163075;
+  --avblue-700: #0d1d46;
+  --avblue-800: #09132f;
+  --avblue-900: #040a17;
+
+  --semantic-danger-1: #ea4e2c;
+  --semantic-danger-2: #ecc9c1;
+  --semantic-danger-3: #fcede9;
+  --semantic-success-1: #3fc063;
+  --semantic-success-2: #c5e1cc;
+  --semantic-success-3: #eaf7ee;
+  --semantic-warning-1: #ee9500;
+  --semantic-warning-2: #f5deb6;
+  --semantic-warning-3: #fef7ea;
+  --semantic-info-1: #006ce5;
+  --semantic-info-2: #b4cceb;
+  --semantic-info-3: #e6effa;
 }
 
 body {
