@@ -7,6 +7,7 @@ import router from "../router";
 import useLocaleStore from "../stores/useLocaleStore";
 import useVerificationStore from "../stores/useVerificationStore";
 import Error from "../components/Error.vue";
+import type { Locale } from '../Types';
 
 const localeStore = useLocaleStore();
 const ballotStore = useBallotStore();
@@ -51,7 +52,7 @@ async function lookupBallot(event: Event) {
 
 watch(route, (newRoute) => {
   _electionSlug.value = newRoute.params.electionSlug;
-  _locale.value = newRoute.params.locale.toString();
+  _locale.value = newRoute.params.locale as Locale;
   setInfo();
 });
 

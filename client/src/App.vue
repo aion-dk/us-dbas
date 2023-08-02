@@ -33,7 +33,7 @@ watch(route, async (newRoute) => {
   if (slug) await configStore.loadConfig(slug.toString());
 
   const locale = newRoute.params.locale.toString();
-  if (locale) localeStore.setLocale(locale);
+  if (locale) localeStore.setLocale(locale as Locale);
 });
 
 watch(localeStore, async (n) => {
@@ -94,7 +94,7 @@ function setTitle() {
     <main class="DBAS__Content" id="main">
       <RouterView class="DBAS__InnerContent" />
     </main>
-    <Footer v-if="footer.show" :current-step="footer.index" />
+    <Footer v-if="footer.show" :current-step="footer.index" :steps="i18n.global.messages[localeStore.locale].footer" />
   </div>
 </template>
 

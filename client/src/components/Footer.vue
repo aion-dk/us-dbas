@@ -12,15 +12,11 @@ const props = defineProps({
     validate: (v: number) =>
       [0,1,2,3,4].includes(v),
   },
+  steps: {
+    type: Array,
+    required: true,
+  }
 });
 
-const steps: string[] = [
-  "Check My Ballot",
-  "Code Found",
-  "Verify Passkey",
-  "Review Unsealed Ballot",
-  "Finish",
-];
-
-const doneSteps = computed(() => steps.slice(0, props.currentStep));
+const doneSteps = computed(() => props.steps.slice(0, props.currentStep));
 </script>
