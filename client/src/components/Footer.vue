@@ -1,47 +1,26 @@
 <template>
-  <section class="Footer">
-    <a href="https://assemblyvoting.com" target="_blank">
-      <span class="Footer__Text">Technology by</span>
-      <img
-        class="Footer__Image"
-        src="../assets/img/avlogo.png"
-        alt="Assembly Voting Logo"
-      />
-    </a>
-  </section>
+  <AVFooter class="Footer" :steps="steps" :done="doneSteps" :active="steps[currentStep]" disable-banner enable-steps /> 
 </template>
 
-<style type="text/css" scoped>
-.Footer {
-  background-color: #fff;
-  font-family: "Open Sans";
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 20px;
-  height: 40px;
-  font-weight: 400;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
+<script setup lang="ts">
+import { computed } from 'vue';
 
-.Footer a {
-  text-decoration: none;
-  color: initial;
-  display: flex;
-  align-items: center;
-}
+const props = defineProps({
+  currentStep: {
+    type: Number,
+    default: null,
+    validate: (v: number) =>
+      [0,1,2,3,4].includes(v),
+  },
+});
 
-.Footer__Text {
-  font-size: 12px;
-}
+const steps: string[] = [
+  "Check My Ballot",
+  "Code Found",
+  "Verify Passkey",
+  "Review Unsealed Ballot",
+  "Finish",
+];
 
-.Footer__Image {
-  max-height: 24px;
-  object-fit: cover;
-  margin-left: 6px;
-}
-</style>
+const doneSteps = computed(() => steps.slice(0, props.currentStep));
+</script>

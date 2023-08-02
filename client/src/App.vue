@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { watch, ref } from "vue";
+import { watch, ref, reactive } from "vue";
 import { RouterView, useRoute } from "vue-router";
 import useLocaleStore from "./stores/useLocaleStore";
 import useConfigStore from "./stores/useConfigStore";
 import useBallotStore from "./stores/useBallotStore";
+import useVerificationStore from './stores/useVerificationStore';
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import router from "./router";
@@ -13,8 +14,18 @@ import type { Locale } from "./Types";
 const ballotStore = useBallotStore();
 const configStore = useConfigStore();
 const localeStore = useLocaleStore();
+const verificationStore = useVerificationStore();
 const route = useRoute();
 const isLoaded = ref(false);
+const footer = reactive({
+  show: false,
+  index: 0,
+});
+
+const restartFooter = () => {
+  footer.show = false;
+  footer.index = 0;
+};
 
 watch(route, async (newRoute) => {
   const slug = newRoute.params.electionSlug;
@@ -46,6 +57,27 @@ watch(configStore, async () => {
   }
 });
 
+watch([route, verificationStore], async () => {
+  if (route.name.toString().startsWith("BallotVerifier")) {
+    switch (route.name.toString()) {
+      case "BallotVerifierStart":
+        footer.show = true;
+        footer.index = 0;
+        break;
+      case "BallotVerifierFound":
+        footer.index = 1;
+        break;
+      case "BallotVerifierView":
+        if(!verificationStore.ballot) footer.index = 2
+        else footer.index = 3
+        break;
+      default:
+        footer.index = 0;
+        break;
+    }
+  } else restartFooter();
+});
+
 function setTitle() {
   const title = ["DBAS", configStore.election.title[localeStore.locale]].filter(
     (s) => s
@@ -62,7 +94,7 @@ function setTitle() {
     <main class="DBAS__Content" id="main">
       <RouterView class="DBAS__InnerContent" />
     </main>
-    <Footer />
+    <Footer v-if="footer.show" :current-step="footer.index" />
   </div>
 </template>
 
@@ -100,6 +132,12 @@ function setTitle() {
   --semantic-info-1: #006ce5;
   --semantic-info-2: #b4cceb;
   --semantic-info-3: #e6effa;
+
+  /* This is not being correctly imported from the UI lib and couldn't find out why, but this will do the trick. */
+  .AVSteps--step[data-v-f80d8c8d]:before,
+  .AVSteps--step[data-v-f80d8c8d]:after {
+    transform: rotate(90deg);
+  }
 }
 
 body {
