@@ -114,9 +114,7 @@ onMounted(() => {
             name="lookup-ballot"
             id="lookup-ballot"
             :disabled="_disabled || !_verificationCode"
-            iconLeft
             fullWidth
-            icon="magnifying-glass"
             @click="initiateVerification"
           />
         </form>

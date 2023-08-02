@@ -3,6 +3,7 @@ import { computed } from "vue";
 import useConfigStore from "../stores/useConfigStore";
 import useLocaleStore from "../stores/useLocaleStore";
 import Infobox from "../components/Infobox.vue";
+import router from "../router";
 
 const configStore = useConfigStore();
 const localeStore = useLocaleStore();
@@ -30,18 +31,22 @@ const subtitle = computed(() => {
       <h2 class="Welcome__AlertTitle">{{ $t("views.welcome.title") }}</h2>
 
       <div class="Welcome__Buttons">
-        <RouterLink
-          :to="{ name: 'BallotVerifierStart' }"
+        <AVButton
+          :label="$t('views.welcome.no')"
+          type="neutral"
+          size="large"
           data-test="ballot-verifier"
-        >
-          {{ $t("views.welcome.no") }}
-        </RouterLink>
-        <RouterLink
-          :to="{ name: 'BallotTrackerStart' }"
+          full-width
+          @on-click="router.push({ name: 'BallotVerifierStart' })"
+        />
+        <AVButton
+          :label="$t('views.welcome.yes')"
+          type="neutral"
+          size="large"
           data-test="ballot-tracker"
-        >
-          {{ $t("views.welcome.yes") }}
-        </RouterLink>
+          full-width
+          @on-click="router.push({ name: 'BallotTrackerStart' })"
+        />
       </div>
     </Infobox>
   </div>
@@ -100,17 +105,6 @@ h1 {
   justify-content: center;
   align-items: center;
   margin-top: 72px;
-}
-
-.Welcome__Buttons a {
-  background-color: #212529;
-  color: #fff;
-  width: 304px;
-  padding: 16px;
-  margin: 16px;
-  border-radius: 12px;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: 600;
+  gap: 2rem;
 }
 </style>

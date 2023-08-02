@@ -109,9 +109,7 @@ onMounted(() => {
             name="lookup-ballot"
             id="lookup-ballot"
             :disabled="_disabled || !_trackingCode"
-            iconLeft
             fullWidth
-            icon="magnifying-glass"
             @click="lookupBallot"
           />
         </form>
