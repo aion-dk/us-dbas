@@ -3,7 +3,7 @@ import useConfigStore from "../stores/useConfigStore";
 import useLocaleStore from "../stores/useLocaleStore";
 import router from "../router";
 import { onMounted } from "vue";
-import { useRoute, RouterLink } from "vue-router";
+import { useRoute } from "vue-router";
 import useVerificationStore from "../stores/useVerificationStore";
 import Timedown from "@/components/Timedown.vue";
 
@@ -59,9 +59,12 @@ onMounted(redirectUnlessPairingCode);
         </div>
       </div>
 
-      <RouterLink class="BallotVerifier__Finish" :to="{ name: 'Welcome' }">
-        {{ $t("views.BallotVerifierView.finish") }}
-      </RouterLink>
+      <AVButton
+          :label="$t('views.BallotVerifierView.finish')"
+          type="neutral"
+          full-width
+          @on-click="router.push({ name: 'Welcome' })"
+        />
     </AVCard>
 
     <div v-else class="BallotVerifier__Spoiled">
@@ -117,10 +120,10 @@ onMounted(redirectUnlessPairingCode);
 }
 
 .BallotVerifier__Title {
-  color: var(--neutrals-g-700, #495057);
+  color: var(--slate-700);
   text-align: center;
   font-size: 26px;
-  font-family: Open Sans;
+  font-family: "Open Sans";
   font-weight: 600;
   line-height: 30px;
 }
@@ -145,9 +148,11 @@ onMounted(redirectUnlessPairingCode);
 .BallotVerifier__ContestName {
   margin-right: 8px;
   font-weight: 600;
+  color: var(--slate-800);
 }
 
 .BallotVerifier__ContestName::after {
+  color: var(--slate-800);
   content: ":";
 }
 
@@ -155,31 +160,29 @@ onMounted(redirectUnlessPairingCode);
   margin-bottom: 40px;
   margin-top: 16px;
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
   border-radius: 12px;
-  border: 1px solid var(--neutrals-g-300, #dee2e6);
-  background: var(--neutrals-g-100, #f7f7f7);
-  padding: 12px;
-  align-items: baseline;
-  width: 600px;
+  border: 1px solid var(--slate-300);
+  background-color: var(--slate-100);
+  padding: 1rem 1.25rem;
+  width: 100%;
 }
 
 .BallotVerifier__Pile {
-  /*  margin-bottom: 20px;*/
+  color: var(--slate-800);
+  
 }
 
 .BallotVerifier__Contest svg {
+  color: var(--slate-600);
   height: 24px;
   width: 24px;
   margin-right: 16px;
-  margin-bottom: -10px;
 }
 
 .BallotVerifier__Option {
-  display: flex;
-  align-items: center;
-  padding: 0;
   margin: 0;
-  margin-bottom: 5px;
 }
 
 .BallotVerifier__PileMultiplier {
@@ -193,14 +196,12 @@ onMounted(redirectUnlessPairingCode);
 
 .BallotVerifier__Card {
   padding: 60px 40px !important;
-  box-sizing: border-box;
   width: 100%;
 }
 
 .BallotVerifier__Finish {
   display: flex;
   padding: 10px;
-  /*  box-sizing: border-box;*/
   justify-content: center;
   align-items: center;
   gap: 8px;
