@@ -60,11 +60,11 @@ onMounted(redirectUnlessPairingCode);
       </div>
 
       <AVButton
-          :label="$t('views.BallotVerifierView.finish')"
-          type="neutral"
-          full-width
-          @on-click="router.push({ name: 'Welcome' })"
-        />
+        :label="$t('views.BallotVerifierView.finish')"
+        type="neutral"
+        full-width
+        @on-click="router.push({ name: 'Welcome' })"
+      />
     </AVCard>
 
     <div v-else class="BallotVerifier__Spoiled">
@@ -171,7 +171,6 @@ onMounted(redirectUnlessPairingCode);
 
 .BallotVerifier__Pile {
   color: var(--slate-800);
-  
 }
 
 .BallotVerifier__Contest svg {
