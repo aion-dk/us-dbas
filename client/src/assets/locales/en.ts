@@ -235,8 +235,11 @@ export const en = {
         "Your ballot tracking code was displayed in the VoteHub app after you submitted your ballot. It was also sent to the email address in your voter registration record. Can't find your code? You can re-open the VoteHub app and enter your identifying information to retrieve the Tracking Code.",
       footer: {
         prefix: "Did you mean",
+        main: "Ballot Check",
         suffix: "instead?",
       },
+      ballot_checker_info_tooltip:
+        "Use the Ballot Check before you submit your ballot to verify it was recorded correctly.",
     },
     verifier: {
       start: {

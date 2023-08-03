@@ -85,9 +85,13 @@ onMounted(() => {
     <Error v-if="_error" :errorPath="_error" />
     <div class="BallotTrackerStart__Content">
       <AVCard class="BallotTrackerStart__Text">
-        <h3 class="header">{{ $t("views.BallotTrackerStart.header") }}</h3>
-        <p class="p1">{{ $t("views.BallotTrackerStart.p1") }}</p>
-        <p class="p2">{{ $t("views.BallotTrackerStart.p2") }}</p>
+        <h3 class="BallotTrackerStart__Header">
+          {{ $t("views.BallotTrackerStart.header") }}
+        </h3>
+        <p class="BallotTrackerStart__Subheader">
+          {{ $t("views.BallotTrackerStart.p1") }}
+        </p>
+        <p>{{ $t("views.BallotTrackerStart.p2") }}</p>
       </AVCard>
       <AVCard class="BallotTrackerStart__Tracking">
         <form @submit="lookupBallot">
@@ -112,38 +116,32 @@ onMounted(() => {
           />
         </form>
 
-        <p class="Tooltip">
-          <tooltip hover placement="bottom">
-            <template #default>
-              <span
-                :aria-label="
-                  $t('views.BallotTrackerStart.locate_tracking_code_tooltip')
-                "
-              >
-                <font-awesome-icon icon="fa-solid fa-circle-question" />
-              </span>
-              <span>{{
-                $t("views.BallotTrackerStart.locate_tracking_code")
-              }}</span>
-            </template>
-
-            <template #content>
-              <span id="tracking-code-tooltip">
-                {{
-                  $t("views.BallotTrackerStart.locate_tracking_code_tooltip")
-                }}
-              </span>
-            </template>
-          </tooltip>
-        </p>
+        <AVTooltip
+          :content="$t('views.BallotTrackerStart.locate_tracking_code_tooltip')"
+          id="where-find-tracking-code"
+          position="bottom"
+          icon="circle-question"
+          :text="$t('views.BallotTrackerStart.locate_tracking_code')"
+          class="AVTooltip__Override"
+        />
       </AVCard>
     </div>
-    <p class="footer">
+
+    <p class="BallotTrackerStart__Footer">
       {{ $t("views.BallotTrackerStart.footer.prefix") }}
-      <RouterLink :to="{ name: 'BallotVerifierStart' }"
-        >Ballot Check</RouterLink
+      <RouterLink
+        :to="{ name: 'BallotVerifierStart' }"
+        class="BallotTrackerStart__Footer_link"
+        >{{ $t("views.BallotTrackerStart.footer.main") }}</RouterLink
       >
       {{ $t("views.BallotTrackerStart.footer.suffix") }}
+
+      <AVTooltip
+        :content="$t('views.BallotTrackerStart.ballot_checker_info_tooltip')"
+        id="tracking-code-tooltip"
+        position="bottom"
+        icon="circle-info"
+      />
     </p>
   </div>
 </template>
@@ -160,14 +158,14 @@ onMounted(() => {
 }
 
 .BallotTrackerStart__Text {
-  padding: 40px !important;
+  padding: 80px !important;
+  color: var(--slate-700);
 }
 
 .BallotTrackerStart__Tracking {
   justify-content: center;
   min-width: 40%;
-  flex-grow: 1;
-  padding: 92px 80px !important;
+  padding: 80px !important;
 }
 
 .BallotTrackerStart__Tracking form {
@@ -178,44 +176,32 @@ onMounted(() => {
   width: 100%;
 }
 
-.BallotTrackerStart__TrackingCode {
-  color: #000;
-  border: solid 1px #adb5bd;
-  border-radius: 12px;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-  text-align: center;
-  padding: 0 20px;
-  font-size: 16px;
-  margin-bottom: 1rem;
-}
-
-svg {
-  margin-right: 5px;
-  margin-left: 5px;
-}
-
-.p1 {
+.BallotTrackerStart__Subheader {
   font-size: 20px;
 }
 
-.header {
+.BallotTrackerStart__Header {
+  font-weight: 800;
   font-size: 26px;
   line-height: 30px;
+  margin-top: 0;
 }
 
-.Tooltip {
-  text-align: center;
-  color: #6c757d;
-}
-
-.footer {
+.BallotTrackerStart__Footer {
   margin-top: 24px;
   padding: 0;
 }
 
+.BallotTrackerStart__Footer_link {
+  font-weight: 800;
+  color: var(--slate-800);
+}
+
 .AVTextInput__Override {
   margin-bottom: 1rem;
+}
+
+.AVTooltip__Override {
+  margin-top: 1rem;
 }
 </style>

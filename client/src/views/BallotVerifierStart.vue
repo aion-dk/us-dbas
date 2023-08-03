@@ -128,7 +128,7 @@ onMounted(() => {
       {{ $t("views.verifier.start.footer.suffix") }}
 
       <AVTooltip
-        :content="$t('views.BallotTrackerStart.locate_tracking_code_tooltip')"
+        :content="$t('views.verifier.start.ballot_tracker_info_tooltip')"
         id="checking-code-tooltip"
         position="bottom"
         icon="circle-info"
@@ -189,7 +189,6 @@ onMounted(() => {
 .BallotVerifierStart__Footer {
   margin-top: 24px;
   padding: 0;
-  max-width: 740px;
 }
 
 .BallotVerifierStart__Footer_link {
