@@ -50,10 +50,6 @@ export const en = {
     "Finish",
   ],
   components: {
-    item_identifier: {
-      tooltip: "Click to copy",
-      copied: "Copied",
-    },
     board_item: {
       info: "What does this mean?",
       expand: "Click to read more",

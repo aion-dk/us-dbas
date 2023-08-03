@@ -41,9 +41,8 @@ function toggle() {
       @click="toggle"
       :aria-label="_label"
     >
-      <font-awesome-icon v-if="_expanded" icon="fa-solid fa-minus" />
-
-      <font-awesome-icon v-else icon="fa-solid fa-plus" />
+      <AVIcon v-if="_expanded" icon="minus" />
+      <AVIcon v-else icon="plus" />
     </button>
   </div>
 </template>

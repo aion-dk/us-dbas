@@ -54,7 +54,6 @@ function absolute(date: any) {
       :content="label"
       id="date-tooltip"
       position="top"
-      icon="fas"
       :text="value"
     />
   </span>

@@ -85,7 +85,7 @@ onMounted(() => loadPage(currentPage()));
         v-if="boardStore.meta.prev_page"
         :to="`/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.prev_page}`"
       >
-        <font-awesome-icon icon="fa-solid fa-chevron-left" />
+        <AVIcon icon="chevron-left" />
       </RouterLink>
 
       <span class="LogsView__PageLink">{{ boardStore.currentPage }}</span>
@@ -98,7 +98,7 @@ onMounted(() => loadPage(currentPage()));
         v-if="boardStore.meta.next_page"
         :to="`/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.next_page}`"
       >
-        <font-awesome-icon icon="fa-solid fa-chevron-right" />
+        <AVIcon icon="chevron-right" />
       </RouterLink>
     </div>
 
@@ -107,7 +107,7 @@ onMounted(() => loadPage(currentPage()));
         class="LogsView__DownloadButton"
         :href="`${options.baseURL}/${configStore.boardSlug}/download_log`"
       >
-        <font-awesome-icon icon="fa-solid fa-download" />
+        <AVIcon icon="download" />
         <span>
           {{ $t("views.logs.download_button") }}
         </span>

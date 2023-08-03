@@ -20,8 +20,8 @@ defineProps({
         </span>
 
         <span class="BoardItem__Date" aria-label="Activity registered at">
-          <font-awesome-icon
-            icon="fa-solid fa-clock"
+          <AVIcon
+            icon="clock"
             class="BoardItem__InlineIcon"
             aria-hidden="true"
           />
@@ -33,9 +33,10 @@ defineProps({
         </span>
 
         <span class="BoardItem__Author" aria-label="Activity authored by">
-          <font-awesome-icon
-            icon="fa-solid fa-user"
+          <AVIcon
+            icon="user"
             class="BoardItem__InlineIcon"
+            aria-hidden="true"
           />
           {{ $t(`components.board_item.${item.type}.author`) }}
         </span>
@@ -47,10 +48,7 @@ defineProps({
         </p>
 
         <p>
-          <font-awesome-icon
-            icon="fa-solid fa-clock"
-            class="BoardItem__InlineIcon"
-          />
+          <AVIcon icon="clock" class="BoardItem__InlineIcon" />
           <span>Registered at: </span>
           <DateTime :date-time="item.registeredAt" format="absolute" />
         </p>
@@ -60,10 +58,7 @@ defineProps({
         </p>
 
         <p>
-          <font-awesome-icon
-            icon="fa-solid fa-user"
-            class="BoardItem__InlineIcon"
-          />
+          <AVIcon icon="user" class="BoardItem__InlineIcon" />
           <span>Author: </span>
           <span>{{ $t(`components.board_item.${item.type}.author`) }}</span>
         </p>

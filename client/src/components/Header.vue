@@ -142,10 +142,7 @@ function classes(name: string) {
         target="_blank"
       >
         <span>
-          <font-awesome-icon
-            aria-hidden="true"
-            icon="fa-solid fa-arrow-up-right-from-square"
-          />
+          <AVIcon icon="arrow-up-right-from-square" aria-hidden="true" />
           {{ $t("header.contact") }}
         </span>
       </a>
