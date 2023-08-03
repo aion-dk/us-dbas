@@ -110,9 +110,7 @@ onMounted(() => {
             name="lookup-ballot"
             id="lookup-ballot"
             :disabled="_disabled || !_trackingCode"
-            iconLeft
             fullWidth
-            icon="magnifying-glass"
             @click="lookupBallot"
           />
         </form>
@@ -187,7 +185,6 @@ onMounted(() => {
   color: #000;
   border: solid 1px #adb5bd;
   border-radius: 12px;
-  box-sizing: border-box;
   width: 100%;
   height: 44px;
   line-height: 44px;

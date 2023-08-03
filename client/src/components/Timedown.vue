@@ -54,7 +54,6 @@ onMounted(() => {
 <style type="text/css" scoped>
 .Timedown {
   width: 100%;
-  box-sizing: border-box;
   text-align: left;
 }
 
@@ -65,7 +64,6 @@ onMounted(() => {
   border-bottom-right-radius: 5px;
   text-align: right;
   padding: 0 5px;
-  box-sizing: border-box;
   min-width: 20px;
   height: 6px;
   line-height: 20px;

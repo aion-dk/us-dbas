@@ -29,12 +29,12 @@ test("tracking a ballot", async ({ page }) => {
 
   await page.goto("/en/us3");
   await expect(page.locator("h1")).toContainText("Funny Election");
-  await page.getByRole("link", { name: "Yes" }).click();
+  await page.getByRole("button", { name: "Yes" }).click();
   await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
   await page.getByRole("button", { name: "Track my ballot" }).click();
   await page.locator(".ExpandableSection__Expander").first().click();
   await page.getByRole("button", { name: "Cancel tracking 5ksv8Ee" }).click();
-  await page.getByRole("link", { name: "Yes" }).click();
+  await page.getByRole("button", { name: "Yes" }).click();
   await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
 });
 
@@ -66,7 +66,7 @@ test("tracking a non-existing ballot shows an error", async ({ page }) => {
 
   await page.goto("/en/us3");
   await expect(page.locator("h1")).toContainText("Funny Election");
-  await page.getByRole("link", { name: "Yes" }).click();
+  await page.getByRole("button", { name: "Yes" }).click();
   await page.getByPlaceholder("Ballot tracking code").fill("abcdef");
   await page.getByRole("button", { name: "Track my ballot" }).click();
   await expect(page.locator(".Error__Title")).toContainText(
@@ -103,7 +103,7 @@ test("tracking a rejected ballot has the right text", async ({ page }) => {
 
   await page.goto("/en/us3");
   await expect(page.locator("h1")).toContainText("Funny Election");
-  await page.getByRole("link", { name: "Yes" }).click();
+  await page.getByRole("button", { name: "Yes" }).click();
   await page.getByPlaceholder("Ballot tracking code").fill("5ksv8Ee");
   await page.getByRole("button", { name: "Track my ballot" }).click();
 

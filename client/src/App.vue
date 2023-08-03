@@ -150,6 +150,10 @@ body {
   font-family: "Open Sans";
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .DBAS {
   height: 100vh;
   display: flex;
