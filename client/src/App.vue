@@ -148,6 +148,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Open Sans";
+  color: var(--slate-800);
 }
 
 * {
