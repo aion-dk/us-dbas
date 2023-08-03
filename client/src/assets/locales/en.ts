@@ -36,6 +36,13 @@ export const en = {
       es: "Cambiar a Español",
     },
   },
+  footer: [
+    "Check My Ballot",
+    "Code Found",
+    "Verify Passkey",
+    "Review Unsealed Ballot",
+    "Finish",
+  ],
   components: {
     item_identifier: {
       tooltip: "Click to copy",
