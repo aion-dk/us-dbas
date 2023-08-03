@@ -50,14 +50,12 @@ function absolute(date: any) {
 
 <template>
   <span class="DateTime" :aria-label="label">
-    <tooltip hover placement="top">
-      <template #default>
-        {{ value }}
-      </template>
-
-      <template #content>
-        {{ label }}
-      </template>
-    </tooltip>
+    <AVTooltip
+      :content="label"
+      id="date-tooltip"
+      position="top"
+      icon="fas"
+      :text="value"
+    />
   </span>
 </template>

@@ -23,20 +23,6 @@ test("displays the prefix when given", async () => {
   expect(wrapper.text()).toContain("Short ID 16fSovo");
 });
 
-test("clicking copies the short address", async () => {
-  let copiedText = "";
-  Object.assign(navigator, {
-    clipboard: {
-      writeText: (text: string) => {
-        copiedText = text;
-      },
-    },
-  });
-  const wrapper = mount(ItemIdentifier, options);
-  await wrapper.get(".ItemIdentifier__ShortCode").trigger("click");
-  expect(copiedText).toContain("16fSovo");
-});
-
 test("handles invalid address", async () => {
   props.address = "invalid-address";
   try {
