@@ -76,11 +76,7 @@ onMounted(() => {
   verificationStore.setupAVVerifier(_electionSlug.value as string);
 
   setInfo();
-  (
-    document.querySelector(
-      ".BallotTrackerStart__TrackingCode"
-    ) as HTMLInputElement
-  )?.focus();
+  (document.querySelector("#tracking-code") as HTMLInputElement)?.focus();
 });
 </script>
 
@@ -95,14 +91,15 @@ onMounted(() => {
       </AVCard>
       <AVCard class="BallotTrackerStart__Tracking">
         <form @submit="lookupBallot">
-          <input
+          <AVTextInput
             :disabled="_disabled"
             type="text"
             name="tracking-code"
             id="tracking-code"
             :placeholder="$t('views.BallotTrackerStart.tracking_code_input')"
+            :error="_error"
             v-model="_trackingCode"
-            class="BallotTrackerStart__TrackingCode"
+            class="AVTextInput__Override"
           />
           <AVButton
             :label="$t('views.BallotTrackerStart.track_ballot_button')"
@@ -205,6 +202,7 @@ svg {
 
 .header {
   font-size: 26px;
+  line-height: 30px;
 }
 
 .Tooltip {
@@ -215,5 +213,9 @@ svg {
 .footer {
   margin-top: 24px;
   padding: 0;
+}
+
+.AVTextInput__Override {
+  margin-bottom: 1rem;
 }
 </style>

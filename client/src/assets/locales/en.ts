@@ -7,15 +7,21 @@ export const en = {
     verify: {
       invalid_code: {
         title: "CHECKING CODE NOT FOUND",
-        description:
-          "Verify you have entered the ballot checking code correctly. Be sure to match case. Need additional help? Contact your local election official.",
+        description_l1:
+          "Verify you have entered the ballot checking code correctly. Be sure to match case.",
+        description_l2: "Need additional help? ",
+        link: "Contact your local election official",
       },
     },
     track: {
       invalid_code: {
         title: "TRACKING CODE NOT FOUND",
-        description:
-          "Please verify that the tracking code was entered correctly. The code is case sensitive. If you are checking to make sure your ballot was recorded correctly before submitting, use the ballot check tab instead. Still having problems? Contact your local election official.",
+        description_l1_p1:
+          "Please verify that the tracking code was entered correctly. The code is case sensitive. If you are checking to make sure your ballot was recorded correctly before submitting, use the",
+        description_l1_link: "ballot check tab",
+        description_l1_p2: "instead.",
+        description_l2: "Still having problems? ",
+        link: "Contact your local election official",
       },
     },
   },

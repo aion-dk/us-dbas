@@ -81,11 +81,7 @@ onMounted(() => {
   verificationStore.setupAVVerifier(_electionSlug.value as string);
 
   setInfo();
-  (
-    document.querySelector(
-      "#checking-code"
-    ) as HTMLInputElement
-  )?.focus();
+  (document.querySelector("#checking-code") as HTMLInputElement)?.focus();
 });
 </script>
 
@@ -106,6 +102,7 @@ onMounted(() => {
             name="checking-code"
             id="checking-code"
             :placeholder="$t('views.verifier.start.placeholder')"
+            :error="_error"
             v-model="_verificationCode"
             class="AVTextInput__Override"
           />
@@ -123,9 +120,11 @@ onMounted(() => {
     </div>
     <p class="BallotVerifierStart__Footer">
       {{ $t("views.verifier.start.footer.prefix") }}
-      <RouterLink :to="{ name: 'BallotTrackerStart' }" class="BallotVerifierStart__Footer_link">{{
-        $t("views.verifier.start.footer.main")
-      }}</RouterLink>
+      <RouterLink
+        :to="{ name: 'BallotTrackerStart' }"
+        class="BallotVerifierStart__Footer_link"
+        >{{ $t("views.verifier.start.footer.main") }}</RouterLink
+      >
       {{ $t("views.verifier.start.footer.suffix") }}
 
       <AVTooltip
