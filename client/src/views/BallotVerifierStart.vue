@@ -83,31 +83,31 @@ onMounted(() => {
   setInfo();
   (
     document.querySelector(
-      ".BallotTrackerStart__TrackingCode"
+      "#checking-code"
     ) as HTMLInputElement
   )?.focus();
 });
 </script>
 
 <template>
-  <div class="BallotTrackerStart">
+  <div class="BallotVerifierStart">
     <Error v-if="_error" :errorPath="_error" />
-    <div class="BallotTrackerStart__Content">
-      <AVCard class="BallotTrackerStart__Tracking">
-        <div class="header">
-          <h1>{{ $t("views.verifier.start.title") }}</h1>
+    <div class="BallotVerifierStart__Content">
+      <AVCard class="BallotVerifierStart__Checking">
+        <div class="BallotVerifierStart__Header">
+          <h3>{{ $t("views.verifier.start.title") }}</h3>
           <p>{{ $t("views.verifier.start.intro") }}</p>
         </div>
 
         <form @submit="initiateVerification">
-          <input
+          <AVTextInput
             :disabled="_disabled"
             type="text"
-            name="tracking-code"
-            id="tracking-code"
+            name="checking-code"
+            id="checking-code"
             :placeholder="$t('views.verifier.start.placeholder')"
             v-model="_verificationCode"
-            class="BallotTrackerStart__TrackingCode"
+            class="AVTextInput__Override"
           />
           <AVButton
             :label="$t('views.verifier.start.submit')"
@@ -121,53 +121,60 @@ onMounted(() => {
         </form>
       </AVCard>
     </div>
-    <p class="footer">
+    <p class="BallotVerifierStart__Footer">
       {{ $t("views.verifier.start.footer.prefix") }}
-      <RouterLink :to="{ name: 'BallotTrackerStart' }"
-        >Ballot Tracker</RouterLink
-      >
+      <RouterLink :to="{ name: 'BallotTrackerStart' }" class="BallotVerifierStart__Footer_link">{{
+        $t("views.verifier.start.footer.main")
+      }}</RouterLink>
       {{ $t("views.verifier.start.footer.suffix") }}
+
+      <AVTooltip
+        :content="$t('views.BallotTrackerStart.locate_tracking_code_tooltip')"
+        id="checking-code-tooltip"
+        position="bottom"
+        icon="circle-info"
+      />
     </p>
   </div>
 </template>
 
 <style type="text/css" scoped>
-h1 {
-  font-weight: 600;
+.BallotVerifierStart__Header > h3 {
+  font-weight: 800;
   font-size: 26px;
-  margin: 0;
-  padding: 0;
+  line-height: 30px;
+  margin-top: 0;
 }
 
-.header * {
+.BallotVerifierStart__Header > p {
+  font-size: 20px;
+}
+
+.BallotVerifierStart__Header {
   text-align: center;
+  color: var(--slate-700);
 }
 
-.BallotTrackerStart {
+.BallotVerifierStart {
   font-family: "Open Sans";
   margin: auto;
   margin-top: 121px;
 }
 
-.BallotTrackerStart__Content {
+.BallotVerifierStart__Content {
   display: flex;
   gap: 2.5rem;
   justify-content: center;
 }
 
-.BallotTrackerStart__Text {
-  padding: 40px !important;
-}
-
-.BallotTrackerStart__Tracking {
-  justify-content: center;
-  flex-grow: 1;
+.BallotVerifierStart__Checking {
   padding: 92px 80px !important;
   align-items: center;
-  max-width: 740px;
+  width: 100%;
+  gap: 1rem;
 }
 
-.BallotTrackerStart__Tracking form {
+.BallotVerifierStart__Checking form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -176,23 +183,18 @@ h1 {
   max-width: 418px;
 }
 
-.BallotTrackerStart__TrackingCode {
-  color: #000;
-  border: solid 1px #adb5bd;
-  border-radius: 12px;
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-  text-align: center;
-  padding: 0 20px;
-  font-size: 16px;
+.AVTextInput__Override {
   margin-bottom: 1rem;
 }
 
-.footer {
-  margin: auto;
+.BallotVerifierStart__Footer {
   margin-top: 24px;
   padding: 0;
   max-width: 740px;
+}
+
+.BallotVerifierStart__Footer_link {
+  font-weight: 800;
+  color: var(--slate-800);
 }
 </style>

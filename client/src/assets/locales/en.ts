@@ -240,8 +240,11 @@ export const en = {
         submit: "Check My Ballot",
         footer: {
           prefix: "Are you trying to track your submitted ballot with the",
-          suffix: "",
+          main: "Ballot Tracker",
+          suffix: "?",
         },
+        ballot_tracker_info_tooltip:
+          "Use the Ballot Tracker to verify your submitted ballot was received and to verify that your signature affidavit was reviewed and accepted. You'll also be able to verify when your ballot is decrypted for printing for counting.",
       },
       found: {
         title: "Ballot Checking Code Found",
