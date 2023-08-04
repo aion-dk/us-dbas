@@ -1,12 +1,14 @@
 import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import DateTime from "./DateTime.vue";
+import { AVTooltip } from "@assemblyvoting/ui-library";
 
 const props: any = {
   dateTime: new Date().toISOString(),
   timeZone: "CET",
 };
-const options = { props };
+const stubs: any = { AVTooltip: AVTooltip };
+const options = { props, global: { stubs } };
 
 test("displays relative time", async () => {
   const wrapper = mount(DateTime, options);

@@ -40,7 +40,7 @@ onMounted(redirectUnlessPairingCode);
         :key="contest.reference"
         class="BallotVerifier__Contest"
       >
-        <font-awesome-icon :icon="['fas', 'envelope-open-text']" />
+        <AVIcon icon="envelope-open-text" aria-hidden="true" />
         <div class="BallotVerifier__ContestName">
           {{ configStore.getContest(contest.reference).title[$i18n.locale] }}
         </div>
