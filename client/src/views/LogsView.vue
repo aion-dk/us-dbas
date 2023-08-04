@@ -4,8 +4,9 @@ import useLocaleStore from "../stores/useLocaleStore";
 import useConfigStore from "../stores/useConfigStore";
 import useBoardStore from "../stores/useBoardStore";
 import { onMounted, ref, watch, computed } from "vue";
-import { useRoute, RouterLink } from "vue-router";
+import { useRoute } from "vue-router";
 import BoardItem from "../components/BoardItem.vue";
+import router from "../router";
 
 const route = useRoute();
 const localeStore = useLocaleStore();
@@ -18,6 +19,10 @@ watch(configStore, () => loadPage(currentPage()));
 watch(route, () => loadPage(currentPage()));
 watch(configItemsOnly, () => loadPage(1));
 watch(type, () => (configItemsOnly.value = type.value === "config"));
+
+function downloadLogs() {
+  window.location.href = `${options.baseURL}/${configStore.boardSlug}/download_log`;
+}
 
 function currentPage() {
   return parseInt(
@@ -79,39 +84,72 @@ onMounted(() => loadPage(currentPage()));
     />
 
     <div class="LogsView__Pagination">
-      <RouterLink
-        aria-label="Previous page"
+      <button
+        :disabled="!boardStore.meta.prev_page"
+        :aria-label="$t('views.logs.pagination_aria_label.first')"
         class="LogsView__PageLink"
-        v-if="boardStore.meta.prev_page"
-        :to="`/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.prev_page}`"
+        @click="
+          router.push(
+            `/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/1`
+          )
+        "
       >
         <AVIcon icon="chevron-left" />
-      </RouterLink>
+        <AVIcon icon="chevron-left" class="LogsView__2nd_Icon" />
+      </button>
+      <button
+        :disabled="!boardStore.meta.prev_page"
+        :aria-label="$t('views.logs.pagination_aria_label.prev')"
+        class="LogsView__PageLink"
+        @click="
+          router.push(
+            `/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.prev_page}`
+          )
+        "
+      >
+        <AVIcon icon="chevron-left" />
+      </button>
 
       <span class="LogsView__PageLink">{{ boardStore.currentPage }}</span>
       <span class="LogsView__PageLink">/</span>
       <span class="LogsView__PageLink">{{ boardStore.meta.total_pages }}</span>
 
-      <RouterLink
-        aria-label="Next page"
+      <button
+        :disabled="!boardStore.meta.next_page"
+        :aria-label="$t('views.logs.pagination_aria_label.next')"
         class="LogsView__PageLink"
-        v-if="boardStore.meta.next_page"
-        :to="`/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.next_page}`"
+        @click="
+          router.push(
+            `/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.next_page}`
+          )
+        "
       >
         <AVIcon icon="chevron-right" />
-      </RouterLink>
+      </button>
+      <button
+        :disabled="boardStore.meta.current_page === boardStore.meta.total_pages"
+        :aria-label="$t('views.logs.pagination_aria_label.last')"
+        class="LogsView__PageLink"
+        @click="
+          router.push(
+            `/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.total_pages}`
+          )
+        "
+      >
+        <AVIcon icon="chevron-right" />
+        <AVIcon icon="chevron-right" class="LogsView__2nd_Icon" />
+      </button>
     </div>
 
     <div class="LogsView__Footer">
-      <a
-        class="LogsView__DownloadButton"
-        :href="`${options.baseURL}/${configStore.boardSlug}/download_log`"
-      >
-        <AVIcon icon="download" />
-        <span>
-          {{ $t("views.logs.download_button") }}
-        </span>
-      </a>
+      <AVButton
+        :label="$t('views.logs.download_button')"
+        type="neutral"
+        icon-left
+        icon="download"
+        @on-click="downloadLogs"
+        data-test="download-btn"
+      />
     </div>
   </main>
 </template>
@@ -124,24 +162,38 @@ onMounted(() => loadPage(currentPage()));
 }
 
 .LogsView__PageLink {
-  padding: 3px;
-  margin: 5px;
+  padding: 0.5rem;
   text-decoration: none;
-  color: inherit;
+  color: var(--slate-900);
+  border: none;
+  background-color: transparent;
 }
 
-.LogsView__PageLink--current {
-  font-weight: 700;
+.LogsView__PageLink:is(button) {
+  cursor: pointer;
+  margin: 0 0.5rem;
+}
+
+.LogsView__PageLink:not(button):first-of-type {
+  margin-left: 1rem;
+}
+
+.LogsView__PageLink:not(button):last-of-type {
+  margin-right: 1rem;
+}
+
+.LogsView__PageLink:disabled {
+  color: var(--slate-500);
+  cursor: default;
 }
 
 .LogsView {
-  width: 900px;
-  margin: auto;
-  font-family: "Open Sans";
+  width: 70vw;
 }
 
 .LogsView__Header * {
   text-align: center;
+  color: var(--slate-800);
 }
 
 .LogsView h2 {
@@ -160,35 +212,32 @@ onMounted(() => loadPage(currentPage()));
   margin-bottom: 40px;
 }
 
-.LogsView__DownloadButton {
-  text-decoration: none;
-  background-color: #343a40;
-  color: #fff;
-  padding: 10px 43px;
-  border-radius: 12px;
-}
-
 .LogsView__ColumnDescriptions {
   list-style: none;
   padding: 16px;
   margin: 0;
   display: flex;
   font-size: 14px;
+  color: var(--slate-800);
 }
 
 .LogsView__ColumnDescriptions--time {
-  width: 170px;
+  width: 16vw;
 }
 
 .LogsView__ColumnDescriptions--event {
-  width: 300px;
+  width: 20vw;
 }
 
 .LogsView__ColumnDescriptions--identifier {
-  width: 170px;
+  width: 12vw;
 }
 
 svg {
   margin-right: 5px;
+}
+
+.LogsView__2nd_Icon {
+  margin-left: -8px;
 }
 </style>
