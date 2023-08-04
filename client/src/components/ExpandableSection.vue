@@ -50,7 +50,7 @@ function toggle() {
 <style type="text/css" scoped>
 .ExpandableSection {
   display: flex;
-  border: solid 1px #dee2e6;
+  border: solid 1px var(--slate-300);
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 20px;
@@ -63,7 +63,7 @@ function toggle() {
 }
 
 .ExpandableSection__Expander {
-  background-color: #343a40;
+  background-color: var(--slate-800);
   border-radius: 100%;
   height: 25px;
   width: 25px;
@@ -74,7 +74,7 @@ function toggle() {
   top: 16px;
   right: 16px;
   cursor: pointer;
-  color: #fff;
+  color: white;
   border: none;
 }
 </style>

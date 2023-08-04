@@ -51,6 +51,9 @@ export const en = {
   ],
   components: {
     board_item: {
+      registered: "Registered at: ",
+      author: "Author: ",
+      address: "Short Address: ",
       info: "What does this mean?",
       expand: "Click to read more",
       collapse: "Click to read less",
@@ -283,6 +286,12 @@ export const en = {
       },
       download_button: "Download the full election log (json)",
       config_only: "Configuration items only?",
+      pagination_aria_label: {
+        first: "First page",
+        prev: "Previous page",
+        next: "Next page",
+        last: "Last page",
+      },
     },
     tracker: {
       activity_log: "Activity connected to the tracking code",

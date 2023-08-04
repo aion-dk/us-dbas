@@ -49,20 +49,27 @@ defineProps({
 
         <p>
           <AVIcon icon="clock" class="BoardItem__InlineIcon" />
-          <span>Registered at: </span>
+          <span>{{ $t(`components.board_item.registered`) }}</span>
           <DateTime :date-time="item.registeredAt" format="absolute" />
         </p>
 
         <p>
-          <ItemIdentifier prefix="Short address:" :address="item.address" />
+          <ItemIdentifier
+            :prefix="$t(`components.board_item.address`)"
+            :address="item.address"
+          />
         </p>
 
         <p>
           <AVIcon icon="user" class="BoardItem__InlineIcon" />
-          <span>Author: </span>
+          <span>{{ $t(`components.board_item.author`) }}</span>
           <span>{{ $t(`components.board_item.${item.type}.author`) }}</span>
         </p>
 
+        <p>
+          <AVIcon icon="circle-info" class="BoardItem__InlineIcon" />
+          <span>{{ $t(`components.board_item.info`) }}</span>
+        </p>
         <p>
           {{ $t(`components.board_item.${item.type}.info`) }}
         </p>
@@ -72,8 +79,12 @@ defineProps({
 </template>
 
 <style type="text/css" scoped>
+.BoardItem {
+  color: var(--slate-800);
+}
+
 .BoardItem__Type {
-  width: 300px;
+  width: 20vw;
   text-transform: uppercase;
   font-size: 18px;
   font-weight: 700;
@@ -82,15 +93,16 @@ defineProps({
 }
 
 .BoardItem__Date {
-  width: 170px;
+  width: 16vw;
 }
 
 .BoardItem__ShortAddress {
-  width: 170px;
+  width: 12vw;
   white-space: pre-line;
 }
 
 .BoardItem__InlineIcon {
   margin-right: 5px;
+  color: var(--slate-600);
 }
 </style>
