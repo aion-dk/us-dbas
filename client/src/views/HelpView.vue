@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import ExpandableSection from "../components/ExpandableSection.vue";
-import { en } from '../assets/locales/en';
+import { en } from "@/assets/locales/en";
 import { es } from "@/assets/locales/es";
-import useLocaleStore from '../stores/useLocaleStore';
-import config from '../lib/config';
+import useLocaleStore from "@/stores/useLocaleStore";
+import config from "@/lib/config";
 
 const localeStore = useLocaleStore();
 const messages: any = {
   en: en,
   es: es,
-}
+};
 </script>
 
 <template>
@@ -20,19 +20,29 @@ const messages: any = {
     </div>
 
     <h2>{{ $t("views.help.ballot_check_title") }}</h2>
-    <ExpandableSection v-for="question in messages[localeStore.locale].views.help.ballot_check" :key="question.question" class="HelpView__FAQ">
+    <ExpandableSection
+      v-for="question in messages[localeStore.locale].views.help.ballot_check"
+      :key="question.question"
+      class="HelpView__FAQ"
+    >
       <template v-slot:collapsed>
         <h3>{{ question.question }}</h3>
       </template>
-      
+
       <template v-slot:expanded>
         <h3>{{ question.question }}</h3>
-        <p v-for="paragraph in question.answer" :key="paragraph">{{ paragraph }}</p>
+        <p v-for="paragraph in question.answer" :key="paragraph">
+          {{ paragraph }}
+        </p>
       </template>
     </ExpandableSection>
 
     <h2>{{ $t("views.help.ballot_track_title") }}</h2>
-    <ExpandableSection v-for="question in messages[localeStore.locale].views.help.ballot_track" :key="question.question"  class="HelpView__FAQ">
+    <ExpandableSection
+      v-for="question in messages[localeStore.locale].views.help.ballot_track"
+      :key="question.question"
+      class="HelpView__FAQ"
+    >
       <template v-slot:collapsed>
         <h3>{{ question.question }}</h3>
       </template>
@@ -49,7 +59,12 @@ const messages: any = {
     <footer>
       <h2>{{ $t("views.help.still_have_questions") }}</h2>
       <p>{{ $t("views.help.cant_find_answers") }}</p>
-      <AVLink :label="$t('views.help.election_office_website')" :href="config.contactUrl" referrerpolicy="no-referrer" target="_blank" />
+      <AVLink
+        :label="$t('views.help.election_office_website')"
+        :href="config.contactUrl"
+        referrerpolicy="no-referrer"
+        target="_blank"
+      />
     </footer>
   </main>
 </template>

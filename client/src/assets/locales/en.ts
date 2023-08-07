@@ -278,7 +278,8 @@ export const en = {
       ballot_check_title: "Help Using the Ballot Check",
       ballot_track_title: "Help Using the Ballot Tracker",
       still_have_questions: "Still have questions?",
-      cant_find_answers: "Can’t find the answers you are looking for? Please contact your local Election Office. ",
+      cant_find_answers:
+        "Can’t find the answers you are looking for? Please contact your local Election Office. ",
       election_office_website: "Go to Election Office website",
       ballot_check: {
         q1: {
@@ -313,9 +314,10 @@ export const en = {
           },
         },
         q5: {
-          question: "What if the VoteHub app times out or stops working during a ballot check?",
+          question:
+            "What if the VoteHub app times out or stops working during a ballot check?",
           answer: {
-            p1: "If the app stops working during a ballot check, please report the problem to your local election official. Click here to contact your local election official. You should be able to relaunch the app but you will need to remark your ballot. We recommend you return to the Verify My Ballot site to perform the ballot check once your newly marked ballot is sealed and ready for submission."
+            p1: "If the app stops working during a ballot check, please report the problem to your local election official. Click here to contact your local election official. You should be able to relaunch the app but you will need to remark your ballot. We recommend you return to the Verify My Ballot site to perform the ballot check once your newly marked ballot is sealed and ready for submission.",
           },
         },
       },
