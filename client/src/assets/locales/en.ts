@@ -275,6 +275,76 @@ export const en = {
     help: {
       title: "Help",
       info: "Have questions? We are here to help.",
+      ballot_check_title: "Help Using the Ballot Check",
+      ballot_track_title: "Help Using the Ballot Tracker",
+      still_have_questions: "Still have questions?",
+      cant_find_answers:
+        "Can’t find the answers you are looking for? Please contact your local Election Office. ",
+      election_office_website: "Go to Election Office website",
+      ballot_check: {
+        q1: {
+          question: "Missing Ballot Checking Code",
+          answer: {
+            p1: "The Ballot Checking Code is displayed in the VoteHub app after the ballot package has been sealed and is ready to be submitted. If you have already submitted your ballot, you will no longer be able to perform the Ballot Check. Instead, you may use the Ballot Tracker to verify that it was received in the digital ballot box. Use the ballot tracking code sent to your email or on display with your I Voted sticker in the VoteHub app.",
+          },
+        },
+        q2: {
+          question: "Passkey does not match",
+          answer: {
+            p1: "We do not recommend that you use digital return to submit your ballot. Tap No in the VoteHub app and, if able, select print ballot to print and return a physical ballot to your election office. Please also contact your local election official for further assistance.",
+          },
+        },
+        q3: {
+          question: "What happens to a ballot after it is submitted?",
+          answer: {
+            p1: "Submitted ballots are securely stored in a digital ballot box until time for counting.",
+            p2: "Once your ballot is submitted to the digital ballot box, it remains encrypted until it is ready for tabulation with other absentee ballots.",
+            p3: "Election officials verify signatures following the same procedures as paper absentee ballots.",
+            p4: "Election officials will perform signature verification on your ballot affidavit, and confirm any other required information according to local rules and requirements.",
+            p5: "Voters can track the status of their ballot on the digital ballot audit site.",
+            p6: "Once signatures are verified, the digital ballot box filters encrypted ballots accepted for counting. You can track your ballot status using the tracking code you receive when you submit your ballot in VoteHub. Simply visit the digital ballot audit site to enter your tracking code and see the current status of your submitted ballot.  The status will include a confirmation it was received, when it has been accepted - or rejected - for counting, and when it has been printed for tabulation.",
+            p7: "Ballots are extracted from the digital ballot box, moved offline, decrypted and printed for counting.",
+            p8: "When ballots are ready to be decrypted and printed for tabulation with other absentee ballots, election officials must first extract the encrypted ballots from the digital ballot box. The encrypted ballots are exported onto removable media and transported onto an air-gapped network with no internet connection. A board of trustees will then provide the key to mix and decrypt the ballots. Once decrypted, the ballots can now be printed onto machine-readable ballots for scanning and tabulation alongside other paper absentee ballots.",
+          },
+        },
+        q4: {
+          question: "How do I submit my ballot after a ballot check?",
+          answer: {
+            p1: "Once you have verified your ballot is recorded correctly, you can tap Yes in the VoteHub app to reseal your ballot. You will be able to submit your ballot - or you can perform the ballot check again using a new ballot checking code displayed in the VoteHub app.",
+          },
+        },
+        q5: {
+          question:
+            "What if the VoteHub app times out or stops working during a ballot check?",
+          answer: {
+            p1: "If the app stops working during a ballot check, please report the problem to your local election official. Click here to contact your local election official. You should be able to relaunch the app but you will need to remark your ballot. We recommend you return to the Verify My Ballot site to perform the ballot check once your newly marked ballot is sealed and ready for submission.",
+          },
+        },
+      },
+      ballot_track: {
+        q1: {
+          question: "Missing Ballot Tracking Code",
+          answer: {
+            p1: "The ballot tracking code was sent to the email address in your voter registration record. Be sure to check your spam folder in case it was delivered there. Still can't find it? You can open the VoteHub voting app and re-enter your identifying information. You will also need to complete the one-time access code authorization to retrieve your tracking code in the app.",
+          },
+        },
+        q2: {
+          question: "Ballot Not Found",
+          answer: {
+            p1: "The ballot tracker is used to confirm that your ballot has been received in the digital ballot box. Be sure you have submitted a ballot and received a ballot tracking code before using this site. You may have a ballot checking code that is used before you submit your ballot to verify that your ballot was recorded and encrypted correctly. To perform a ballot check with a ballot checking code, click here.",
+            p2: "If you are have submitted your ballot and received a ballot tracking code, be sure to check that you have entered the 7 digit ballot tracking code correctly. The code is case sensitive. If your ballot is still not found, contact your local election administrator.",
+          },
+        },
+        q3: {
+          question: "About Ballot Statuses",
+          answer: {
+            p1: "Ballot Received - Your ballot has been received in the digital ballot box and is awaiting signature verification by local election officials.",
+            p2: "Ballot Accepted - Your signature affidavit has been verified and your ballot is accepted for counting.",
+            p3: "Ballot Not Accepted - There is a problem with your signature affidavit. Contact your local election official for next steps.",
+            p4: "Ballot Printed for Counting - Your ballot has been extracted from the digital ballot box and decrypted offline. It has been printed onto a paper ballot for scanning and tabulation with other absentee ballots.",
+          },
+        },
+      },
     },
     logs: {
       config: {
