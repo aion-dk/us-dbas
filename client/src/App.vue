@@ -162,7 +162,7 @@ body {
 }
 
 .DBAS__Content {
-  height: calc(100vh - 120px);
+  height: calc(100vh - 70px);
   margin-top: 80px;
   overflow-y: scroll;
 }
