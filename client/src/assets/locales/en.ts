@@ -270,6 +270,8 @@ export const en = {
       inprogress: {
         title: "Verify Passkey",
         info: "Passkeys match? Tap Yes or No in the VoteHub app.",
+        alert_title: "You are running out of time.",
+        alert_text: "Please confirm the passkey matches in the VoteHub app before your session expires. If your session expires, you will need to re-seal your ballot and start over with a new ballot checking code.",
       },
       spoiled: {
         title: "Unsealed ballot",
