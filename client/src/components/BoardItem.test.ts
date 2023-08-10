@@ -16,7 +16,7 @@ const options = {
   global: {
     plugins: [i18n],
   },
-  props: { item },
+  props: { item, isConfigItem: true },
 };
 
 test("includes short address", async () => {
@@ -26,7 +26,6 @@ test("includes short address", async () => {
 
 test("includes item type", async () => {
   const wrapper = mount(BoardItem, options);
-  console.log(wrapper.text());
   expect(wrapper.text()).toContain("Voter session");
 });
 

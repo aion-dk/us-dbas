@@ -164,6 +164,11 @@ export const en = {
       time: "Date and time",
       actor: "Actor",
       identifier: "Verification Code",
+      tooltips: {
+        type: "Type of the activity recorded on Digital Ballot Box",
+        identifier: "Code that Election Officials and Trustees use to confirm correctness of the configuration",
+        actor: "Source of the activity type",
+      },
     },
     ballot_activity: {
       registered_at: "Timestamp:",

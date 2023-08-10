@@ -53,7 +53,10 @@ function loadPage(page: number) {
   }
 }
 
-onMounted(() => loadPage(currentPage()));
+onMounted(() => {
+  loadPage(currentPage());
+  configItemsOnly.value = type.value === "config";
+});
 </script>
 
 <template>
@@ -66,21 +69,43 @@ onMounted(() => loadPage(currentPage()));
     <ul class="LogsView__ColumnDescriptions">
       <li class="LogsView__ColumnDescriptions--event">
         {{ $t("components.ballot_activity_list.type") }}
+        <AVTooltip
+          :content="$t('components.ballot_activity_list.tooltips.type')"
+          id="activity-type-tooltip"
+          position="right"
+          icon="circle-info"
+          class="AVTooltip__Override"
+        />
       </li>
       <li class="LogsView__ColumnDescriptions--time">
         {{ $t("components.ballot_activity_list.time") }}
       </li>
-      <li class="LogsView__ColumnDescriptions--identifier">
+      <li v-if="configItemsOnly" class="LogsView__ColumnDescriptions--identifier">
         {{ $t("components.ballot_activity_list.identifier") }}
+        <AVTooltip
+          :content="$t('components.ballot_activity_list.tooltips.identifier')"
+          id="activity-type-tooltip"
+          position="right"
+          icon="circle-info"
+          class="AVTooltip__Override"
+        />
       </li>
-      <li class="LogsView__ColumnDescriptions--actor">
+      <li v-else class="LogsView__ColumnDescriptions--actor">
         {{ $t("components.ballot_activity_list.actor") }}
+        <AVTooltip
+          :content="$t('components.ballot_activity_list.tooltips.actor')"
+          id="activity-type-tooltip"
+          position="right"
+          icon="circle-info"
+          class="AVTooltip__Override"
+        />
       </li>
     </ul>
     <BoardItem
       v-for="item in boardStore.items"
       :key="item.address"
       :item="item"
+      :is-config-item="configItemsOnly"
     />
 
     <div class="LogsView__Pagination">
@@ -222,15 +247,15 @@ onMounted(() => loadPage(currentPage()));
 }
 
 .LogsView__ColumnDescriptions--time {
-  width: 16vw;
-}
-
-.LogsView__ColumnDescriptions--event {
   width: 20vw;
 }
 
+.LogsView__ColumnDescriptions--event {
+  width: 25vw;
+}
+
 .LogsView__ColumnDescriptions--identifier {
-  width: 12vw;
+  width: 20vw;
 }
 
 svg {

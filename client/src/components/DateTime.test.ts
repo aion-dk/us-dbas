@@ -7,8 +7,8 @@ const props: any = {
   dateTime: new Date().toISOString(),
   timeZone: "CET",
 };
-const stubs: any = { AVTooltip: AVTooltip };
-const options = { props, global: { stubs } };
+const components = { AVTooltip: AVTooltip };
+const options = { props, global: { components } };
 
 test("displays relative time", async () => {
   const wrapper = mount(DateTime, options);
