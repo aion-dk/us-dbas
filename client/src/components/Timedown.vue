@@ -32,15 +32,12 @@ const miliseconds = computed(() => secondsLeft.value * 1000);
 const percentageWidth = computed(
   () => (secondsLeft.value / props.maxSeconds) * 100
 );
+const progressBgColor = computed(() => secondsLeft.value <= ALERT_TIMEOUT ? '--semantic-warning-1' : '--slate-800');
 const style = computed(() => {
   return `
       --width: ${percentageWidth.value}%;
-      --progress-bg: ${
-        secondsLeft.value <= ALERT_TIMEOUT ? "#ee9500" : "#09132f"
-      } 
+      background-color: var(${progressBgColor.value});
     `;
-  // #ee9500 -> var(--semantic-warning-1)
-  // #09132f -> var(--slate-800)
 });
 
 watch(secondsLeft, () => {
@@ -70,7 +67,6 @@ onMounted(() => {
 
 .Timedown__Progress {
   width: var(--width);
-  background-color: var(--progress-bg);
   text-align: right;
   padding: 0 5px;
   min-width: 20px;
