@@ -140,7 +140,6 @@ onMounted(redirectUnlessPairingCode);
   letter-spacing: 5px;
 }
 
-.BallotVerifier__Infobox,
 .BallotVerifier__DecryptedVoteBox {
   margin-bottom: 20px;
 }

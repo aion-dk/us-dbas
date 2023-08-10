@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Infobox from "../components/Infobox.vue";
 import { watch, onMounted } from "vue";
 import router from "@/router";
 import useVerificationStore from "@/stores/useVerificationStore";
@@ -29,24 +28,23 @@ onMounted(async () => {
 <template>
   <div class="BallotVerifier">
     <div class="BallotVerifier__Found">
-      <Infobox class="BallotVerifier__Infobox" id="infobox">
+      <AVCard class="AVCard__Override" id="found-box">
         <h2>{{ $t("views.verifier.found.title") }}</h2>
         <p>{{ $t("views.verifier.found.description") }}</p>
-      </Infobox>
+      </AVCard>
     </div>
   </div>
 </template>
 
 <style type="text/css" scoped>
 .BallotVerifier {
-  font-family: "Open Sans";
   text-align: center;
   max-width: 800px;
   display: flex;
   padding-top: 100px;
 }
 
-.BallotVerifier__Infobox {
-  margin-bottom: 20px;
+.AVCard__Override {
+  padding: 4rem !important;
 }
 </style>

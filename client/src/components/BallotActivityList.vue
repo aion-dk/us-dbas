@@ -38,6 +38,10 @@ defineProps({
 </template>
 
 <style type="text/css" scoped>
+.BallotActivitiesList {
+  margin-bottom: 4rem;
+}
+
 .BallotActivitiesList h3 {
   padding: 20px 16px;
   margin: 0;
@@ -52,10 +56,10 @@ defineProps({
 }
 
 .BallotActivitiesList__ColumnDescriptions--time {
-  width: 150px;
+  width: 20vw;
 }
 
 .BallotActivitiesList__ColumnDescriptions--event {
-  width: 205px;
+  width: 25vw;
 }
 </style>
