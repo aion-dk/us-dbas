@@ -9,6 +9,7 @@ import LogsView from "../views/LogsView.vue";
 import HelpView from "../views/HelpView.vue";
 import AboutView from "../views/AboutView.vue";
 import BallotVerifierFound from "@/views/BallotVerifierFound.vue";
+import SessionTimeout from "@/views/SessionTimeout.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -65,6 +66,11 @@ const router = createRouter({
       name: "AboutView",
       path: "/:locale/:electionSlug/about",
       component: AboutView,
+    },
+    {
+      name: "SessionExpired",
+      path: "/:locale/:electionSlug/session_expired",
+      component: SessionTimeout,
     },
   ],
 });

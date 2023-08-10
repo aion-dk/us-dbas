@@ -409,6 +409,12 @@ export const en = {
       yes: "Yes",
       no: "No",
     },
+    expired: {
+      title: "Your session has expired due to inactivity",
+      description:
+        "Please follow instructions in the VoteHub app to restart the ballot check again.",
+      button: "OK",
+    },
   },
   timedown: {
     title: "The passkey will expire in %{timeLeft}",
