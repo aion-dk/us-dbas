@@ -20,7 +20,7 @@ import router from "../router";
 
 <style type="text/css">
 .Expired__Card {
-  margin-top: 8rem;
+  margin-top: 6rem;
   padding: 4rem !important;
   gap: 2rem;
   text-align: center;

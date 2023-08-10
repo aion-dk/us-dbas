@@ -35,10 +35,12 @@ const percentageWidth = computed(
 const style = computed(() => {
   return `
       --width: ${percentageWidth.value}%;
-      --progress-bg: ${secondsLeft.value <= ALERT_TIMEOUT ? '#ee9500' : '#09132f'} 
+      --progress-bg: ${
+        secondsLeft.value <= ALERT_TIMEOUT ? "#ee9500" : "#09132f"
+      } 
     `;
-    // #ee9500 -> var(--semantic-warning-1)
-    // #09132f -> var(--slate-800)
+  // #ee9500 -> var(--semantic-warning-1)
+  // #09132f -> var(--slate-800)
 });
 
 watch(secondsLeft, () => {

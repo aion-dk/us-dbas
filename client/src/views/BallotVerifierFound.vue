@@ -42,7 +42,7 @@ onMounted(async () => {
 }
 
 .AVCard__Override {
-  margin-top: 8rem;
+  margin-top: 6rem;
   padding: 4rem !important;
   width: 100%;
 }

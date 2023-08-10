@@ -77,7 +77,7 @@ onMounted(redirectUnlessPairingCode);
         @dismiss="showAlert = false"
         class="BallotVerifier__Spoiled_Alert"
       >
-        {{ $t('views.verifier.inprogress.alert_text') }}
+        {{ $t("views.verifier.inprogress.alert_text") }}
       </AVAlert>
 
       <AVCard class="BallotVerifier__Card">
@@ -115,7 +115,7 @@ onMounted(redirectUnlessPairingCode);
 <style type="text/css" scoped>
 .BallotVerifier {
   font-family: "Open Sans";
-  padding-top: 8rem;
+  padding-top: 6rem;
   display: flex;
   justify-content: center;
 }

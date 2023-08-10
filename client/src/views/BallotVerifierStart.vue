@@ -157,7 +157,7 @@ onMounted(() => {
 .BallotVerifierStart {
   font-family: "Open Sans";
   margin: auto;
-  margin-top: 8rem;
+  margin-top: 6rem;
 }
 
 .BallotVerifierStart__Content {
