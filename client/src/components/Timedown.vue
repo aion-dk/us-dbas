@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, ref, watch, onMounted } from "vue";
-import humanizeDuration from "humanize-duration";
-import i18n from "../lib/i18n";
 
-const emit = defineEmits(["timeout"]);
+const ALERT_TIMEOUT = 180; // Time left for the 'running out of time' alert to pop up
+
+const emit = defineEmits(["timeout", "alert"]);
 
 const props = defineProps({
   maxSeconds: {
@@ -20,22 +20,32 @@ function decrementSeconds() {
   if (secondsLeft.value > 0) secondsLeft.value--;
 }
 
+const msToTimeLeft = (ms: number) => {
+  let min = Math.floor(ms / 60000);
+  let sec = Number.parseInt(((ms % 60000) / 1000).toFixed(0));
+  return min + ":" + (sec < 10 ? "0" : "") + sec;
+};
+
 const secondsLeft = ref(props.currentSeconds);
 const interval = ref(null);
 const miliseconds = computed(() => secondsLeft.value * 1000);
-const displayValue = computed(() =>
-  humanizeDuration(miliseconds.value, { language: i18n.global.locale })
-);
 const percentageWidth = computed(
   () => (secondsLeft.value / props.maxSeconds) * 100
+);
+const progressBgColor = computed(() =>
+  secondsLeft.value <= ALERT_TIMEOUT ? "--semantic-warning-1" : "--slate-800"
 );
 const style = computed(() => {
   return `
       --width: ${percentageWidth.value}%;
+      background-color: var(${progressBgColor.value});
     `;
 });
 
-watch(secondsLeft, () => (secondsLeft.value === 0 ? emit("timeout") : null));
+watch(secondsLeft, () => {
+  if (secondsLeft.value === ALERT_TIMEOUT) emit("alert");
+  if (secondsLeft.value === 0) emit("timeout");
+});
 
 onMounted(() => {
   interval.value = setInterval(() => decrementSeconds(), 1000);
@@ -46,7 +56,7 @@ onMounted(() => {
   <div class="Timedown">
     <div class="Timedown__Progress" :style="style" />
     <div>
-      {{ $t("timedown.title", { timeLeft: displayValue }) }}
+      {{ $t("timedown.title", { timeLeft: msToTimeLeft(miliseconds) }) }}
     </div>
   </div>
 </template>
@@ -59,9 +69,6 @@ onMounted(() => {
 
 .Timedown__Progress {
   width: var(--width);
-  background-color: #333;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   text-align: right;
   padding: 0 5px;
   min-width: 20px;

@@ -39,12 +39,11 @@ onMounted(async () => {
 <style type="text/css" scoped>
 .BallotVerifier {
   text-align: center;
-  max-width: 800px;
-  display: flex;
-  padding-top: 100px;
 }
 
 .AVCard__Override {
+  margin-top: 6rem;
   padding: 4rem !important;
+  width: 100%;
 }
 </style>

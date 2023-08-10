@@ -270,6 +270,9 @@ export const en = {
       inprogress: {
         title: "Verify Passkey",
         info: "Passkeys match? Tap Yes or No in the VoteHub app.",
+        alert_title: "You are running out of time.",
+        alert_text:
+          "Please confirm the passkey matches in the VoteHub app before your session expires. If your session expires, you will need to re-seal your ballot and start over with a new ballot checking code.",
       },
       spoiled: {
         title: "Unsealed ballot",
@@ -408,6 +411,12 @@ export const en = {
         "Use this site to verify your ballot is recorded and received correctly. You can also view all activity in the VoteHub system through the Election Log tab.",
       yes: "Yes",
       no: "No",
+    },
+    expired: {
+      title: "Your session has expired due to inactivity",
+      description:
+        "Please follow instructions in the VoteHub app to restart the ballot check again.",
+      button: "OK",
     },
   },
   timedown: {

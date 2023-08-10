@@ -2,7 +2,7 @@
 import useConfigStore from "../stores/useConfigStore";
 import useLocaleStore from "../stores/useLocaleStore";
 import router from "../router";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import useVerificationStore from "../stores/useVerificationStore";
 import Timedown from "@/components/Timedown.vue";
@@ -11,6 +11,7 @@ const localeStore = useLocaleStore();
 const configStore = useConfigStore();
 const verificationStore = useVerificationStore();
 const route = useRoute();
+const showAlert = ref(false);
 
 function cancel() {
   router.push(`/${route.params.locale}/${route.params.electionSlug}`);
@@ -68,6 +69,17 @@ onMounted(redirectUnlessPairingCode);
     </AVCard>
 
     <div v-else class="BallotVerifier__Spoiled">
+      <AVAlert
+        v-if="showAlert"
+        type="warning"
+        icon="triangle-exclamation"
+        :title="$t('views.verifier.inprogress.alert_title')"
+        @dismiss="showAlert = false"
+        class="BallotVerifier__Spoiled_Alert"
+      >
+        {{ $t("views.verifier.inprogress.alert_text") }}
+      </AVAlert>
+
       <AVCard class="BallotVerifier__Card">
         <div class="BallotVerifier__InProgress">
           <h1 class="BallotVerifier__Title">
@@ -89,9 +101,10 @@ onMounted(redirectUnlessPairingCode);
         :maxSeconds="configStore.election.bcTimeout"
         :currentSeconds="configStore.election.bcTimeout"
         style="margin-bottom: 20px"
+        @alert="showAlert = true"
         @timeout="
           () => {
-            router.push({ name: 'Welcome' });
+            router.push({ name: 'SessionExpired' });
           }
         "
       />
@@ -102,7 +115,7 @@ onMounted(redirectUnlessPairingCode);
 <style type="text/css" scoped>
 .BallotVerifier {
   font-family: "Open Sans";
-  padding-top: 85px;
+  padding-top: 6rem;
   display: flex;
   justify-content: center;
 }
@@ -115,7 +128,7 @@ onMounted(redirectUnlessPairingCode);
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 800px;
+  width: 100%;
   padding: 60px !important;
 }
 
@@ -215,5 +228,9 @@ onMounted(redirectUnlessPairingCode);
   cursor: pointer;
   width: 100%;
   max-width: 600px;
+}
+
+.BallotVerifier__Spoiled_Alert {
+  margin-bottom: 2rem !important;
 }
 </style>
