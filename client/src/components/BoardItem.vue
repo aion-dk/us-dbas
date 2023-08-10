@@ -15,9 +15,9 @@ defineProps({
 });
 
 const getRelevantKey = (item: any) => {
-  if (item.type === 'ThresholdConfigItem') return item.content.encryptionKey
-  else return item.address
-}
+  if (item.type === "ThresholdConfigItem") return item.content.encryptionKey;
+  else return item.address;
+};
 </script>
 
 <template>
@@ -37,11 +37,19 @@ const getRelevantKey = (item: any) => {
           <DateTime :date-time="item.registeredAt" format="relative" />
         </span>
 
-        <span v-if="isConfigItem" class="BoardItem__ShortAddress" aria-label="Activity identifier">
+        <span
+          v-if="isConfigItem"
+          class="BoardItem__ShortAddress"
+          aria-label="Activity identifier"
+        >
           <ItemIdentifier :address="getRelevantKey(item)" />
         </span>
 
-        <span v-else class="BoardItem__Author" aria-label="Activity authored by">
+        <span
+          v-else
+          class="BoardItem__Author"
+          aria-label="Activity authored by"
+        >
           <AVIcon
             icon="user"
             class="BoardItem__InlineIcon"

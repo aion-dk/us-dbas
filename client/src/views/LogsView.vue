@@ -80,7 +80,10 @@ onMounted(() => {
       <li class="LogsView__ColumnDescriptions--time">
         {{ $t("components.ballot_activity_list.time") }}
       </li>
-      <li v-if="configItemsOnly" class="LogsView__ColumnDescriptions--identifier">
+      <li
+        v-if="configItemsOnly"
+        class="LogsView__ColumnDescriptions--identifier"
+      >
         {{ $t("components.ballot_activity_list.identifier") }}
         <AVTooltip
           :content="$t('components.ballot_activity_list.tooltips.identifier')"

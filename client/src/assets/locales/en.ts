@@ -166,7 +166,8 @@ export const en = {
       identifier: "Verification Code",
       tooltips: {
         type: "Type of the activity recorded on Digital Ballot Box",
-        identifier: "Code that Election Officials and Trustees use to confirm correctness of the configuration",
+        identifier:
+          "Code that Election Officials and Trustees use to confirm correctness of the configuration",
         actor: "Source of the activity type",
       },
     },
