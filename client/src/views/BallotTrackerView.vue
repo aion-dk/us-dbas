@@ -2,7 +2,6 @@
 import useConfigStore from "../stores/useConfigStore";
 import useBallotStore from "../stores/useBallotStore";
 import useLocaleStore from "../stores/useLocaleStore";
-import Infobox from "../components/Infobox.vue";
 import { ref, watch, computed, onMounted } from "vue";
 import BallotActivityList from "../components/BallotActivityList.vue";
 import router from "../router";
@@ -36,13 +35,13 @@ onMounted(() => setBallot());
   <div class="BallotTracker" v-if="ballot" aria-flowto="tracking-code">
     <h1 class="h1">{{ $t("views.tracker.info.title") }}</h1>
 
-    <Infobox class="BallotTracker__TrackingCode" role="alertdialog">
-      <h3 role="alert" id="tracking-code" aria-flowto="infobox">
+    <AVCard class="BallotTracker__TrackingCode" role="alertdialog">
+      <div role="alert" id="tracking-code" aria-flowto="ballot-status">
         <span>{{ $t("views.tracker.currently_tracking") }}</span>
         <code :aria-label="periodicedTrackingCode">
           {{ ballot.trackingCode }}
         </code>
-      </h3>
+      </div>
       <button
         class="BallotTracker__Cancel"
         @click="cancel"
@@ -55,12 +54,12 @@ onMounted(() => setBallot());
       >
         ×
       </button>
-    </Infobox>
+    </AVCard>
 
-    <Infobox class="BallotTracker__StatusInfo">
+    <AVCard class="BallotTracker__StatusInfo" id="ballot-status">
       <h3>{{ $t(`views.tracker.status_map.${ballot.status}.title`) }}</h3>
       <p>{{ $t(`views.tracker.status_map.${ballot.status}.description`) }}</p>
-    </Infobox>
+    </AVCard>
 
     <div class="BallotTracker__ActivityList" v-if="ballot.activities.length">
       <h3 class="h1">{{ $t(`views.tracker.activity_log`) }}</h3>
@@ -73,29 +72,14 @@ onMounted(() => setBallot());
 .h1 {
   font-size: 24px;
   font-weight: 600;
-}
-
-.BallotTracker {
-  font-family: "Open Sans";
-}
-
-.BallotTracker__Row {
-  display: flex;
-  margin-bottom: 40px;
-}
-
-.BallotTracker__Row--stacked {
-  flex-direction: column;
+  margin-top: 40px;
 }
 
 .BallotTracker__TrackingCode {
   text-align: center;
   margin-top: 40px;
   position: relative;
-}
-
-.BallotTracker__Infobox {
-  max-width: 350px;
+  padding: 2rem !important;
 }
 
 .BallotTracker__TrackingCode h3 {
@@ -110,8 +94,8 @@ onMounted(() => setBallot());
   font-weight: 400;
 }
 
-.BallotTracker__TrackingCode h3 span {
-  color: #6c757d;
+.BallotTracker__TrackingCode span {
+  color: var(--slate-600);
   font-weight: 600;
   display: block;
   margin-bottom: 20px;
@@ -119,6 +103,7 @@ onMounted(() => setBallot());
 
 .BallotTracker__StatusInfo {
   margin-top: 40px;
+  padding: 2rem 4rem !important;
 }
 
 .BallotTracker__StatusInfo h3 {
@@ -130,11 +115,15 @@ onMounted(() => setBallot());
   border: none;
   background: transparent;
   position: absolute;
-  top: 0;
+  top: 8px;
   right: 8px;
   font-size: 40px;
   cursor: pointer;
-  color: #adb5bd;
+  color: var(--slate-500);
+}
+
+.BallotTracker__Cancel:hover {
+  color: var(--slate-800);
 }
 
 .BallotTracker__ActivityList {

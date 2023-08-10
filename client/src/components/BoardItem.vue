@@ -8,7 +8,16 @@ defineProps({
     type: Object,
     required: true,
   },
+  isConfigItem: {
+    type: Boolean,
+    required: true,
+  },
 });
+
+const getRelevantKey = (item: any) => {
+  if (item.type === "ThresholdConfigItem") return item.content.encryptionKey;
+  else return item.address;
+};
 </script>
 
 <template>
@@ -28,11 +37,19 @@ defineProps({
           <DateTime :date-time="item.registeredAt" format="relative" />
         </span>
 
-        <span class="BoardItem__ShortAddress" aria-label="Activity identifier">
-          <ItemIdentifier :address="item.address" />
+        <span
+          v-if="isConfigItem"
+          class="BoardItem__ShortAddress"
+          aria-label="Activity identifier"
+        >
+          <ItemIdentifier :address="getRelevantKey(item)" />
         </span>
 
-        <span class="BoardItem__Author" aria-label="Activity authored by">
+        <span
+          v-else
+          class="BoardItem__Author"
+          aria-label="Activity authored by"
+        >
           <AVIcon
             icon="user"
             class="BoardItem__InlineIcon"
@@ -56,7 +73,7 @@ defineProps({
         <p>
           <ItemIdentifier
             :prefix="$t(`components.board_item.address`)"
-            :address="item.address"
+            :address="getRelevantKey(item)"
           />
         </p>
 
@@ -84,7 +101,7 @@ defineProps({
 }
 
 .BoardItem__Type {
-  width: 20vw;
+  width: 25vw;
   text-transform: uppercase;
   font-size: 18px;
   font-weight: 700;
@@ -93,11 +110,11 @@ defineProps({
 }
 
 .BoardItem__Date {
-  width: 16vw;
+  width: 20vw;
 }
 
 .BoardItem__ShortAddress {
-  width: 12vw;
+  width: 20vw;
   white-space: pre-line;
 }
 

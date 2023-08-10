@@ -2,7 +2,6 @@
 import { computed } from "vue";
 import useConfigStore from "../stores/useConfigStore";
 import useLocaleStore from "../stores/useLocaleStore";
-import Infobox from "../components/Infobox.vue";
 import router from "../router";
 
 const configStore = useConfigStore();
@@ -27,7 +26,7 @@ const subtitle = computed(() => {
 
     <p class="Welcome__Intro">{{ $t("views.welcome.intro") }}</p>
 
-    <Infobox class="Welcome__Alert">
+    <AVCard class="AVCard__Override">
       <h2 class="Welcome__AlertTitle">{{ $t("views.welcome.title") }}</h2>
 
       <div class="Welcome__Buttons">
@@ -48,7 +47,7 @@ const subtitle = computed(() => {
           @on-click="router.push({ name: 'BallotTrackerStart' })"
         />
       </div>
-    </Infobox>
+    </AVCard>
   </div>
 </template>
 
@@ -82,10 +81,10 @@ h1 {
   color: #6c757d;
 }
 
-.Welcome__Alert {
+.AVCard__Override {
   text-align: center;
-  max-width: 700px;
   margin: auto;
+  padding: 4rem !important;
   margin-top: 70px;
 }
 

@@ -27,7 +27,7 @@ defineProps({
         </div>
 
         <div class="BallotActivity__Author" aria-label="Activity author">
-          <AVIcon icon="user" class="BallotActivity__Icon" />
+          <AVIcon icon="circle-user" class="BallotActivity__Icon" />
           <span>
             {{ $t(`components.ballot_activity.${activity.type}.author`) }}
           </span>
@@ -41,23 +41,27 @@ defineProps({
 
         <p>
           <AVIcon icon="clock" class="BallotActivity__Icon" />
-          {{ $t("components.ballot_activity.registered_at") }}
+          <span class="BallotActivity__Description">{{
+            $t("components.ballot_activity.registered_at")
+          }}</span>
           <DateTime :date-time="activity.registered_at" format="long" />
         </p>
         <p>
-          <AVIcon icon="user" class="BallotActivity__Icon" />
-          {{
+          <AVIcon icon="circle-user" class="BallotActivity__Icon" />
+          <span class="BallotActivity__Description">{{
             $t("components.ballot_activity.author", {
               author: $t(`components.ballot_activity.${activity.type}.author`),
             })
-          }}
+          }}</span>
           <span>
             {{ $t(`components.ballot_activity.${activity.type}.author`) }}
           </span>
         </p>
         <p>
           <AVIcon icon="circle-info" class="BallotActivity__Icon" />
-          {{ $t("components.ballot_activity.meaning") }}
+          <span class="BallotActivity__Description">{{
+            $t("components.ballot_activity.meaning")
+          }}</span>
         </p>
         <p>
           {{ $t(`components.ballot_activity.${activity.type}.info`) }}
@@ -69,13 +73,27 @@ defineProps({
 
 <style type="text/css" scoped>
 .BallotActivity__RegisteredAt {
-  width: 150px;
+  width: 20vw;
+  display: flex;
+  align-items: center;
+}
+
+.BallotActivity__Author {
+  display: flex;
+  align-items: center;
+  width: 20vw;
+}
+
+.BallotActivity__Description {
+  font-weight: 600;
+  color: var(--slate-600);
+  margin-right: 8px;
 }
 
 .BallotActivity__Type {
-  width: 205px;
+  width: 25vw;
   text-transform: uppercase;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 18px;
   margin: 0;
   padding: 0;
@@ -83,5 +101,6 @@ defineProps({
 
 .BallotActivity__Icon {
   margin-right: 5px;
+  color: var(--slate-600);
 }
 </style>
