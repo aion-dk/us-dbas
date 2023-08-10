@@ -148,8 +148,7 @@ onMounted(() => {
 
 <style type="text/css" scoped>
 .BallotTrackerStart {
-  font-family: "Open Sans";
-  margin-top: 121px;
+  margin-top: 6rem;
 }
 
 .BallotTrackerStart__Content {
