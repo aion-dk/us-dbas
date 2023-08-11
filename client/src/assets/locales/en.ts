@@ -420,7 +420,8 @@ export const en = {
     },
     general_error: {
       title: "Votehub app stopped responding",
-      description: "Please check the Votehub app and start the Ballot Check again",
+      description:
+        "Please check the Votehub app and start the Ballot Check again",
       button: "OK",
     },
   },

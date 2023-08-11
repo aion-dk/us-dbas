@@ -10,7 +10,7 @@ import HelpView from "../views/HelpView.vue";
 import AboutView from "../views/AboutView.vue";
 import BallotVerifierFound from "@/views/BallotVerifierFound.vue";
 import SessionTimeout from "@/views/SessionTimeout.vue";
-import ErrorScreen from '@/views/ErorrScreen.vue';
+import ErrorScreen from "@/views/ErorrScreen.vue";
 
 const router = createRouter({
   history: createWebHistory(),
