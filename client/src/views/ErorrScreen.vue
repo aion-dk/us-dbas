@@ -62,5 +62,6 @@ import router from "../router";
   margin-top: 1rem;
   align-self: center;
   width: 24rem;
+  max-width: 100%;
 }
 </style>
