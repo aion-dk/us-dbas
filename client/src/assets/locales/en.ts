@@ -418,6 +418,11 @@ export const en = {
         "Please follow instructions in the VoteHub app to restart the ballot check again.",
       button: "OK",
     },
+    general_error: {
+      title: "Votehub app stopped responding",
+      description: "Please check the Votehub app and start the Ballot Check again",
+      button: "OK",
+    },
   },
   timedown: {
     title: "The passkey will expire in %{timeLeft}",
