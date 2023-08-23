@@ -12,7 +12,7 @@ import type { Locale } from "./Types";
 
 const ballotStore = useBallotStore();
 const configStore = useConfigStore();
-const locale = computed(() => i18n.global.locale);
+const reactiveLocale = computed(() => i18n.global.locale);
 const verificationStore = useVerificationStore();
 const route = useRoute();
 const isLoaded = ref(false);
@@ -35,7 +35,7 @@ watch(route, async (newRoute) => {
   if (locale) setLocale(locale as Locale);
 });
 
-watch(locale, async (n) => {
+watch(reactiveLocale, async (n) => {
   await router.push({ name: route.name, params: { locale: n } });
 });
 
