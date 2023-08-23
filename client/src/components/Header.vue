@@ -4,14 +4,11 @@ import { useRoute, RouterLink } from "vue-router";
 import config from "../lib/config";
 import DropDown from "./DropDown.vue";
 import { uniq } from "lodash";
-import i18n from "../lib/i18n";
+import i18n, { setLocale } from "../lib/i18n";
 import type { DropdownOption, RouteGroups } from "@/Types";
-import useLocaleStore from "../stores/useLocaleStore";
-import type { Locale } from "../Types";
 
 const { t } = i18n.global;
 const route = useRoute();
-const localeStore = useLocaleStore();
 
 const props = defineProps({
   locale: {
@@ -39,10 +36,6 @@ const availableLocales = computed(() => {
     };
   });
 });
-
-function setLocale(newLocale: string) {
-  localeStore.setLocale(newLocale as Locale);
-}
 
 const routeGroups: RouteGroups = {
   track: ["BallotTrackerView", "BallotTrackerStart"],

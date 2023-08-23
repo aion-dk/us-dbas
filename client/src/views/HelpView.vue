@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import ExpandableSection from "../components/ExpandableSection.vue";
+import i18n from "../lib/i18n";
 import { en } from "@/assets/locales/en";
 import { es } from "@/assets/locales/es";
-import useLocaleStore from "@/stores/useLocaleStore";
 import config from "@/lib/config";
 
-const localeStore = useLocaleStore();
 const messages: any = {
   en: en,
   es: es,
@@ -21,7 +20,7 @@ const messages: any = {
 
     <h2>{{ $t("views.help.ballot_check_title") }}</h2>
     <ExpandableSection
-      v-for="question in messages[localeStore.locale].views.help.ballot_check"
+      v-for="question in messages[i18n.global.locale].views.help.ballot_check"
       :key="question.question"
       class="HelpView__FAQ"
     >
@@ -39,7 +38,7 @@ const messages: any = {
 
     <h2>{{ $t("views.help.ballot_track_title") }}</h2>
     <ExpandableSection
-      v-for="question in messages[localeStore.locale].views.help.ballot_track"
+      v-for="question in messages[i18n.global.locale].views.help.ballot_track"
       :key="question.question"
       class="HelpView__FAQ"
     >

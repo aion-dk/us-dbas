@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import useConfigStore from "../stores/useConfigStore";
 import useBallotStore from "../stores/useBallotStore";
-import useLocaleStore from "../stores/useLocaleStore";
 import { ref, watch, computed, onMounted } from "vue";
 import BallotActivityList from "../components/BallotActivityList.vue";
 import router from "../router";
 import { useRoute } from "vue-router";
 import type { Ballot } from "../Types";
+import i18n from "../lib/i18n";
 
 const route = useRoute();
-const localeStore = useLocaleStore();
 const configStore = useConfigStore();
 const ballotStore = useBallotStore();
 const ballot = ref<Ballot>(null);
@@ -25,7 +24,7 @@ function setBallot() {
 }
 
 function cancel() {
-  router.push(`/${localeStore.locale}/${configStore.boardSlug}`);
+  router.push(`/${i18n.global.locale}/${configStore.boardSlug}`);
 }
 
 onMounted(() => setBallot());

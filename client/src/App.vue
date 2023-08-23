@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { watch, ref, reactive } from "vue";
+import { watch, ref, reactive, computed } from "vue";
 import { RouterView, useRoute } from "vue-router";
-import useLocaleStore from "./stores/useLocaleStore";
 import useConfigStore from "./stores/useConfigStore";
 import useBallotStore from "./stores/useBallotStore";
 import useVerificationStore from "./stores/useVerificationStore";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import router from "./router";
-import i18n from "./lib/i18n";
+import i18n, { setLocale } from "./lib/i18n";
 import type { Locale } from "./Types";
 
 const ballotStore = useBallotStore();
 const configStore = useConfigStore();
-const localeStore = useLocaleStore();
+const reactiveLocale = computed(() => i18n.global.locale);
 const verificationStore = useVerificationStore();
 const route = useRoute();
 const isLoaded = ref(false);
@@ -33,12 +32,11 @@ watch(route, async (newRoute) => {
   if (slug) await configStore.loadConfig(slug.toString());
 
   const locale = newRoute.params.locale.toString();
-  if (locale) localeStore.setLocale(locale as Locale);
+  if (locale) setLocale(locale as Locale);
 });
 
-watch(localeStore, async (n) => {
-  await router.push({ name: route.name, params: { locale: n.locale } });
-  i18n.global.locale = n.locale as Locale;
+watch(reactiveLocale, async (n) => {
+  await router.push({ name: route.name, params: { locale: n } });
 });
 
 watch(configStore, async () => {
@@ -79,7 +77,7 @@ watch([route, verificationStore], async () => {
 });
 
 function setTitle() {
-  const title = ["DBAS", configStore.election.title[localeStore.locale]].filter(
+  const title = ["DBAS", configStore.election.title[i18n.global.locale]].filter(
     (s) => s
   );
   if (window.top) window.top.document.title = title.join(" - ");
@@ -90,14 +88,14 @@ function setTitle() {
   <div class="DBAS" v-if="isLoaded">
     <!-- <a href="#main" class="DBAS_SkipToContentLink">Skip to main content</a> -->
 
-    <Header :election="configStore.election" :locale="localeStore.locale" />
+    <Header :election="configStore.election" :locale="i18n.global.locale" />
     <main class="DBAS__Content" id="main">
       <RouterView class="DBAS__InnerContent" />
     </main>
     <Footer
       v-if="footer.show"
       :current-step="footer.index"
-      :steps="i18n.global.messages[localeStore.locale].footer"
+      :steps="i18n.global.messages[i18n.global.locale].footer"
     />
   </div>
 </template>

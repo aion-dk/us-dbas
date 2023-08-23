@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import useConfigStore from "../stores/useConfigStore";
-import useLocaleStore from "../stores/useLocaleStore";
+import i18n from "../lib/i18n";
 import router from "../router";
 
 const configStore = useConfigStore();
-const localeStore = useLocaleStore();
 
 const subtitle = computed(() => {
   return [configStore.election.jurisdiction, configStore.election.stateName]
@@ -19,7 +18,7 @@ const subtitle = computed(() => {
     <h1>
       <div class="Welcome__Title">{{ $t("header.dbas") }}</div>
       <div class="Welcome__Election">
-        {{ configStore.election.title[localeStore.locale] }}
+        {{ configStore.election.title[i18n.global.locale] }}
       </div>
       <div class="Welcome__Subtitle">{{ subtitle }}</div>
     </h1>

@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import useConfigStore from "../stores/useConfigStore";
-import useLocaleStore from "../stores/useLocaleStore";
 import router from "../router";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import useVerificationStore from "../stores/useVerificationStore";
 import Timedown from "@/components/Timedown.vue";
+import i18n from "../lib/i18n";
 
-const localeStore = useLocaleStore();
 const configStore = useConfigStore();
 const verificationStore = useVerificationStore();
 const route = useRoute();
@@ -23,7 +22,7 @@ function redirectUnlessPairingCode() {
 
 function getOptionName(contest: any, selection: any) {
   return configStore.getContestOption(contest.reference, selection.reference)
-    .title[localeStore.locale];
+    .title[i18n.global.locale];
 }
 
 onMounted(redirectUnlessPairingCode);
