@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { options } from "../lib/api";
-import useLocaleStore from "../stores/useLocaleStore";
 import useConfigStore from "../stores/useConfigStore";
 import useBoardStore from "../stores/useBoardStore";
 import { onMounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import BoardItem from "../components/BoardItem.vue";
+import i18n from "../lib/i18n";
 import router from "../router";
 
 const route = useRoute();
-const localeStore = useLocaleStore();
 const configStore = useConfigStore();
 const boardStore = useBoardStore();
 const configItemsOnly = ref<boolean>(false);
@@ -118,7 +117,7 @@ onMounted(() => {
         class="LogsView__PageLink"
         @click="
           router.push(
-            `/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/1`
+            `/${i18n.global.locale}/${configStore.boardSlug}/logs/${type}/1`
           )
         "
       >
@@ -131,7 +130,7 @@ onMounted(() => {
         class="LogsView__PageLink"
         @click="
           router.push(
-            `/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.prev_page}`
+            `/${i18n.global.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.prev_page}`
           )
         "
       >
@@ -148,7 +147,7 @@ onMounted(() => {
         class="LogsView__PageLink"
         @click="
           router.push(
-            `/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.next_page}`
+            `/${i18n.global.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.next_page}`
           )
         "
       >
@@ -160,7 +159,7 @@ onMounted(() => {
         class="LogsView__PageLink"
         @click="
           router.push(
-            `/${localeStore.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.total_pages}`
+            `/${i18n.global.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.total_pages}`
           )
         "
       >
