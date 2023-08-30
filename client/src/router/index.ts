@@ -10,6 +10,7 @@ import HelpView from "../views/HelpView.vue";
 import AboutView from "../views/AboutView.vue";
 import BallotVerifierFound from "@/views/BallotVerifierFound.vue";
 import SessionTimeout from "@/views/SessionTimeout.vue";
+import ErrorScreen from "@/views/ErorrScreen.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -71,6 +72,11 @@ const router = createRouter({
       name: "SessionExpired",
       path: "/:locale/:electionSlug/session_expired",
       component: SessionTimeout,
+    },
+    {
+      name: "ErrorScreen",
+      path: "/:locale/:electionSlug/error",
+      component: ErrorScreen,
     },
   ],
 });
