@@ -57,13 +57,13 @@ const config: PlaywrightTestConfig = {
         contextOptions: {
           screen: {
             width: 1920,
-            height: 1080
-          }
+            height: 1080,
+          },
         },
         viewport: {
           width: 1920,
-          height: 1080
-        }
+          height: 1080,
+        },
       },
     },
     {
@@ -73,21 +73,21 @@ const config: PlaywrightTestConfig = {
         contextOptions: {
           screen: {
             width: 1920,
-            height: 1080
-          }
+            height: 1080,
+          },
         },
         viewport: {
           width: 1920,
-          height: 1080
-        }
+          height: 1080,
+        },
       },
     },
 
     /* Test against mobile viewports. */
     {
-      name: 'Mobile Chrome',
+      name: "Mobile Chrome",
       use: {
-        ...devices['Pixel 5'],
+        ...devices["Pixel 5"],
       },
     },
     // {

@@ -28,7 +28,7 @@ test("downloading logs", async ({ page, isMobile }) => {
   });
 
   await page.goto("/en/us3");
-  if (isMobile) await page.getByRole('button', { name: 'Open menu' }).click();
+  if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
   else await page.getByRole("menuitem", { name: "Logs" }).click();
   await page.getByRole("link", { name: "Activity logs" }).click();
 
@@ -76,7 +76,7 @@ test("traversing board items", async ({ page, isMobile }) => {
   });
 
   await page.goto("/en/us3");
-  if (isMobile) await page.getByRole('button', { name: 'Open menu' }).click();
+  if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
   else await page.getByRole("menuitem", { name: "Logs" }).click();
   await page.getByRole("link", { name: "Configuration logs" }).click();
 
