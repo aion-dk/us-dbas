@@ -41,6 +41,8 @@ export const en = {
       en: "Switch to English",
       es: "Cambiar a Español",
     },
+    close_menu_aria_label: "Close menu",
+    open_menu_aria_label: "Open menu",
   },
   footer: [
     "Check My Ballot",

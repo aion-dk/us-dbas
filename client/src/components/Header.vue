@@ -75,14 +75,14 @@ onBeforeUnmount(() => {
 
 <template>
   <AVNavbar class="Header__Navbar_Overrides">
-    <divc class="Header__logo-section">
+    <div class="Header__logo-section">
       <img class="Header__Logo" aria-hidden="true" :src="config.logoUrl" alt="Jurisdiction Seal" />
 
-      <RouterLink class="Header__Title" :to="`/${locale}/${election.slug}`" v-if="displayElectionName" @click="toggleMenu">
+      <RouterLink class="Header__Title" :to="`/${locale}/${election.slug}`" v-if="displayElectionName" @click="isMenuOpened && toggleMenu">
         <span>{{ $t("header.dbas") }}</span>
         <span class="sub">{{ name }}</span>
       </RouterLink>
-    </divc>
+    </div>
 
     <div class="Header__Links" :class="{
       Header__Show: !isMenuOpened,
@@ -186,6 +186,7 @@ onBeforeUnmount(() => {
   height: calc(100dvh - 70px);
   padding-bottom: 3rem;
   background-color: white;
+  z-index: 30 !important;
 }
 
 .Header__Show {
