@@ -40,7 +40,7 @@ async function lookupBallot(event: Event) {
 
   if (ballotStore.ballot?.status) {
     router.push(
-      `/${_locale.value}/${_electionSlug.value}/track/${_trackingCode.value}`
+      `/${_locale.value}/${_electionSlug.value}/track/${_trackingCode.value}`,
     );
   } else {
     _error.value = "track.invalid_code";

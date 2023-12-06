@@ -251,7 +251,7 @@ onMounted(redirectUnlessPairingCode);
   }
 
   .BallotVerifier__ContestName {
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 
   .BallotVerifier__Contest svg {

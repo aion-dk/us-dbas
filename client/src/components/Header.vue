@@ -59,7 +59,7 @@ const toggleMenu = () => {
 };
 
 const onResize = (e: Event) => {
-  isMenuOpened.value = false
+  isMenuOpened.value = false;
   isMobile.value = (e.target as Window).innerWidth <= 1280;
 };
 
@@ -76,77 +76,154 @@ onBeforeUnmount(() => {
 <template>
   <AVNavbar class="Header__Navbar_Overrides">
     <div class="Header__logo-section">
-      <img class="Header__Logo" aria-hidden="true" :src="config.logoUrl" alt="Jurisdiction Seal" />
+      <img
+        class="Header__Logo"
+        aria-hidden="true"
+        :src="config.logoUrl"
+        alt="Jurisdiction Seal"
+      />
 
-      <RouterLink class="Header__Title" :to="`/${locale}/${election.slug}`" v-if="displayElectionName" @click="isMenuOpened && toggleMenu">
+      <RouterLink
+        class="Header__Title"
+        :to="`/${locale}/${election.slug}`"
+        v-if="displayElectionName"
+        @click="isMenuOpened && toggleMenu"
+      >
         <span>{{ $t("header.dbas") }}</span>
         <span class="sub">{{ name }}</span>
       </RouterLink>
     </div>
 
-    <div class="Header__Links" :class="{
-      Header__Show: !isMenuOpened,
-    }">
-      <RouterLink role="menuitem" :class="classes('verify')" :to="{ name: 'BallotVerifierStart' }" @click="toggleMenu">
+    <div
+      class="Header__Links"
+      :class="{
+        Header__Show: !isMenuOpened,
+      }"
+    >
+      <RouterLink
+        role="menuitem"
+        :class="classes('verify')"
+        :to="{ name: 'BallotVerifierStart' }"
+        @click="toggleMenu"
+      >
         <span>{{ $t("header.check") }}</span>
       </RouterLink>
 
-      <RouterLink role="menuitem" :class="classes('track')" :to="{ name: 'BallotTrackerStart' }" @click="toggleMenu">
+      <RouterLink
+        role="menuitem"
+        :class="classes('track')"
+        :to="{ name: 'BallotTrackerStart' }"
+        @click="toggleMenu"
+      >
         <span>{{ $t("header.track") }}</span>
       </RouterLink>
 
-      <RouterLink v-if="!isMobile" id="logs" role="menuitem" :class="classes('logs')"
-        :to="{ name: 'LogsView', params: { type: 'config', page: 1 } }">
+      <RouterLink
+        v-if="!isMobile"
+        id="logs"
+        role="menuitem"
+        :class="classes('logs')"
+        :to="{ name: 'LogsView', params: { type: 'config', page: 1 } }"
+      >
         <span>{{ $t("header.logs.logs") }}</span>
         <ul id="logs-submenu">
           <li>
-            <RouterLink :to="{ name: 'LogsView', params: { type: 'activity', page: 1 } }">{{ $t("header.logs.activity") }}
+            <RouterLink
+              :to="{ name: 'LogsView', params: { type: 'activity', page: 1 } }"
+              >{{ $t("header.logs.activity") }}
             </RouterLink>
           </li>
           <li>
-            <RouterLink :to="{ name: 'LogsView', params: { type: 'config', page: 1 } }">{{ $t("header.logs.config") }}
+            <RouterLink
+              :to="{ name: 'LogsView', params: { type: 'config', page: 1 } }"
+              >{{ $t("header.logs.config") }}
             </RouterLink>
           </li>
         </ul>
       </RouterLink>
 
-      <RouterLink v-if="isMobile" :class="classes('logs')" :to="{ name: 'LogsView', params: { type: 'activity', page: 1 } }" @click="toggleMenu">{{
-        $t("header.logs.activity") }}</RouterLink>
+      <RouterLink
+        v-if="isMobile"
+        :class="classes('logs')"
+        :to="{ name: 'LogsView', params: { type: 'activity', page: 1 } }"
+        @click="toggleMenu"
+        >{{ $t("header.logs.activity") }}</RouterLink
+      >
 
-      <RouterLink v-if="isMobile" :class="classes('logs')" :to="{ name: 'LogsView', params: { type: 'config', page: 1 } }" @click="toggleMenu">{{
-        $t("header.logs.config") }}</RouterLink>
+      <RouterLink
+        v-if="isMobile"
+        :class="classes('logs')"
+        :to="{ name: 'LogsView', params: { type: 'config', page: 1 } }"
+        @click="toggleMenu"
+        >{{ $t("header.logs.config") }}</RouterLink
+      >
 
-      <RouterLink :class="classes('AboutView')" role="menuitem" :to="{ name: 'AboutView' }" @click="toggleMenu">
+      <RouterLink
+        :class="classes('AboutView')"
+        role="menuitem"
+        :to="{ name: 'AboutView' }"
+        @click="toggleMenu"
+      >
         <span>{{ $t("header.about") }}</span>
       </RouterLink>
 
-      <RouterLink role="menuitem" :class="classes('HelpView')" :to="{ name: 'HelpView' }" @click="toggleMenu">
+      <RouterLink
+        role="menuitem"
+        :class="classes('HelpView')"
+        :to="{ name: 'HelpView' }"
+        @click="toggleMenu"
+      >
         <span>{{ $t("header.help") }}</span>
       </RouterLink>
 
-      <a role="menuitem" class="Header__Link" :href="config.contactUrl" target="_blank" @click="toggleMenu">
+      <a
+        role="menuitem"
+        class="Header__Link"
+        :href="config.contactUrl"
+        target="_blank"
+        @click="toggleMenu"
+      >
         <span>
           <AVIcon icon="arrow-up-right-from-square" aria-hidden="true" />
           {{ $t("header.contact") }}
         </span>
       </a>
 
-      <DropDown class="Header__Locales" :options="availableLocales" @change="(value) => setLocale(value)" />
+      <DropDown
+        class="Header__Locales"
+        :options="availableLocales"
+        @change="(value) => setLocale(value)"
+      />
     </div>
 
-    <button class="Header__Hamburger_Btn" :aria-label="isMenuOpened
-        ? $t('header.close_menu_aria_label')
-        : $t('header.open_menu_aria_label')
-      " @click="toggleMenu">
-      <AVIcon v-if="isMenuOpened" icon="xmark" class="Header__Hamburger_Icon" aria-hidden="true" />
-      <AVIcon v-else icon="bars" class="Header__Hamburger_Icon" aria-hidden="true" />
+    <button
+      class="Header__Hamburger_Btn"
+      :aria-label="
+        isMenuOpened
+          ? $t('header.close_menu_aria_label')
+          : $t('header.open_menu_aria_label')
+      "
+      @click="toggleMenu"
+    >
+      <AVIcon
+        v-if="isMenuOpened"
+        icon="xmark"
+        class="Header__Hamburger_Icon"
+        aria-hidden="true"
+      />
+      <AVIcon
+        v-else
+        icon="bars"
+        class="Header__Hamburger_Icon"
+        aria-hidden="true"
+      />
     </button>
   </AVNavbar>
 </template>
 
 <style type="text/css" scoped>
 .Header__Navbar_Overrides {
-  padding: .5rem !important;
+  padding: 0.5rem !important;
 }
 
 .Header__logo-section {
@@ -278,7 +355,7 @@ onBeforeUnmount(() => {
     background-color: var(--slate-100);
   }
 
-  ul>li>.router-link-active {
+  ul > li > .router-link-active {
     border: none;
   }
 
@@ -322,6 +399,5 @@ onBeforeUnmount(() => {
   #logs:hover #logs-submenu {
     display: block;
   }
-
 }
 </style>

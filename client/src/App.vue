@@ -49,7 +49,7 @@ watch(configStore, async () => {
     if (route.params.trackingCode) {
       await ballotStore.loadBallot(
         route.params.trackingCode.toString(),
-        configStore.boardSlug
+        configStore.boardSlug,
       );
     }
   }
@@ -78,7 +78,7 @@ watch([route, verificationStore], async () => {
 
 function setTitle() {
   const title = ["DBAS", configStore.election.title[i18n.global.locale]].filter(
-    (s) => s
+    (s) => s,
   );
   if (window.top) window.top.document.title = title.join(" - ");
 }
@@ -212,7 +212,7 @@ body {
 
   #download-logs-btn {
     font-size: 1rem;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
   }
 }
 
