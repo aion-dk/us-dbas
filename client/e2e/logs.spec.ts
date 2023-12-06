@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import { latestConfig, boardItemsPage1, boardItemsPage2 } from "./mocks";
 
-test("downloading logs", async ({ page }) => {
+test("downloading logs", async ({ page, isMobile }) => {
   // Mock Network calls
   await page.route("**/*", async (route) => {
     const url = route.request().url();
@@ -28,7 +28,7 @@ test("downloading logs", async ({ page }) => {
   });
 
   await page.goto("/en/us3");
-  await page.getByRole("menuitem", { name: "Logs" }).click();
+  if (!isMobile) await page.getByRole("menuitem", { name: "Logs" }).click();
   await page.getByRole("link", { name: "Activity logs" }).click();
 
   const downloadPromise = page.waitForEvent("download");
@@ -38,7 +38,7 @@ test("downloading logs", async ({ page }) => {
   const download = await downloadPromise;
 });
 
-test("traversing board items", async ({ page }) => {
+test("traversing board items", async ({ page, isMobile }) => {
   // Mock Network calls
   await page.route("**/*", async (route) => {
     const url = route.request().url();
@@ -74,7 +74,7 @@ test("traversing board items", async ({ page }) => {
   });
 
   await page.goto("/en/us3");
-  await page.getByRole("menuitem", { name: "Logs" }).click();
+  if (!isMobile) await page.getByRole("menuitem", { name: "Logs" }).click();
 
   // Page 1
   await page.getByText("16fSovo").click();
