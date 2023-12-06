@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import config from "../lib/config";
 import { RouterLink } from "vue-router";
-import { ref } from 'vue'
+import { ref } from "vue";
 
 defineProps({
   errorPath: {
