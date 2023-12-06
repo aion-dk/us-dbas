@@ -48,11 +48,7 @@ defineProps({
 }
 
 .BallotActivitiesList__ColumnDescriptions {
-  list-style: none;
-  padding: 16px;
-  margin: 0;
-  display: flex;
-  font-size: 14px;
+  display: none;
 }
 
 .BallotActivitiesList__ColumnDescriptions--time {
@@ -61,5 +57,15 @@ defineProps({
 
 .BallotActivitiesList__ColumnDescriptions--event {
   width: 25vw;
+}
+
+@media only screen and (min-width: 80rem) {
+  .BallotActivitiesList__ColumnDescriptions {
+    list-style: none;
+    padding: 16px;
+    margin: 0;
+    display: flex;
+    font-size: 14px;
+  }
 }
 </style>

@@ -60,6 +60,7 @@ function toggle() {
 
 .ExpandableSection__Line {
   display: flex;
+  flex-direction: column;
 }
 
 .ExpandableSection__Expander {
@@ -76,5 +77,11 @@ function toggle() {
   cursor: pointer;
   color: white;
   border: none;
+}
+
+@media only screen and (min-width: 80rem) {
+  .ExpandableSection__Line {
+    flex-direction: row;
+  }
 }
 </style>

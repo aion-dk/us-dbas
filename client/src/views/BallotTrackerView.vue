@@ -69,14 +69,15 @@ onMounted(() => setBallot());
 
 <style type="text/css" scoped>
 .h1 {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
-  margin-top: 40px;
+  margin: 0 0 2rem 0;
+  text-align: center;
 }
 
 .BallotTracker__TrackingCode {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 1rem;
   position: relative;
   padding: 2rem !important;
 }
@@ -101,13 +102,19 @@ onMounted(() => setBallot());
 }
 
 .BallotTracker__StatusInfo {
-  margin-top: 40px;
-  padding: 2rem 4rem !important;
+  margin-top: 1rem;
+  padding: 2rem !important;
+  text-align: center;
 }
 
 .BallotTracker__StatusInfo h3 {
   font-size: 24px;
   font-weight: 600;
+  margin: 0 0 1rem 0;
+}
+
+.BallotTracker__StatusInfo p {
+  margin: 0;
 }
 
 .BallotTracker__Cancel {
@@ -127,5 +134,32 @@ onMounted(() => setBallot());
 
 .BallotTracker__ActivityList {
   margin-top: 40px;
+}
+
+@media only screen and (min-width: 80rem) {
+  .h1 {
+    font-size: 24px;
+    margin-top: 40px;
+    margin-bottom: 0;
+    text-align: left;
+  }
+
+  .BallotTracker__TrackingCode {
+    margin-top: 2.5rem;
+  }
+
+  .BallotTracker__StatusInfo {
+    margin-top: 40px;
+    padding: 2rem 4rem !important;
+    text-align: left;
+  }
+
+  .BallotTracker__StatusInfo h3 {
+    margin: 1rem 0;
+  }
+
+  .BallotTracker__StatusInfo p {
+    margin: 1rem 0;
+  }
 }
 </style>
