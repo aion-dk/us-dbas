@@ -70,7 +70,7 @@ test("tracking a non-existing ballot shows an error", async ({ page }) => {
   await page.getByPlaceholder("Ballot tracking code").fill("abcdef");
   await page.getByRole("button", { name: "Track my ballot" }).click();
   await expect(page.locator(".AVAlert")).toContainText(
-    "TRACKING CODE NOT FOUND",
+    "TRACKING CODE NOT FOUND"
   );
   await page.getByPlaceholder("Ballot tracking code").fill("hijklm");
 });
@@ -112,15 +112,15 @@ test("tracking a rejected ballot has the right text", async ({ page }) => {
   await page.locator(".BallotTracker__StatusInfo h3");
 
   await expect(page.locator(".BallotTracker__StatusInfo h3")).toHaveText(
-    "Ballot Not Accepted",
+    "Ballot Not Accepted"
   );
   await expect(page.locator(".BallotTracker__StatusInfo p")).toHaveText(
-    "There is a problem with your signature affidavit. It was not accepted due to “REJECTION REASON”. Contact your local election official for next steps and to cure your affidavit.",
+    "There is a problem with your signature affidavit. It was not accepted due to “REJECTION REASON”. Contact your local election official for next steps and to cure your affidavit."
   );
   await expect(page.locator(".BallotTracker__StatusInfo p")).toHaveText(
-    "There is a problem with your signature affidavit. It was not accepted due to “REJECTION REASON”. Contact your local election official for next steps and to cure your affidavit.",
+    "There is a problem with your signature affidavit. It was not accepted due to “REJECTION REASON”. Contact your local election official for next steps and to cure your affidavit."
   );
   await expect(page.locator(".BallotActivity__Type").first()).toHaveText(
-    "Affidavit Rejected",
+    "Affidavit Rejected"
   );
 });

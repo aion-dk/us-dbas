@@ -30,10 +30,10 @@ const secondsLeft = ref(props.currentSeconds);
 const interval = ref(null);
 const miliseconds = computed(() => secondsLeft.value * 1000);
 const percentageWidth = computed(
-  () => (secondsLeft.value / props.maxSeconds) * 100,
+  () => (secondsLeft.value / props.maxSeconds) * 100
 );
 const progressBgColor = computed(() =>
-  secondsLeft.value <= ALERT_TIMEOUT ? "--semantic-warning-1" : "--slate-800",
+  secondsLeft.value <= ALERT_TIMEOUT ? "--semantic-warning-1" : "--slate-800"
 );
 const style = computed(() => {
   return `

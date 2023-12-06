@@ -67,7 +67,7 @@ test("verifying with an invalid verification code", async ({ page }) => {
   await page.getByPlaceholder("Ballot Checking Code").fill("invalid-code");
   await page.getByRole("button", { name: "Check My Ballot" }).click();
   await expect(page.locator(".AVAlert")).toContainText(
-    "CHECKING CODE NOT FOUND",
+    "CHECKING CODE NOT FOUND"
   );
   await page.getByPlaceholder("Ballot Checking Code").fill("invalid-code");
 });

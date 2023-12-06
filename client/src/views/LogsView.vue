@@ -26,7 +26,7 @@ function downloadLogs() {
 function currentPage() {
   return parseInt(
     (route.params.page || boardStore.currentPage || 1).toString(),
-    10,
+    10
   );
 }
 
@@ -117,7 +117,7 @@ onMounted(() => {
         class="LogsView__PageLink"
         @click="
           router.push(
-            `/${i18n.global.locale}/${configStore.boardSlug}/logs/${type}/1`,
+            `/${i18n.global.locale}/${configStore.boardSlug}/logs/${type}/1`
           )
         "
       >
@@ -130,7 +130,7 @@ onMounted(() => {
         class="LogsView__PageLink"
         @click="
           router.push(
-            `/${i18n.global.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.prev_page}`,
+            `/${i18n.global.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.prev_page}`
           )
         "
       >
@@ -147,7 +147,7 @@ onMounted(() => {
         class="LogsView__PageLink"
         @click="
           router.push(
-            `/${i18n.global.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.next_page}`,
+            `/${i18n.global.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.next_page}`
           )
         "
       >
@@ -159,7 +159,7 @@ onMounted(() => {
         class="LogsView__PageLink"
         @click="
           router.push(
-            `/${i18n.global.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.total_pages}`,
+            `/${i18n.global.locale}/${configStore.boardSlug}/logs/${type}/${boardStore.meta.total_pages}`
           )
         "
       >
