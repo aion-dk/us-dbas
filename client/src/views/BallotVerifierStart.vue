@@ -154,9 +154,7 @@ onMounted(() => {
 }
 
 .BallotVerifierStart {
-  font-family: "Open Sans";
   margin: auto;
-  margin-top: 6rem;
 }
 
 .BallotVerifierStart__Content {
@@ -166,7 +164,7 @@ onMounted(() => {
 }
 
 .BallotVerifierStart__Checking {
-  padding: 92px 80px !important;
+  padding: 2rem !important;
   align-items: center;
   width: 100%;
   gap: 1rem;
@@ -186,12 +184,26 @@ onMounted(() => {
 }
 
 .BallotVerifierStart__Footer {
-  margin-top: 24px;
+  margin: 1rem 0 14rem 0;
   padding: 0;
 }
 
 .BallotVerifierStart__Footer_link {
   font-weight: 800;
   color: var(--slate-800);
+}
+
+@media only screen and (min-width: 80rem) {
+  .BallotVerifierStart {
+    margin-top: 6rem;
+  }
+
+  .BallotVerifierStart__Checking {
+    padding: 5.75rem 5rem !important;
+  }
+
+  .BallotVerifierStart__Footer {
+    margin: 1.5rem 0 0 0;
+  }
 }
 </style>

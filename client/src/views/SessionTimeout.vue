@@ -20,8 +20,7 @@ import router from "../router";
 
 <style type="text/css">
 .Expired__Card {
-  margin-top: 6rem;
-  padding: 4rem !important;
+  padding: 2rem !important;
   gap: 2rem;
   text-align: center;
   position: relative;
@@ -61,6 +60,14 @@ import router from "../router";
 .Expired__Button {
   margin-top: 1rem;
   align-self: center;
-  width: 24rem;
+  width: 100%;
+  max-width: 24rem;
+}
+
+@media only screen and (min-width: 80rem) {
+  .Expired__Card {
+    margin-top: 6rem;
+    padding: 4rem !important;
+  }
 }
 </style>

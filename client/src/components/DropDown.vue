@@ -32,9 +32,3 @@ defineProps({
     </option>
   </select>
 </template>
-
-<style type="text/css" scoped>
-select {
-  font-family: "Open Sans";
-}
-</style>

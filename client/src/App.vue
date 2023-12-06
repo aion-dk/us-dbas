@@ -169,6 +169,7 @@ body {
 
 .DBAS__InnerContent {
   width: 100%;
+  margin: auto;
   padding: 2rem;
 }
 
@@ -193,5 +194,26 @@ body {
 /* Style overrides for UI Lib components */
 .AVTextInput {
   text-align: center;
+}
+
+.AVTextInput--error-icon {
+  z-index: 0 !important;
+}
+
+@media only screen and (max-width: 32rem) {
+  .AVAlert--title-container {
+    flex-direction: column !important;
+  }
+
+  .AVAlert--title {
+    font-size: 1rem !important;
+    text-align: left !important;
+  }
+}
+
+@media only screen and (min-width: 80rem) {
+  .DBAS__InnerContent {
+    width: 80vw;
+  }
 }
 </style>
