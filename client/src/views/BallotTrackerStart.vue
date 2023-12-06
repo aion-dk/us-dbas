@@ -146,24 +146,21 @@ onMounted(() => {
 </template>
 
 <style type="text/css" scoped>
-.BallotTrackerStart {
-  margin-top: 6rem;
-}
-
 .BallotTrackerStart__Content {
   display: flex;
-  gap: 2.5rem;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .BallotTrackerStart__Text {
-  padding: 80px !important;
+  padding: 2rem !important;
   color: var(--slate-700);
 }
 
 .BallotTrackerStart__Tracking {
   justify-content: center;
-  min-width: 40%;
-  padding: 80px !important;
+  min-width: 100%;
+  padding: 2rem !important;
 }
 
 .BallotTrackerStart__Tracking form {
@@ -201,5 +198,25 @@ onMounted(() => {
 
 .AVTooltip__Override {
   margin-top: 1rem;
+}
+
+@media only screen and (min-width: 80rem) {
+  .BallotTrackerStart {
+    margin-top: 6rem;
+  }
+
+  .BallotTrackerStart__Content {
+    flex-direction: row;
+    gap: 2.5rem;
+  }
+
+  .BallotTrackerStart__Text {
+    padding: 5rem !important;
+  }
+
+  .BallotTrackerStart__Tracking {
+    min-width: 40%;
+    padding: 5rem !important;
+  }
 }
 </style>

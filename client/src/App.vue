@@ -154,21 +154,23 @@ body {
 }
 
 .DBAS {
+  height: 100dvh;
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 .DBAS__Content {
+  height: calc(100dvh - 70px);
   height: calc(100vh - 70px);
-  margin-top: 80px;
+  margin-top: 70px;
   overflow-y: scroll;
 }
 
 .DBAS__InnerContent {
-  width: 80vw;
+  width: 100%;
   margin: auto;
-  padding: 0;
+  padding: 2rem;
 }
 
 .popper-content-wrapper {
@@ -192,5 +194,31 @@ body {
 /* Style overrides for UI Lib components */
 .AVTextInput {
   text-align: center;
+}
+
+.AVTextInput--error-icon {
+  z-index: 0 !important;
+}
+
+@media only screen and (max-width: 32rem) {
+  .AVAlert--title-container {
+    flex-direction: column !important;
+  }
+
+  .AVAlert--title {
+    font-size: 1rem !important;
+    text-align: left !important;
+  }
+
+  #download-logs-btn {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media only screen and (min-width: 80rem) {
+  .DBAS__InnerContent {
+    width: 80vw;
+  }
 }
 </style>

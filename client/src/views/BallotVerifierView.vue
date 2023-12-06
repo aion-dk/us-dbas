@@ -113,10 +113,9 @@ onMounted(redirectUnlessPairingCode);
 
 <style type="text/css" scoped>
 .BallotVerifier {
-  font-family: "Open Sans";
-  padding-top: 6rem;
   display: flex;
   justify-content: center;
+  margin: auto;
 }
 
 .BallotVerifier p {
@@ -128,14 +127,13 @@ onMounted(redirectUnlessPairingCode);
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 60px !important;
+  margin-bottom: 14rem;
 }
 
 .BallotVerifier__Title {
   color: var(--slate-700);
   text-align: center;
   font-size: 26px;
-  font-family: "Open Sans";
   font-weight: 600;
   line-height: 30px;
 }
@@ -157,7 +155,6 @@ onMounted(redirectUnlessPairingCode);
 }
 
 .BallotVerifier__ContestName {
-  margin-right: 8px;
   font-weight: 600;
   color: var(--slate-800);
 }
@@ -168,15 +165,15 @@ onMounted(redirectUnlessPairingCode);
 }
 
 .BallotVerifier__Contest {
-  margin-bottom: 40px;
-  margin-top: 16px;
+  margin-bottom: 1rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   border-radius: 12px;
   border: 1px solid var(--slate-300);
   background-color: var(--slate-100);
-  padding: 1rem 1.25rem;
+  padding: 1rem;
   width: 100%;
 }
 
@@ -188,7 +185,6 @@ onMounted(redirectUnlessPairingCode);
   color: var(--slate-600);
   height: 24px;
   width: 24px;
-  margin-right: 16px;
 }
 
 .BallotVerifier__Option {
@@ -205,7 +201,7 @@ onMounted(redirectUnlessPairingCode);
 }
 
 .BallotVerifier__Card {
-  padding: 60px 40px !important;
+  padding: 2.5rem !important;
   width: 100%;
 }
 
@@ -231,5 +227,35 @@ onMounted(redirectUnlessPairingCode);
 
 .BallotVerifier__Spoiled_Alert {
   margin-bottom: 2rem !important;
+}
+
+@media only screen and (min-width: 80rem) {
+  .BallotVerifier {
+    margin-top: 6rem;
+  }
+
+  .BallotVerifier__Spoiled {
+    padding: 3.75rem !important;
+    margin-bottom: 0;
+  }
+
+  .BallotVerifier__Card {
+    padding: 3.75rem 2.5rem !important;
+  }
+
+  .BallotVerifier__Contest {
+    flex-direction: row;
+    margin-bottom: 40px;
+    margin-top: 16px;
+    padding: 1rem 1.25rem;
+  }
+
+  .BallotVerifier__ContestName {
+    margin-right: 0.5rem;
+  }
+
+  .BallotVerifier__Contest svg {
+    margin-right: 1rem;
+  }
 }
 </style>

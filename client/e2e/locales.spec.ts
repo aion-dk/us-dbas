@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import { latestConfig } from "./mocks";
 
-test("changing locale", async ({ page }) => {
+test("changing locale", async ({ page, isMobile }) => {
   // Mock Network calls
   await page.route("**/*", async (route) => {
     const url = route.request().url();
@@ -19,8 +19,10 @@ test("changing locale", async ({ page }) => {
   });
 
   await page.goto("/en/us3");
+  if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
   await page.locator(".Header__Locales").selectOption("es");
   await page.getByRole("menuitem", { name: "Información" }).click();
+  if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
   await page.locator(".Header__Locales").selectOption("en");
   await page.getByRole("menuitem", { name: "About" }).click();
 });

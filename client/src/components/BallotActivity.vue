@@ -73,7 +73,6 @@ defineProps({
 
 <style type="text/css" scoped>
 .BallotActivity__RegisteredAt {
-  width: 20vw;
   display: flex;
   align-items: center;
 }
@@ -81,7 +80,6 @@ defineProps({
 .BallotActivity__Author {
   display: flex;
   align-items: center;
-  width: 20vw;
 }
 
 .BallotActivity__Description {
@@ -91,16 +89,30 @@ defineProps({
 }
 
 .BallotActivity__Type {
-  width: 25vw;
   text-transform: uppercase;
   font-weight: 800;
   font-size: 18px;
-  margin: 0;
+  margin: 0 0 1rem 0;
   padding: 0;
 }
 
 .BallotActivity__Icon {
   margin-right: 5px;
   color: var(--slate-600);
+}
+
+@media only screen and (min-width: 80rem) {
+  .BallotActivity__RegisteredAt {
+    width: 20vw;
+  }
+
+  .BallotActivity__Author {
+    width: 20vw;
+  }
+
+  .BallotActivity__Type {
+    width: 25vw;
+    margin: 0;
+  }
 }
 </style>

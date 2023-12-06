@@ -5,6 +5,7 @@
     :active="steps[currentStep]"
     disable-banner
     enable-steps
+    style="z-index: 5 !important"
   />
 </template>
 

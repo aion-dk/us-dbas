@@ -101,25 +101,34 @@ const getRelevantKey = (item: any) => {
 }
 
 .BoardItem__Type {
-  width: 25vw;
   text-transform: uppercase;
   font-size: 18px;
   font-weight: 700;
   padding: 0;
-  margin: 0;
-}
-
-.BoardItem__Date {
-  width: 20vw;
+  margin: 0 0 1rem 0;
 }
 
 .BoardItem__ShortAddress {
-  width: 20vw;
   white-space: pre-line;
 }
 
 .BoardItem__InlineIcon {
   margin-right: 5px;
   color: var(--slate-600);
+}
+
+@media only screen and (min-width: 80rem) {
+  .BoardItem__Type {
+    width: 25vw;
+    margin: 0;
+  }
+
+  .BoardItem__Date {
+    width: 20vw;
+  }
+
+  .BoardItem__ShortAddress {
+    width: 20vw;
+  }
 }
 </style>

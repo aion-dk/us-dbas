@@ -54,40 +54,46 @@ const config: PlaywrightTestConfig = {
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
+        contextOptions: {
+          screen: {
+            width: 1920,
+            height: 1080,
+          },
+        },
+        viewport: {
+          width: 1920,
+          height: 1080,
+        },
       },
     },
     {
       name: "firefox",
       use: {
         ...devices["Desktop Firefox"],
+        contextOptions: {
+          screen: {
+            width: 1920,
+            height: 1080,
+          },
+        },
+        viewport: {
+          width: 1920,
+          height: 1080,
+        },
       },
     },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: {
-    //     ...devices['Pixel 5'],
-    //   },
-    // },
+    {
+      name: "Mobile Chrome",
+      use: {
+        ...devices["Pixel 5"],
+      },
+    },
     // {
     //   name: 'Mobile Safari',
     //   use: {
     //     ...devices['iPhone 12'],
-    //   },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: {
-    //     channel: 'msedge',
-    //   },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: {
-    //     channel: 'chrome',
     //   },
     // },
   ],

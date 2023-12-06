@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import config from "../lib/config";
 import { RouterLink } from "vue-router";
+import { ref } from "vue";
 
 defineProps({
   errorPath: {
@@ -8,6 +9,9 @@ defineProps({
     required: true,
   },
 });
+
+const error = ref(null);
+error.value?.scrollIntoView({ behavior: "smooth" });
 </script>
 
 <template>
@@ -17,6 +21,7 @@ defineProps({
     icon="triangle-exclamation"
     disable-dismiss
     class="AVAlert__Override"
+    ref="error"
   >
     <template v-if="errorPath.startsWith('verify')">
       <p>
