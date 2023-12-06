@@ -75,6 +75,7 @@ test("traversing board items", async ({ page, isMobile }) => {
 
   await page.goto("/en/us3");
   if (!isMobile) await page.getByRole("menuitem", { name: "Logs" }).click();
+  await page.getByRole("link", { name: "Configuration logs" }).click();
 
   // Page 1
   await page.getByText("16fSovo").click();
