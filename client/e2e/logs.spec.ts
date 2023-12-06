@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { latestConfig, boardItemsPage1, boardItemsPage2 } from "./mocks";
 
 test("downloading logs", async ({ page, isMobile }) => {
@@ -28,7 +28,8 @@ test("downloading logs", async ({ page, isMobile }) => {
   });
 
   await page.goto("/en/us3");
-  if (!isMobile) await page.getByRole("menuitem", { name: "Logs" }).click();
+  if (isMobile) await page.getByRole('button', { name: 'Open menu' }).click();
+  else await page.getByRole("menuitem", { name: "Logs" }).click();
   await page.getByRole("link", { name: "Activity logs" }).click();
 
   const downloadPromise = page.waitForEvent("download");
@@ -36,6 +37,7 @@ test("downloading logs", async ({ page, isMobile }) => {
     .getByRole("button", { name: "Download the full election log (json)" })
     .click();
   const download = await downloadPromise;
+  expect(download.path()).toBeTruthy();
 });
 
 test("traversing board items", async ({ page, isMobile }) => {
@@ -74,7 +76,8 @@ test("traversing board items", async ({ page, isMobile }) => {
   });
 
   await page.goto("/en/us3");
-  if (!isMobile) await page.getByRole("menuitem", { name: "Logs" }).click();
+  if (isMobile) await page.getByRole('button', { name: 'Open menu' }).click();
+  else await page.getByRole("menuitem", { name: "Logs" }).click();
   await page.getByRole("link", { name: "Configuration logs" }).click();
 
   // Page 1
