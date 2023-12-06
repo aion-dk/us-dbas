@@ -154,21 +154,22 @@ body {
 }
 
 .DBAS {
+  height: 100dvh;
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 .DBAS__Content {
+  height: calc(100dvh - 70px);
   height: calc(100vh - 70px);
-  margin-top: 80px;
+  margin-top: 70px;
   overflow-y: scroll;
 }
 
 .DBAS__InnerContent {
-  width: 80vw;
-  margin: auto;
-  padding: 0;
+  width: 100%;
+  padding: 2rem;
 }
 
 .popper-content-wrapper {

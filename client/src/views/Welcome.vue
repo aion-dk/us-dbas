@@ -52,9 +52,7 @@ const subtitle = computed(() => {
 
 <style type="text/css" scoped>
 .Welcome {
-  max-width: 950px;
-  margin: auto;
-  margin-top: 40px;
+  padding: 2rem;
 }
 
 h1 {
@@ -77,18 +75,17 @@ h1 {
   margin-top: 12px;
   font-size: 24px;
   font-weight: 600;
-  color: #6c757d;
+  color: var(--slate-600);
 }
 
 .AVCard__Override {
   text-align: center;
-  margin: auto;
-  padding: 4rem !important;
-  margin-top: 70px;
+  padding: 2rem !important;
+  margin-top: 2rem;
 }
 
 .Welcome__Intro {
-  color: #6c757d;
+  color: var(--slate-600);
 }
 
 .Welcome__AlertTitle {
@@ -100,9 +97,30 @@ h1 {
 
 .Welcome__Buttons {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 72px;
-  gap: 2rem;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+@media only screen and (min-width: 80rem) {
+  .Welcome {
+    max-width: 950px;
+    margin: auto;
+    margin-top: 40px;
+  }
+
+  .AVCard__Override {
+    margin: auto;
+    padding: 4rem !important;
+    margin-top: 70px;
+  }
+
+  .Welcome__Buttons {
+    flex-direction: row;
+    margin-top: 4.5rem;
+    gap: 2rem;
+  }
 }
 </style>
