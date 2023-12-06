@@ -176,6 +176,7 @@ onMounted(() => {
         icon="download"
         @on-click="downloadLogs"
         data-test="download-btn"
+        id="download-logs-btn"
       />
     </div>
   </main>
@@ -214,19 +215,15 @@ onMounted(() => {
   cursor: default;
 }
 
-.LogsView {
-  width: 70vw;
-}
-
 .LogsView__Header * {
   text-align: center;
   color: var(--slate-800);
 }
 
 .LogsView h2 {
-  margin-top: 47px;
   font-weight: 600;
   font-size: 26px;
+  margin: 0;
 }
 
 .LogsView p {
@@ -240,12 +237,7 @@ onMounted(() => {
 }
 
 .LogsView__ColumnDescriptions {
-  list-style: none;
-  padding: 16px;
-  margin: 0;
-  display: flex;
-  font-size: 14px;
-  color: var(--slate-800);
+  display: none;
 }
 
 .LogsView__ColumnDescriptions--time {
@@ -266,5 +258,24 @@ svg {
 
 .LogsView__2nd_Icon {
   margin-left: -8px;
+}
+
+@media only screen and (min-width: 80rem) {
+  .LogsView {
+    width: 70vw;
+  }
+
+  .LogsView h2 {
+    margin-top: 47px;
+  }
+
+  .LogsView__ColumnDescriptions {
+    list-style: none;
+    padding: 16px;
+    margin: 0;
+    display: flex;
+    font-size: 14px;
+    color: var(--slate-800);
+  }
 }
 </style>

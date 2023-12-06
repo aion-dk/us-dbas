@@ -69,10 +69,6 @@ const messages: any = {
 </template>
 
 <style type="text/css" scoped>
-.HelpView {
-  padding-top: 6rem !important;
-}
-
 .HelpView__Header {
   text-align: center;
 }
@@ -89,8 +85,7 @@ const messages: any = {
   line-height: 28px;
   color: var(--slate-700);
   font-weight: 600;
-  margin-top: 4rem;
-  margin-bottom: 2rem;
+  text-align: center;
 }
 
 footer {
@@ -108,9 +103,22 @@ footer > h2 {
 .HelpView__FAQ h3 {
   margin: 0;
   padding: 0;
+  width: 80%;
 }
 
 .HelpView__FAQ p:last-of-type {
   margin-bottom: 0;
+}
+
+@media only screen and (min-width: 80rem) {
+  .HelpView {
+    padding-top: 6rem !important;
+  }
+
+  .HelpView h2 {
+    text-align: left;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+  }
 }
 </style>

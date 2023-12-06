@@ -26,11 +26,8 @@ import config from "../lib/config";
 
 <style type="text/css">
 .AboutView {
-  padding-top: 6rem !important;
-  width: 60vw !important;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 }
 
 .AboutView h1 {
@@ -42,6 +39,7 @@ import config from "../lib/config";
 }
 
 .AboutView h2 {
+  text-align: center;
   color: var(--slate-700);
   font-size: 24px;
   font-weight: 600;
@@ -57,5 +55,25 @@ import config from "../lib/config";
 .AboutView a {
   color: var(--slate-900);
   font-weight: 600;
+}
+
+.AboutView p {
+  text-align: center;
+}
+
+@media only screen and (min-width: 80rem) {
+  .AboutView {
+    padding-top: 6rem !important;
+    width: 60vw !important;
+    gap: 1rem;
+  }
+
+  .AboutView h2 {
+    text-align: left;
+  }
+
+  .AboutView p {
+    text-align: left;
+  }
 }
 </style>

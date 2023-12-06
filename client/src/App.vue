@@ -209,6 +209,11 @@ body {
     font-size: 1rem !important;
     text-align: left !important;
   }
+
+  #download-logs-btn {
+    font-size: 1rem;
+    padding: .5rem 1rem;
+  }
 }
 
 @media only screen and (min-width: 80rem) {
