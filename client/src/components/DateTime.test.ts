@@ -3,8 +3,11 @@ import { mount } from "@vue/test-utils";
 import DateTime from "./DateTime.vue";
 import { AVTooltip } from "@assemblyvoting/ui-library";
 
+const date = new Date();
+date.setHours(date.getHours() - 5);
+
 const props: any = {
-  dateTime: new Date().toISOString(),
+  dateTime: date.toISOString(),
   timeZone: "CET",
 };
 const components = { AVTooltip: AVTooltip };
@@ -12,7 +15,7 @@ const options = { props, global: { components } };
 
 test("displays relative time", async () => {
   const wrapper = mount(DateTime, options);
-  expect(wrapper.text()).toContain("a few seconds ago");
+  expect(wrapper.text()).toContain("hours ago");
 });
 
 test("displays absolute time", async () => {
