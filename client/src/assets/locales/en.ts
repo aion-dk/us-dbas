@@ -368,7 +368,6 @@ export const en = {
         intro: "This log shows all activity in the digital ballot box.",
       },
       download_button: "Download the full election log (json)",
-      config_only: "Configuration items only?",
       pagination_aria_label: {
         first: "First page",
         prev: "Previous page",

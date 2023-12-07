@@ -21,8 +21,8 @@ test("changing locale", async ({ page, isMobile }) => {
   await page.goto("/en/us3");
   if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
   await page.locator(".Header__Locales").selectOption("es");
-  await page.getByRole("menuitem", { name: "Información" }).click();
-  if (isMobile) await page.getByRole("button", { name: "Open menu" }).click();
+  await page.getByRole("menuitem", { name: "Acerca de" }).click();
+  if (isMobile) await page.getByRole("button", { name: "Abrir Menú" }).click();
   await page.locator(".Header__Locales").selectOption("en");
   await page.getByRole("menuitem", { name: "About" }).click();
 });

@@ -60,7 +60,7 @@ const toggleMenu = () => {
 
 const onResize = (e: Event) => {
   isMenuOpened.value = false;
-  isMobile.value = (e.target as Window).innerWidth <= 1280;
+  isMobile.value = (e.target as Window).innerWidth < 1280;
 };
 
 onMounted(() => {
@@ -239,7 +239,7 @@ onBeforeUnmount(() => {
 
 .Header__Title {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 1rem;
   margin-left: 1rem;
   text-decoration: none;
   color: var(--slate-700);
@@ -248,7 +248,7 @@ onBeforeUnmount(() => {
 }
 
 .Header__Title .sub {
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .Header__Links {
@@ -308,21 +308,16 @@ onBeforeUnmount(() => {
 }
 
 @media only screen and (min-width: 80rem) {
-  .Header__Navbar_Overrides {
-    padding-right: 1.5rem !important;
-    padding-left: 1rem !important;
-  }
-
   .Header__Hamburger_Btn {
     display: none;
   }
 
   .Header__Title {
-    font-size: 22px;
+    font-size: 1rem;
   }
 
   .Header__Title .sub {
-    font-size: 16px;
+    font-size: 0.75rem;
   }
 
   .Header__Links {
@@ -336,18 +331,17 @@ onBeforeUnmount(() => {
     height: fit-content;
     text-wrap: nowrap;
     padding-bottom: 0;
-    flex-grow: 1;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
   .Header__Link {
-    padding: 8px 16px;
-    font-size: 18px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     text-decoration: none;
     color: var(--slate-700);
-    border-radius: 12px;
+    border-radius: 0.5rem;
     border: transparent 2px solid;
   }
 
@@ -364,15 +358,14 @@ onBeforeUnmount(() => {
   }
 
   .Header__Locales {
-    margin-right: 20px;
-    font-size: 16px;
+    margin-right: 0.5rem;
+    font-size: 0.75rem;
     text-decoration: none;
     color: var(--slate-700);
     border: none;
     text-transform: uppercase;
     font-weight: 700;
-    font-size: 18px;
-    padding: 4px;
+    padding: 0 0.25rem;
   }
 
   #logs-submenu {
@@ -380,7 +373,7 @@ onBeforeUnmount(() => {
     position: absolute;
     list-style: none;
     padding: 0;
-    margin: 12px 0 0 -16px;
+    margin: 0.4rem 0 0 -1rem;
     background-color: white;
     box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.15);
   }
@@ -391,13 +384,50 @@ onBeforeUnmount(() => {
 
   #logs-submenu a {
     display: block;
-    padding: 16px 20px;
+    padding: 0.75rem 1rem;
     text-decoration: none;
     color: var(--slate-700);
   }
 
   #logs:hover #logs-submenu {
     display: block;
+  }
+}
+
+@media only screen and (min-width: 120rem) {
+  .Header__Navbar_Overrides {
+    padding: 0 1rem !important;
+  }
+
+  .Header__Title {
+    font-size: 1.375rem;
+  }
+
+  .Header__Title .sub {
+    font-size: 1rem;
+  }
+
+  .Header__Links {
+    gap: 1rem;
+  }
+
+  .Header__Link {
+    padding: 0.5rem 1rem;
+    font-size: 1.125rem;
+  }
+
+  .Header__Locales {
+    margin-right: 1rem;
+    padding: 0 0.5rem;
+    font-size: 1.125rem;
+  }
+
+  #logs-submenu {
+    margin: 0.75rem 0 0 -1rem;
+  }
+
+  #logs-submenu a {
+    padding: 1rem 1.25rem;
   }
 }
 </style>
