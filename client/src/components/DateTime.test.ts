@@ -2,6 +2,10 @@ import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import DateTime from "./DateTime.vue";
 import { AVTooltip } from "@assemblyvoting/ui-library";
+import { AVIcon } from "@assemblyvoting/ui-library";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import VuePopper from "@kalimahapps/vue-popper";
 
 const date = new Date();
 date.setHours(date.getHours() - 5);
@@ -10,7 +14,12 @@ const props: any = {
   dateTime: date.toISOString(),
   timeZone: "CET",
 };
-const components = { AVTooltip: AVTooltip };
+const components = {
+  AVTooltip: AVTooltip,
+  AVIcon: AVIcon,
+  "popper-tooltip": VuePopper
+};
+
 const options = { props, global: { components } };
 
 test("displays relative time", async () => {
