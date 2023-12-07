@@ -2,8 +2,9 @@ import { expect, test } from "vitest";
 import { mount } from "@vue/test-utils";
 import BallotActivityList from "./BallotActivityList.vue";
 import { createI18n } from "vue-i18n";
-
 const i18n = createI18n({
+  locale: "en",
+  fallbackLocale: "en",
   messages: {
     en: {
       components: {
@@ -23,10 +24,20 @@ const i18n = createI18n({
   },
 });
 
+const stubs = {
+  DateTime: {
+    template: "<span />",
+  },
+  AVIcon: {
+    template: "<span />",
+  },
+};
+
 test("that BallotActivityList mounts", async () => {
   const wrapper = mount(BallotActivityList, {
     global: {
       plugins: [i18n],
+      stubs,
     },
     props: {
       activities: [],
@@ -42,6 +53,7 @@ test("that activities are listed", async () => {
   const wrapper = mount(BallotActivityList, {
     global: {
       plugins: [i18n],
+      stubs,
     },
     props: {
       activities: [

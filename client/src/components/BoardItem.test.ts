@@ -12,9 +12,22 @@ const item = {
   registeredAt: new Date().toString(),
 };
 
+const stubs = {
+  DateTime: {
+    template: "<span />",
+  },
+  AVIcon: {
+    template: "<span />",
+  },
+  AVTooltip: {
+    template: "<span />",
+  },
+};
+
 const options = {
   global: {
     plugins: [i18n],
+    stubs,
   },
   props: { item, isConfigItem: true },
 };

@@ -7,7 +7,14 @@ const slots = {
   collapsed: "Collapsed text",
   expanded: "Expanded text",
 };
-const options = { props, slots };
+
+const stubs = {
+  AVIcon: {
+    template: "<span />",
+  },
+};
+
+const options = { props, slots, global: { stubs } };
 
 test("displays the collapsed text", async () => {
   const wrapper = mount(ExpandableSection, options);
