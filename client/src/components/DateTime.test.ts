@@ -17,7 +17,7 @@ const props: any = {
 const components = {
   AVTooltip: AVTooltip,
   AVIcon: AVIcon,
-  "popper-tooltip": VuePopper
+  "popper-tooltip": VuePopper,
 };
 
 const options = { props, global: { components } };
